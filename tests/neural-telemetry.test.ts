@@ -22,6 +22,15 @@ void test('invalid neural payloads never become displayed activity', () => {
   assert.equal(recordActivity(trace, sample({ state: new Float32Array(1024).fill(NaN) })), false);
   assert.equal(trace.samples.length, 0);
 });
+void test('switching back to a cached controller accepts its older sequence without duplicating samples', () => {
+  const trace = activityTrace();
+  recordActivity(trace, sample({ sequence: 20 }));
+  recordActivity(trace, sample({ source: 'wing', sequence: 21 }));
+  assert.equal(recordActivity(trace, sample({ sequence: 20 })), true);
+  assert.equal(trace.source, 'motor');
+  assert.equal(trace.samples.length, 1);
+  assert.equal(recordActivity(trace, sample({ sequence: 20 })), false);
+});
 void test('expanded network telemetry includes every cell and rejects a mismatched graph', () => {
   const trace = activityTrace(), expanded = sample({ state: new Float32Array(2048).fill(.125) });
   assert.equal(recordActivity(trace, expanded), false);

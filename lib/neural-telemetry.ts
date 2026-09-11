@@ -4,9 +4,10 @@ export interface ActivityTrace { source: NeuralSource | null; run: number; seque
 export function activityTrace(): ActivityTrace { return { source: null, run: -1, sequence: -1, samples: [] }; }
 /** At most one plotted value per neural observation; no render-clock samples. */
 export function recordActivity(trace: ActivityTrace, sample: NeuralSample, neurons = 1024) {
-  if (sample.sequence <= trace.sequence) return false;
+  const differentStream = trace.source !== sample.source || trace.run !== sample.run;
+  if (!differentStream && sample.sequence <= trace.sequence) return false;
   if (sample.state.length !== neurons || !Number.isFinite(sample.time) || sample.state.some(v => !Number.isFinite(v))) return false;
-  if (trace.source !== sample.source || trace.run !== sample.run) trace.samples = [];
+  if (differentStream) trace.samples = [];
   trace.source = sample.source; trace.run = sample.run; trace.sequence = sample.sequence;
   const mean = sample.state.reduce((sum, v) => sum + Math.abs(v), 0) / sample.state.length;
   trace.samples.push({ time: sample.time, mean });

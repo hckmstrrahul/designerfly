@@ -62,3 +62,9 @@ Exact JavaScript versions are in `package-lock.json`; Python versions are in
 [Flyhard](https://github.com/MarkUnthank/flyhard), and Supabase's fly animation
 informed the reference review. Their demo results are not Designer Fly's results.
 See `docs/reference-review.md` for the distinction.
+
+## Inter
+
+Inter by Rasmus Andersson and contributors is licensed under SIL Open Font License 1.1.
+Source: https://github.com/rsms/inter
+Bundled license: `public/fonts/inter/LICENSE.txt`. Used for project information and the experiment modal.

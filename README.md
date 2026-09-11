@@ -48,9 +48,12 @@ server; the default toolbar uses local copy/paste.
 - **Speed:** cycle through 1×, 2× and 4× simulation time. Each update runs 2, 4 or
   8 full control steps. The fixed physics timestep, feedback inference and every
   contact/ink sample are preserved. This is faster execution of the same
-  simulation, not a controller trained to move faster in physical time.
+  simulation, not a controller trained to move faster in physical time. The orange
+  Speed button starts at 1×; one, two or three white LEDs indicate the speed.
 - **Wings:** run the learned rhythm used to animate the wings.
-- **Activity / Anatomy:** switch the neural device's view. Drag to rotate,
+- **Drawing 01 / Drawing 02:** select the motor or wing controller on Neural Link.
+  Drawing 02 starts wings; Drawing 01 stops them. Both neural displays follow the
+  selected controller. Drag to rotate,
   right-drag or Shift-drag to pan, scroll/pinch to zoom, double-click to reset.
   Focus the neural canvas for arrow-key rotation, Shift+arrow panning, `+`/`−`
   zoom and Home reset. The fly scene also supports rotate, pan and zoom.
@@ -58,6 +61,25 @@ server; the default toolbar uses local copy/paste.
 In Arrange, focused shapes support arrow keys to move, Shift+arrows to resize,
 and Delete to remove. Shapes stay inside a reachable 0.8 × 0.8 model-mm region
 on the larger paper. This is a geometric wireframe tool: no text or arbitrary paths.
+
+## The devices
+
+- **Simulator (S–01):** the physical drawing scene and hardware-style controls.
+- **Neural Link (NL–01):** located neurons, signed activity colors, an average
+  activity trace, controller selection, stylus contact and drawing progress.
+  With no samples, the trace shows a gray placeholder rather than fabricated activity.
+- **Neural Spectrum (NS–01):** measured neuron skeletons with activity-driven brightness.
+
+Desktop fits the devices on one screen. Heights grow on taller displays, up to
+1,040 px for the simulator; smaller viewports scale the group to fit. On tablets,
+the two neural devices share a width. Narrow screens use a wider, vertically
+scrollable stack with cables between adjacent devices. Vertical swipes over the
+scenes scroll the mobile page. The simulator's circular controls sit above its
+four evenly sized shape/Arrange buttons in this layout.
+
+**About this experiment** opens a modal with the method, limitations, validation
+figures and source credits. Project information uses locally hosted Inter; device
+readouts retain Departure Mono.
 
 ## How the fly actually works
 
@@ -98,21 +120,14 @@ between samples strengthen the glow. A fixed square-root display curve reveals
 small values, with 8× gain on the change component. Unchanged values remain still. The bottom
 trace is mean absolute rate across every neuron, including cells without positions.
 
-**Anatomy** shows 96 measured branching skeletons from the original circuit,
-remapped by body ID into the active graph. Cyan identifies sensory cells, purple
-local-circuit cells and gold motor cells. It is a structural view; it does not
-simulate signals travelling down individual branches. Expanding the controller
-does not invent additional skeletons.
-
 Enabling wings on either device selects the 1,024-neuron wing controller on both
-live monitors, even during drawing. The NL–01 Drawing button stops flapping and
+live monitors, even during drawing. The NL–01 Drawing 01 button stops flapping and
 returns to the motor controller. Counts follow the selected network.
 
 **Neural Spectrum (NS–01)** shows the same 96 measured 3D skeletons in a separate
-interactive view below Anatomy. A stable hue identifies each neuron; opacity and
+interactive view below Neural Link. A stable hue identifies each neuron; opacity and
 line thickness follow the magnitude of its actual controller rate. This is a
-cell-level activity overlay, not simulated propagation along branches. Anatomy
-retains its structural class colors. All live values are computed model states,
+cell-level activity overlay, not simulated propagation along branches. All live values are computed model states,
 not recordings of a biological fly's spikes.
 
 ## What it can and cannot do
@@ -200,6 +215,7 @@ proxy and intentionally binds its backend to localhost.
   rig, pinned to `38c8ec61034cd59bc5ba0de20688d4a3c0000d60`. NeLy, EPFL and contributors.
   **Apache 2.0**. Materials, stance, mirrored geometry and pencil grip are adapted.
 - **[Departure Mono](https://departuremono.com/)** — Helena Zhang; **SIL OFL 1.1**.
+- **[Inter](https://github.com/rsms/inter)** — Rasmus Andersson and contributors; **SIL OFL 1.1**.
 - **[Lucide](https://lucide.dev/)** — interface icons; **ISC**.
 
 ## Open use

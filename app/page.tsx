@@ -1,6 +1,7 @@
-import { Circle, RectangleHorizontal, Triangle, Wind, LayoutTemplate, Activity, GitBranch, Gauge } from 'lucide-react';
+import { Circle, RectangleHorizontal, Triangle, Wind, LayoutTemplate, Gauge, Activity, FlaskConical, Scale, ArrowUpRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDrawing } from '@/lib/use-drawing';
+import { DeviceCable } from './device-cable';
 import { NeuralDisplay } from './neural-display';
 import { CompositionEditor } from './composition-editor';
 import { INITIAL_STUDY, MAX_SHAPES, constrainShape, type PlacedShape } from '@/lib/composition';
@@ -11,10 +12,34 @@ function Screw({ position }: { position: string }) { return <span aria-hidden="t
 function Screws() { return <>{['top-left', 'top-right', 'bottom-left', 'bottom-right'].map(p => <Screw key={p} position={p} />)}</>; }
 
 export default function DesignerFly() {
-  const { model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed } = useDrawing();
-  const [neuralMode, setNeuralMode] = useState<'activity' | 'anatomy'>('activity');
+  const { model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, contact } = useDrawing();
   const [arranging, setArranging] = useState(false), [study, setStudy] = useState<PlacedShape[]>(INITIAL_STUDY);
   const nextId = useRef(5);
+  const experimentDialog = useRef<HTMLDialogElement>(null);
+  const stage = useRef<HTMLDivElement>(null), devices = useRef<HTMLDivElement>(null);
+  const [deviceScale, setDeviceScale] = useState(1);
+  const [stageHeight, setStageHeight] = useState<number>();
+  useEffect(() => {
+    const fit = () => {
+      if (!stage.current || !devices.current) return;
+      const bench = stage.current.parentElement!;
+      const heading = bench.querySelector<HTMLElement>('.project-heading')!;
+      const style = getComputedStyle(bench);
+      const available = bench.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom) - heading.offsetHeight - parseFloat(style.rowGap);
+      const scale = window.innerWidth <= 1000 ? 1 : Math.max(0, Math.min(1, stage.current.clientWidth / devices.current.offsetWidth, available / devices.current.offsetHeight));
+      setDeviceScale(scale);
+      setStageHeight(devices.current.offsetHeight * scale);
+    };
+    const observer = new ResizeObserver(fit);
+    if (stage.current) {
+      observer.observe(stage.current);
+      observer.observe(stage.current.parentElement!);
+      const heading = stage.current.parentElement!.querySelector('.project-heading');
+      if (heading) observer.observe(heading);
+    }
+    if (devices.current) observer.observe(devices.current);
+    fit(); return () => observer.disconnect();
+  }, []);
   function chooseShape(kind: number) {
     if (!arranging) { void draw(kind); return; }
     if (study.length >= MAX_SHAPES) return;
@@ -30,19 +55,38 @@ export default function DesignerFly() {
   const expanded = report?.reports['active-motor'];
   const motorScores = expanded ? { trained_rmse: expanded.after_rmse, ablated_rmse: expanded.ablated_rmse } : isComposition ? compositionScores && { ...compositionScores, untrained_rmse: compositionScores.before_refinement_rmse } : report?.reports['motor-validation']?.scores;
   const busy = ['drawing', 'draw', 'approach', 'travel', 'lower', 'lift'].includes(phase);
-  const monitoring = ready && (busy || wings);
+  const monitoring = ready && (neuralSource === 'wing' ? wings : busy);
   const status = error ? 'Connection interrupted' : !ready ? 'Preparing the studio' : arranging ? study.length >= MAX_SHAPES ? 'Eight shapes on this sheet' : 'Shape buttons add to the study' : phase === 'travel' ? `Moving to shape ${strokeIndex + 1}` : phase === 'lower' ? 'Pencil to paper' : phase === 'lift' ? 'Lifting the pencil' : phase === 'approach' ? 'Taking the pencil' : phase === 'drawing' || phase === 'draw' ? `Drawing ${SHAPES[shape!]}${strokeCount > 1 ? ` ${strokeIndex + 1}/${strokeCount}` : ''}` : phase === 'done' ? 'A little work of art' : 'Ready when you are';
   return (
     <main className="workbench">
-      <div className="device-pair">
+      <header className="project-heading">
+        <h2>designerfly<span className="brand-period">.</span></h2>
+        <p>A virtual fruit fly drawing with a trained neural controller.</p>
+        <nav aria-label="About this project">
+          <button onClick={() => experimentDialog.current?.showModal()}><FlaskConical aria-hidden="true" />About this experiment</button>
+          <a href="https://github.com/hckmstrrahul/designerfly" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.71 2.63 1.22 3.27.93.1-.73.4-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.24 1.16-3.02-.12-.29-.5-1.43.11-2.98 0 0 .95-.3 3.09 1.15a10.77 10.77 0 0 1 5.62 0c2.15-1.45 3.09-1.15 3.09-1.15.61 1.55.23 2.69.11 2.98.72.78 1.16 1.79 1.16 3.02 0 4.32-2.63 5.28-5.14 5.56.4.35.76 1.03.76 2.09v3.09c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z" /></svg>GitHub<ArrowUpRight aria-hidden="true" /></a>
+          <a href="https://github.com/hckmstrrahul/designerfly/blob/main/LICENSE" target="_blank" rel="noreferrer"><Scale aria-hidden="true" />Open source · MIT<ArrowUpRight aria-hidden="true" /></a>
+        </nav>
+      </header>
+      <div className="device-stage" ref={stage} style={{ height: stageHeight }}>
+      <div className="device-pair" ref={devices} style={{ transform: `scale(${deviceScale})` }}>
         <section className="instrument drawing-device" aria-label="Designer Fly drawing instrument">
           <Screws />
-          <header className="faceplate"><div className="wordmark"><span className="brand-mark" aria-hidden="true"><i /><i /><i /></span><h1>designer fly<span className="brand-period">.</span></h1></div><div className="model-number"><strong>DF–01</strong></div></header>
+          <header className="faceplate"><div className="wordmark"><h1>simulator<span className="brand-period">.</span></h1></div><div className="model-number"><strong>S–01</strong></div></header>
           <div className="paper-surround">
             <section className="scene-view" aria-label={`Three-dimensional fruit fly controlling a physical stylus with one foreleg at a small artist pedestal. ${shape === null ? 'Blank canvas.' : `${isComposition ? `${strokeCount}-shape study` : SHAPES[shape]}, ${Math.round(progress * 100)} percent drawn.`}`}>
               <div ref={host} className="fly-scene" />
               <span className="view-corner corner-a" /><span className="view-corner corner-b" /><span className="view-corner corner-c" /><span className="view-corner corner-d" />
-              <output className="scene-status" aria-label="Fly activity" aria-live="polite">{status}</output>
+              <output className="scene-status" aria-label="Fly activity" aria-live="polite">
+                <svg className="fly-speaker" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <g stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 15C4 2 2 18 13 20m5-5C28 2 30 18 19 20M13 23l-4 4m10-4 4 4M14 7l-2-3m6 3 2-3" />
+                    <ellipse cx="16" cy="20" rx="3" ry="6" fill="currentColor" fillOpacity=".12" />
+                    <circle cx="16" cy="10" r="3.5" />
+                  </g>
+                </svg>
+                <span>{status}</span>
+              </output>
               <div className="scene-hint">Drag to rotate · Scroll to zoom</div>
               {!ready && <div className="scene-loading">{error || 'Preparing the little studio…'}</div>}
               {arranging && <CompositionEditor shapes={study} onChange={setStudy} onClose={() => setArranging(false)} onDraw={() => { setArranging(false); void draw(study[0].shape, study); }} />}
@@ -50,32 +94,60 @@ export default function DesignerFly() {
             <div className="rail" aria-hidden="true"><div className="rail-ticks" /></div>
           </div>
           <div className="control-panel">
-            <div className="utility-controls"><button className="hardware-key utility-key" aria-label="Arrange shapes" aria-pressed={arranging} disabled={!ready || busy} onClick={() => setArranging(a => !a)}><LayoutTemplate size={19} /><span>Arrange</span></button><button className="hardware-key utility-key wing-key" aria-label={wings ? 'Stop wings' : 'Flap wings'} aria-pressed={wings} onClick={toggleWings} disabled={!ready}><Wind size={20} /><span>Wings</span></button><button className="hardware-key utility-key speed-key" aria-label={`Simulation speed ${speed} times. Click to change.`} onClick={cycleSpeed} disabled={!ready} title="Advance more full physics steps per update"><Gauge size={19} /><span>{speed}× speed</span></button></div>
-            <div className="shape-controls" aria-label="Choose a shape">{SHAPES.map((kind, i) => { const Icon = ICONS[i]; return <div className="key-module" key={kind}><button disabled={!ready || (arranging && study.length >= MAX_SHAPES)} className={`shape-key ${!arranging && shape === i ? 'selected' : ''}`} onClick={() => chooseShape(i)} aria-label={`${arranging ? 'Add' : 'Draw'} ${kind}`} aria-keyshortcuts={String(i + 1)} title={`${arranging ? 'Add' : 'Draw'} ${kind} (${i + 1})`}><span className="key-top"><Icon size={31} strokeWidth={1.7} /><span className="key-indicator" /></span></button><span className="key-caption" aria-hidden="true"><span>0{i + 1}</span>{kind}</span></div>; })}</div>
+            <div className="utility-controls">
+
+              <div className="utility-module"><button className={`shape-key round-key ${wings ? 'selected' : ''}`} aria-label={wings ? 'Stop wings' : 'Flap wings'} aria-pressed={wings} onClick={toggleWings} disabled={!ready}><span className="key-top"><Wind size={26} strokeWidth={1.7} /><span className="key-indicator" /></span></button><span className="key-caption" aria-hidden="true">Wings</span></div>
+              <div className="utility-module"><button className="shape-key round-key speed-key selected" aria-pressed={true} aria-label={`Simulation speed ${speed} times. Click to change.`} onClick={cycleSpeed} disabled={!ready} title="Advance more full physics steps per update"><span className="key-top"><Gauge size={25} strokeWidth={1.7} /><span className="speed-leds" aria-hidden="true">{[1, 2, 4].map(level => <i key={level} className={speed >= level ? 'lit' : ''} />)}</span></span></button><span className="key-caption" aria-hidden="true">{speed}× speed</span></div>
+            </div>
+            <div className="shape-controls" aria-label="Choose a shape"><div className="key-module"><button className={`shape-key ${arranging ? 'selected' : ''}`} aria-label="Arrange shapes" aria-pressed={arranging} disabled={!ready || busy} onClick={() => setArranging(a => !a)}><span className="key-top"><LayoutTemplate size={25} strokeWidth={1.7} /><span className="key-indicator" /></span></button><span className="key-caption" aria-hidden="true">Arrange</span></div>{SHAPES.map((kind, i) => { const Icon = ICONS[i]; return <div className="key-module" key={kind}><button disabled={!ready || (arranging && study.length >= MAX_SHAPES)} className={`shape-key ${!arranging && shape === i ? 'selected' : ''}`} onClick={() => chooseShape(i)} aria-pressed={!arranging && shape === i} aria-label={`${arranging ? 'Add' : shape === i && !isComposition ? 'Reset' : 'Draw'} ${kind}`} aria-keyshortcuts={String(i + 1)} title={`${arranging ? 'Add' : shape === i && !isComposition ? 'Reset' : 'Draw'} ${kind} (${i + 1})`}><span className="key-top"><Icon size={31} strokeWidth={1.7} /><span className="key-indicator" /></span></button><span className="key-caption" aria-hidden="true">{kind}</span></div>; })}</div>
           </div>
           <footer className="device-footer" aria-hidden="true"><span className="footer-dots"><i /><i /><i /></span><span className="vent" /></footer>
         </section>
-        <div className={`cable ${busy ? 'connected' : ''}`} aria-hidden="true"><i className="jack jack-left" /><svg viewBox="0 0 90 300" preserveAspectRatio="none"><path d="M0 70 C65 70 4 244 56 244 C85 244 70 136 90 136" /><path className="cable-highlight" d="M0 70 C65 70 4 244 56 244 C85 244 70 136 90 136" /></svg><i className="jack jack-right" /></div>
-        <aside className="instrument neural-device" aria-label="Live neural circuit monitor">
+        <aside className="instrument neural-device activity-device" aria-label="Live neural circuit monitor">
           <Screws />
           <header className="neural-header"><h2>neural link<span>.</span></h2><span className="neural-model">NL–01</span></header>
-          <div className="neural-screen"><div className="screen-top"><span>{neuralSource === 'motor' ? 'Drawing controller' : 'Wing rhythm'}</span><span className={`screen-live ${monitoring ? 'active' : ''}`}>{monitoring ? '● Live' : '● Paused'}</span></div>{model && <NeuralDisplay model={model} live={live} source={neuralSource} mode={neuralMode} />}
-            <div className="screen-metrics">{model?.neurons.toLocaleString('en-US') || '…'} neurons · {model?.edges.toLocaleString('en-US') || '…'} connections</div>
+          <div className="neural-screen"><div className="neural-screen-toolbar">
+            <span title="Right-drag to pan · Double-click to reset">Drag to rotate · Scroll to zoom</span>
+            <span className={`screen-live ${monitoring ? 'active' : ''}`}>{monitoring ? '● Live' : '● Paused'}</span>
+          </div>
+            <div className="screen-metrics" title="Selected controller totals. The scene displays neurons with measured locations; the trace includes all neurons."><span><strong>{model?.neurons.toLocaleString('en-US') || '…'}</strong> neurons</span><span><strong>{model?.edges.toLocaleString('en-US') || '…'}</strong> connections</span></div>
+            {model && <NeuralDisplay model={model} live={live} source={neuralSource} mode="activity" />}
+            <div className="controller-status" aria-label="Controller and stylus status"><span><small>Controller</small><b>{neuralSource === 'wing' ? 'Wing rhythm' : 'Foreleg motor'}</b></span><span><small>Stylus</small><b>{contact ? 'On paper' : 'Lifted'}</b></span></div>
             <div className="signal-row"><span>{isComposition ? 'Study' : 'Drawing'}</span><progress className="signal-track" aria-label={isComposition ? 'Study progress' : 'Drawing progress'} value={progress} max={1} /><span>{Math.round(progress * 100)}%</span></div>
           </div>
-          <div className="neural-hardware"><button className="hardware-key mode-key" aria-pressed={neuralMode === 'activity'} onClick={() => setNeuralMode('activity')}><Activity size={19} /><span>Activity</span><i /></button><button className="hardware-key mode-key" aria-pressed={neuralMode === 'anatomy'} onClick={() => setNeuralMode('anatomy')}><GitBranch size={19} /><span>Anatomy</span><i /></button></div>
+          <div className="neural-hardware" aria-label="Neural signal source"><button className="hardware-key mode-key" aria-pressed={neuralSource === 'motor'} title="Show drawing activity and stop wing flapping" onClick={() => { if (wings) toggleWings(); else selectNeuralSource('motor'); }}><Activity size={19} /><span>Drawing 01</span><i /></button><button className="hardware-key mode-key" aria-pressed={neuralSource === 'wing'} title="Start wing flapping and show its activity" onClick={() => { if (!wings) toggleWings(); else selectNeuralSource('wing'); }} disabled={!ready}><Wind size={19} /><span>Drawing 02</span><i /></button></div>
           <footer className="device-footer" aria-hidden="true"><span className="vent" /></footer>
         </aside>
+        <div className="neural-companions">
+        <aside className="instrument neural-device spectral-device" aria-label="Neural morphology colored by controller activity">
+          <Screws />
+          <header className="neural-header"><h2>neural spectrum<span>.</span></h2><span className="neural-model">NS–01</span></header>
+          <div className="neural-screen">
+            <div className="anatomy-caption spectrum-status"><span title="Right-drag to pan · Double-click to reset">Drag to rotate · Scroll to zoom</span><span>{monitoring ? '● Live' : '● Paused'}</span></div>
+            {model && <NeuralDisplay model={model} live={live} source={neuralSource} mode="spectrum" />}
+          </div>
+          <footer className="device-footer" aria-hidden="true"><span className="vent" /></footer>
+        </aside>
+        </div>
+        <DeviceCable />
       </div>
-      <div className="bench-footer"><p>Pick a shape. Let the little artist take it from here.</p></div>
-      <details className="experiment-notes"><summary>Inside the experiment <span>↗</span></summary><div className="notes-content compact-notes">
-        <p><strong>How it works.</strong> A trained neural planner makes the shape path. Arrange specifies its position and size; a feedback network reads joint motion, pencil error and contact, then drives three physical foreleg joints in MuJoCo. Marks appear only when the tip touches the paper during a stroke.</p>
-        <p><strong>What you’re seeing.</strong> The monitor shows a selected MaleCNS ventral nerve cord circuit. Activity colors show signed model values; rings show changes between samples (×8). Anatomy colors identify sensory, local-circuit and motor cells. Missing cell locations are never invented. The trace includes every neuron.</p>
-        <p><strong>The limits.</strong> This is an embodied neural prototype: a fixed body, one controlled foreleg and an attached pencil. Wings are driven animation, without flight physics. Layouts are specified by you or a preset. It does not understand prompts or autonomously design interfaces; biological accuracy and an advantage over random wiring are unproven.</p>
-        <p><strong>Speed.</strong> 1× / 2× / 4× runs more complete neural-and-physics steps per display update, keeping the timestep and every contact/ink sample. It accelerates simulation time, not the learned movement in physical time. Actual speed depends on your computer.</p>
-        {motorScores && <p className="compact-evidence">Held-out command error: {motorScores.trained_rmse.toFixed(3)} trained · {motorScores.ablated_rmse.toFixed(3)} with connections removed.</p>}
-        <p className="credits">Built by <a href="https://github.com/hckmstrrahul" target="_blank" rel="noreferrer">@hckmstrrahul</a> · <a href="https://github.com/hckmstrrahul/designerfly" target="_blank" rel="noreferrer">Code &amp; methods ↗</a><br />Data: <a href="https://male-cns.janelia.org/" target="_blank" rel="noreferrer">MaleCNS / FlyEM</a> (CC BY 4.0) · Anatomy: <a href="https://github.com/NeLy-EPFL/flygym" target="_blank" rel="noreferrer">NeuroMechFly / FlyGym</a> (Apache 2.0).</p>
-      </div></details>
+      </div>
+      {/* Native modal handles backdrop dismissal and isolates simulation shortcuts. */}
+      {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+      <dialog ref={experimentDialog} className="experiment-modal" aria-labelledby="experiment-title" onClick={event => { if (event.target === event.currentTarget) experimentDialog.current?.close(); }} onKeyDown={event => event.stopPropagation()}>
+        <header><h2 id="experiment-title">About this experiment</h2><button aria-label="Close experiment details" onClick={() => experimentDialog.current?.close()}>×</button></header>
+        <div className="experiment-content">
+          <section><h3>From neurons to pencil</h3><p>A trained planner traces a shape. A feedback network uses joint motion, pencil error and contact to drive three foreleg joints in MuJoCo. Ink appears only when the pencil touches paper.</p></section>
+          <section><h3>Reading the displays</h3><div className="display-explain">
+            <div><h4>Neural Link</h4><p>A selected MaleCNS circuit: red and green show signed model activity; brightness shows strength. The graph averages activity magnitude across all controller neurons.</p></div>
+            <div><h4>Neural Spectrum</h4><p>96 measured neuron skeletons. Color identifies each neuron; brightness follows its computed activity. Missing locations are omitted.</p></div>
+          </div></section>
+          <section><h3>What this prototype can do</h3><p>Draw and arrange simple shapes with one controlled foreleg. The body stays fixed; wing flapping is neural animation without flight physics. It cannot understand prompts or design interfaces on its own.</p><p className="experiment-caveat">These are model values, not recorded spikes or signals travelling along branches. This is a partial circuit, not a full brain. Biological accuracy and an advantage over random wiring remain unproven.</p></section>
+          <section><h3>Faster simulation</h3><p>1×, 2× and 4× run more complete physics and neural steps per update, preserving the timestep and ink samples. Actual speed depends on your computer.</p></section>
+          {motorScores && <section className="experiment-results"><h3>Held-out command error <span>Lower is better</span></h3><div><p><strong>{motorScores.trained_rmse.toFixed(3)}</strong><span>Trained controller</span></p><p><strong>{motorScores.ablated_rmse.toFixed(3)}</strong><span>Connections removed</span></p></div></section>}
+          <section className="experiment-sources"><h3>Sources &amp; credits</h3><p><a href="https://male-cns.janelia.org/" target="_blank" rel="noreferrer">MaleCNS / FlyEM ↗</a><span>Neural data · CC BY 4.0</span></p><p><a href="https://github.com/NeLy-EPFL/flygym" target="_blank" rel="noreferrer">NeuroMechFly / FlyGym ↗</a><span>Fly anatomy · Apache 2.0</span></p><p className="experiment-author">Built by <a href="https://github.com/hckmstrrahul" target="_blank" rel="noreferrer">@hckmstrrahul</a><a href="https://github.com/hckmstrrahul/designerfly" target="_blank" rel="noreferrer">Code &amp; methods ↗</a></p></section>
+        </div>
+      </dialog>
     </main>
   );
 }

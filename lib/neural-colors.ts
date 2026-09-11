@@ -1,8 +1,6 @@
-/** Fixed signed rate scale; color does not imply neurotransmitter identity. */
+/** Hue encodes sign; opacity and glow encode strength, not neurotransmitter identity. */
 export function activityColor(value: number): string {
-  const v = Math.max(-1, Math.min(1, value));
-  const neutral = [143, 165, 158], end = v < 0 ? [99, 175, 249] : [255, 139, 103];
-  return `rgb(${neutral.map((n, i) => Math.round(n + (end[i] - n) * Math.abs(v))).join(',')})`;
+  return value < 0 ? 'rgb(239,83,70)' : value > 0 ? 'rgb(94,207,105)' : 'rgb(62,88,65)';
 }
 export const CELL_COLORS: Record<string, string> = { vnc_sensory: '#73c9e8', vnc_intrinsic: '#bd9ee8', vnc_motor: '#f2bd73' };
 /** Actual frame-to-frame change, with fixed 8× visual gain. */

@@ -55,10 +55,10 @@ def step(request:Step):
         push=np.array([.8,-.5,.5]) if request.push and i==0 else None
         frames.append(session.step(push=push))
         if frames[-1].get('done'):break
-    wing=0.
+    wing=0.;wing_state=None
     if request.wings:
-        out,_=planner(features([1],[request.wing_phase])[0]);wing=float(out[0])
-    return {'frames':frames,'state':session.last_state.tolist(),'wing':wing,'neural_source':'motor','sample_time':session.env.data.time-.02}
+        out,rate=planner(features([1],[request.wing_phase])[0]);wing=float(out[0]);wing_state=rate.tolist()
+    return {'frames':frames,'state':session.last_state.tolist(),'wing':wing,'wing_state':wing_state,'neural_source':'motor','sample_time':session.env.data.time-.02}
 @app.delete('/session/{key}')
 def remove(key:str):sessions.pop(key,None);return {'ok':True}
 @app.get('/wing')

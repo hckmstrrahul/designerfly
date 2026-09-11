@@ -193,45 +193,553 @@ h1 { font-size: 24px; font-weight: 600; letter-spacing: -1.2px; margin: 0; }
 @media(max-width:700px) { .screen-top,.screen-bottom { font-size: 9px; }.neural-device { width: 100%; }.neural-canvas { height: 360px; } }
 
 /* Physical controls, with all feedback contained within the displays. */
-.scene-status { position: absolute; top: 23px; left: 23px; right: 23px; pointer-events: none; color: #4c6057; font: 11px/1.7 'Departure Mono', monospace; }
+.scene-status { position: absolute; top: 23px; left: 23px; right: 23px; display: flex; align-items: center; gap: 10px; pointer-events: none; color: #4c6057; font: 14px/1.6 'Departure Mono', monospace; }
+.fly-speaker { width: 24px; height: 24px; flex: 0 0 24px; }
 .utility-controls { display: flex; gap: 14px; align-items: center; }
 .hardware-key { border: 1px solid #929e8b; border-bottom: 4px solid #7b8773; background: linear-gradient(145deg,#eaf0e1,#c7d1bf); color: #4d604c; box-shadow: 0 1px 1px #ffffffc9 inset, 0 3px 4px #45553926; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px; font: 11px var(--mono); transition: transform .12s, box-shadow .12s; }
 .hardware-key:hover { filter: brightness(1.035); }
 .hardware-key:active { transform: translateY(2px); box-shadow: 0 1px 2px #45553926; }
 .hardware-key:focus-visible { outline: 2px solid #e47744; outline-offset: 4px; }
 .hardware-key:disabled { opacity: .45; cursor: default; }
-.utility-key { width: 76px; height: 66px; flex-direction: column; border-radius: 7px; gap: 8px; }
-.wing-key { border-radius: 24px; background: linear-gradient(145deg,#d4e3df,#aebfb5); }
-.utility-key[aria-pressed="true"] { color: #fff7e8; border-color: #a45a36; background: linear-gradient(145deg,#eb9763,#cb7447); }
-.neural-hardware { display: flex; justify-content: center; gap: 13px; padding: 27px 0 25px; }
-.mode-key { position: relative; height: 60px; flex: 1; max-width: 138px; border-radius: 7px; padding: 0 7px 6px; }
-.mode-key i { position: absolute; width: 16px; height: 3px; border-radius: 2px; bottom: 8px; background: #a2ad98; box-shadow: 0 1px 1px #56674730 inset; }
+.utility-module { width: 76px; flex: 0 0 76px; }
+.utility-module .key-caption { justify-content: center; }
+.round-key { width: 76px; height: 76px; border-radius: 50%; }
+.round-key .key-top { border-radius: 50%; }
+.neural-hardware { display: flex; justify-content: center; gap: 13px; padding: 14px 0 12px; }
+.mode-key { position: relative; height: 44px; flex: 1; max-width: 138px; border-radius: 7px; padding: 0 7px; }
+.mode-key i { position: absolute; width: 5px; height: 5px; border-radius: 50%; top: 7px; right: 7px; background: #a2ad98; box-shadow: 0 1px 1px #56674730 inset; }
 .mode-key[aria-pressed="true"] { background: linear-gradient(145deg,#718577,#4d6357); color: #f0efda; border-color: #3f5447; }
 .mode-key[aria-pressed="true"] i { background: #f3bf79; box-shadow: 0 0 5px #eaba7244; }
 .neural-screen { background: #222d29; }
 .screen-top { color: #c6d6c9; padding: 16px 14px 0; font: 10px 'Departure Mono', monospace; letter-spacing: 0; }
 .screen-live { color: #98a89c; white-space: nowrap; }
 .screen-live.active { color: #f3bc7f; }
-.neural-view-label { padding: 13px 14px 6px; font: 11px/1.7 'Departure Mono', monospace; color: #d0d7c6; }
+.neural-screen-toolbar { color: #aebfb2; display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 12px 12px 0; flex-shrink: 0; font: 9px 'Departure Mono', monospace; }
+.neural-source-controls { display: flex; gap: 5px; }
+.neural-source-controls button { border: 1px solid #6b80653b; border-radius: 3px; padding: 4px 9px; font: 10px var(--mono); color: #8fa28d; background: transparent; cursor: pointer; }
+.neural-source-controls button[aria-pressed="true"] { color: #c4d1b5; background: #c4d1b51a; border-color: #c4d1b566; }
+.neural-source-controls button:focus-visible { outline: 2px solid #c4d1b5; outline-offset: 2px; }
+.neural-view-label { padding: 9px 14px 5px; font: 10px/1.7 'Departure Mono', monospace; color: #aebfb2; }
 .neural-view-label span { display: block; color: #8ca397; font-size: 9px; }
 .neural-canvas { touch-action: none; cursor: grab; outline-offset: -2px; }
 .neural-canvas:active { cursor: grabbing; }
 .neural-canvas:focus-visible { outline: 1px solid #e2bc82; }
-.neural-legend { padding: 8px 14px 5px; color: #bfcbbc; font: 9px/1.6 'Departure Mono', monospace; min-height: 48px; }
+.neural-legend { padding: 8px 14px 5px; color: #bfcbbc; font: 9px/1.6 'Departure Mono', monospace; min-height: 32px; }
 .rate-legend { display: flex; align-items: center; gap: 9px; }
-.rate-legend i { height: 5px; border-radius: 3px; flex: 1; background: linear-gradient(90deg,rgb(99,175,249),rgb(143,165,158),rgb(255,139,103)); }
+.rate-legend i { height: 5px; border-radius: 3px; flex: 1; background: linear-gradient(90deg,rgb(239,83,70) 0%,rgb(239,83,70) 15%,rgb(62,88,65) 50%,rgb(94,207,105) 85%,rgb(94,207,105) 100%); }
 .legend-description { display: flex; justify-content: space-between; gap: 7px; padding-top: 5px; font-size: 8px; }
 .cell-legend { display: flex; flex-wrap: wrap; gap: 7px 12px; padding-top: 5px; }
 .cell-legend span { display: flex; align-items: center; gap: 5px; }
 .cell-legend i { width: 6px; height: 6px; border-radius: 50%; }
 .neural-gesture-hint { color: #8fa599; padding: 3px 14px 9px; font: 8px/1.7 'Departure Mono', monospace; }
-.screen-metrics { border-top: 1px solid #8aa18e25; margin: 0 14px; padding-top: 10px; color: #a4b7a9; font: 9px/1.6 'Departure Mono', monospace; }
+.screen-metrics { display: flex; flex-direction: column; gap: 4px; padding: 14px 14px 10px; flex-shrink: 0; color: #a4b7a9; font: 11px/1.4 'Departure Mono', monospace; }
+.screen-metrics strong { color: #d0dbc9; font-size: 16px; font-weight: 400; }
 .neural-screen .signal-row { padding: 9px 14px 15px; font: 9px 'Departure Mono', monospace; color: #bbc7b2; }
 .neural-screen .signal-track { background: #44564b; border-radius: 2px; overflow: hidden; }
 .neural-screen progress { appearance: none; border: 0; width: 0; }
 .neural-screen progress::-webkit-progress-bar { background: #44564b; }
 .neural-screen progress::-webkit-progress-value { background: #e7ad75; }
 .neural-screen progress::-moz-progress-bar { background: #e7ad75; }
-@media(min-width:701px) { .neural-canvas { min-height: 250px; }.neural-hardware { min-height: 137px; align-items: center; }.neural-header { flex-basis: 100px; } }
+@media(min-width:701px) { .device-pair { align-items: start; }.neural-device { height: 900px; }.neural-canvas { min-height: 0; }.neural-hardware { flex-shrink: 0; align-items: center; }.neural-header { flex-basis: 84px; }.neural-device .device-footer { height: 24px; } }
 @media(max-width:950px) { .utility-controls { justify-content: center; }.neural-hardware { gap: 8px; }.mode-key { gap: 5px; font-size: 10px; }.screen-top { font-size: 9px; }.legend-description { flex-wrap: wrap; } }
-@media(max-width:700px) { .drawing-device .control-panel { gap: 24px; }.utility-controls { width: 100%; justify-content: center; gap: 22px; }.neural-canvas { height: 370px; }.neural-hardware { padding: 25px 0; }.neural-screen { display: flex; flex-direction: column; } }
+@media(max-width:700px) { .drawing-device .control-panel { gap: 24px; }.utility-controls { width: 100%; justify-content: center; gap: 22px; }.neural-device { height: 820px; display: flex; flex-direction: column; }.neural-header { flex: 0 0 80px; }.neural-canvas { flex: 1; min-height: 0; height: 0; }.neural-hardware { padding: 14px 0 12px; flex-shrink: 0; }.neural-screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }.neural-device .device-footer { height: 24px; flex-shrink: 0; } }
+
+/* Let the screen use the chassis height left by the compact hardware row. */
+.drawing-device { height: 900px; display: flex; flex-direction: column; }
+.drawing-device .faceplate { height: 84px; flex: 0 0 84px; }
+.drawing-device .paper-surround { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.drawing-device .scene-view { flex: 1; min-height: 0; height: 0; }
+.drawing-device .rail { flex-shrink: 0; }
+.drawing-device .control-panel { flex-shrink: 0; padding: 14px 0 12px; gap: 18px; }
+.drawing-device .key-caption { margin-top: 9px; }
+.drawing-device .device-footer { height: 24px; flex-shrink: 0; }
+@media(min-width:951px) and (max-width:1200px) {
+  .utility-controls { gap: 8px; }
+  .utility-module { width: 60px; flex-basis: 60px; }
+  .round-key { width: 60px; height: 60px; }
+}
+@media(max-width:700px) { .drawing-device { height: 820px; }.drawing-device .faceplate { flex-basis: 80px; }.drawing-device .control-panel { gap: 16px; } }
+
+.neural-companions { grid-column: 3; margin-top: 24px; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.anatomy-device { height: 450px; }
+.anatomy-device .neural-header { flex: 0 0 64px; }
+.anatomy-device .neural-header h2 { font-size: 20px; }
+.anatomy-device .neural-screen { min-height: 0; }
+.anatomy-device .neural-canvas { min-height: 0; }
+.anatomy-caption { padding: 11px 12px 5px; color: #aebfb2; font: 9px 'Departure Mono', monospace; }
+.anatomy-device .cell-legend { gap: 7px; font-size: 8px; }
+.anatomy-device .neural-legend { min-height: 28px; }
+@media(min-width:1600px) {
+  .device-pair { width: min(100%,1740px); grid-template-columns: minmax(0,1fr) 58px 350px 24px 300px; }
+  .neural-companions { grid-column: 5; margin-top: 0; }
+}
+@media(max-width:700px) { .neural-companions { width: 100%; }.anatomy-device { height: 410px; }.anatomy-device .neural-header { flex-basis: 60px; } }
+.spectrum-status { display: flex; justify-content: space-between; gap: 8px; }
+.anatomy-device .neural-header h2 { white-space: nowrap; }
+.spectral-device .neural-header h2 { font-size: 17px; letter-spacing: -.7px; }
+.spectrum-legend { display: flex; align-items: center; gap: 8px; font-size: 8px; }
+.spectrum-legend>i { width: 34px; height: 5px; border-radius: 3px; background: linear-gradient(90deg,#ff718a,#da7aff,#77aaff,#70e7bb,#e3e87a); }
+
+/* Linked activity instruments, with a slimmer spectrum chassis. */
+.device-pair { position: relative; padding-bottom: 76px; }
+.device-footer { border-top: 0; box-shadow: none; }
+.device-footer .vent { display: block; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 44px; height: 7px; opacity: .55; }
+.drawing-device .device-footer { justify-content: center; }
+.drawing-device .footer-dots { display: flex; }
+.spectral-device { height: 900px; padding: 0 10px; border-radius: 12px; }
+.spectral-device .neural-header { flex: 0 0 84px; padding: 0 6px; }
+.spectral-device .neural-header h2 { font-size: 18px; }
+.spectral-device .neural-screen { border-width: 2px; min-height: 0; }
+.spectral-device .device-footer { height: 24px; }
+.spectrum-legend { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; font-size: 9px; }
+.spectrum-legend>div { display: flex; align-items: center; gap: 8px; }
+.spectrum-swatches,.strength-swatches { display: flex; gap: 3px; align-items: center; }
+.spectrum-swatches i { width: 5px; height: 5px; border-radius: 50%; }
+.strength-swatches i { width: 3px; height: 10px; border-radius: 2px; background: #d4e5c4; }
+.sync-cable { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.sync-cable path { fill: none; stroke-linecap: round; }
+.sync-cable-shadow { stroke: #40463524; stroke-width: 7; transform: translateY(3px); }
+.sync-cable-body { stroke: #535b4b; stroke-width: 4; }
+.sync-cable-highlight { stroke: #adb49b; stroke-width: 1; }
+@media(max-width:700px) { .spectral-device { height: 820px; }.spectral-device .neural-header { flex-basis: 80px; } }
+
+/* Reference arrangement: drawing desk, horizontal controller, spectrum below. */
+.neural-trace { display: block; width: 100%; height: 74px; flex: 0 0 74px; }
+@media(min-width:1001px) {
+  .device-pair { width: min(100%,1740px); grid-template-columns: minmax(0,1.5fr) 70px minmax(0,1fr); grid-template-rows: 420px 456px; row-gap: 24px; padding-bottom: 0; }
+  .drawing-device { grid-column: 1; grid-row: 1 / 3; }
+  .activity-device { grid-column: 3; grid-row: 1; height: 420px; padding: 8px; display: grid; grid-template-columns: 55% 45%; grid-template-rows: 48px 26px 64px 74px 28px 26px 36px 1fr 64px 12px; }
+  .activity-device .neural-header { grid-column: 2; grid-row: 1; height: auto; padding: 0 10px; }
+  .activity-device .neural-header h2 { font-size: 20px; }
+  .activity-device .neural-screen { display: contents; }
+  .activity-device .neural-canvas { grid-column: 1; grid-row: 1 / -1; width: 100%; height: 100%; min-height: 0; background: #222d29; border: 2px solid #bac1b0; border-radius: 4px; }
+  .activity-device .neural-screen-toolbar { grid-column: 2; grid-row: 2; padding: 6px 12px 0; }
+  .activity-device .screen-metrics { grid-column: 2; grid-row: 3; padding: 10px 14px 6px; }
+  .activity-device .neural-trace { grid-column: 2; grid-row: 4; }
+  .activity-device .neural-legend { grid-column: 2; grid-row: 5; min-height: 0; padding-top: 3px; }
+  .activity-device .neural-gesture-hint { grid-column: 2; grid-row: 6; padding-bottom: 0; }
+  .activity-device .signal-row { grid-column: 2; grid-row: 7; padding: 8px 14px; }
+  .activity-device .neural-screen-toolbar,.activity-device .screen-metrics,.activity-device .neural-trace,.activity-device .neural-legend,.activity-device .neural-gesture-hint,.activity-device .signal-row { background: #222d29; }
+  .activity-device .neural-hardware { grid-column: 2; grid-row: 9; padding: 10px 8px; gap: 10px; }
+  .activity-device .device-footer { grid-column: 2; grid-row: 10; height: 12px; }
+  .neural-companions { grid-column: 3; grid-row: 2; width: 54%; margin: 0; }
+  .spectral-device { height: 456px; }
+  .spectral-device .neural-header { flex-basis: 50px; }
+}
+@media(min-width:701px) and (max-width:1000px) {
+  .device-pair { grid-template-columns: minmax(0,1fr) 36px 280px; }
+  .activity-device { grid-column: 3; height: 900px; }
+  .neural-companions { grid-column: 3; }
+}
+@media(max-width:1000px) { .device-pair { row-gap: 24px; }.sync-cable { display: none; } }
+@media(min-width:1001px) {
+  .activity-device .top-left,.activity-device .bottom-left { left: calc(55% + 10px); }
+  .activity-device .device-footer .vent { left: 77.5%; }
+  .activity-device .neural-screen-toolbar { border-radius: 4px 4px 0 0; }
+  .activity-device .signal-row { border-radius: 0 0 4px 4px; }
+}
+
+/* Companion instruments: one machining rhythm, recessed glass, quiet faceplates. */
+.neural-device {
+  border-radius: 14px;
+  border: 1px solid #b7bcb1;
+  border-bottom: 4px solid #a2a89c;
+  background: linear-gradient(120deg,#e9ebe4,#e0e3d9 80%);
+  box-shadow: 0 1px 1px #ffffffd9 inset, 0 3px 3px #4b554526, 0 20px 28px -18px #303c4266;
+}
+.neural-device .neural-header h2 { font-weight: 500; letter-spacing: -.85px; }
+.neural-device .neural-model { font-size: 10px; color: #818975; letter-spacing: .3px; }
+.neural-device .screw { width: 7px; height: 7px; opacity: .6; }
+.neural-device .screw i { left: 3px; height: 4px; }
+.neural-device .top-left { top: 9px; left: 9px; }
+.neural-device .top-right { top: 9px; right: 9px; }
+.neural-device .bottom-left { bottom: 9px; left: 9px; }
+.neural-device .bottom-right { bottom: 9px; right: 9px; }
+.neural-device .device-footer .vent { top: 9px; width: 32px; height: 4px; opacity: .3; }
+.neural-device .mode-key { border-radius: 6px; height: 44px; max-width: none; font: 10px 'Departure Mono', monospace; box-shadow: 0 1px 0 #ffffffbd inset, 0 2px 1px #929c87, 0 3px 4px #44513a1f; }
+.neural-device .mode-key svg { width: 17px; height: 17px; }
+.neural-device .mode-key i { width: 4px; height: 4px; top: 6px; right: 6px; }
+.neural-device .mode-key[aria-pressed="true"] { background: linear-gradient(145deg,#708276,#52665b); }
+.neural-device .mode-key:active { transform: translateY(2px); box-shadow: 0 1px 1px #52604755; }
+.spectral-device { padding: 0 16px; }
+.spectral-device .neural-header { padding: 0; flex-basis: 58px; }
+.spectral-device .neural-header h2 { font-size: 18px; }
+.spectral-device .neural-screen { border: 3px solid #b4bdac; border-radius: 6px; box-shadow: 0 0 0 1px #a5ae9e, 0 1px 0 #ffffffb3, 0 2px 4px #101e2055 inset; }
+.spectral-device .device-footer { height: 18px; }
+.spectral-device .spectrum-status { padding: 12px 12px 8px; }
+.spectral-device .neural-legend { padding: 8px 12px 4px; }
+.spectral-device .neural-gesture-hint { padding: 5px 12px 12px; }
+@media(min-width:1001px) {
+  .activity-device { padding: 24px; grid-template-columns: minmax(0,1.12fr) minmax(0,1fr); column-gap: 20px; grid-template-rows: 38px 26px 56px 68px 26px 26px 34px 1fr 48px 0; }
+  .activity-device::after { content: ''; grid-column: 2; grid-row: 2 / 8; z-index: 0; margin: -3px; border: 3px solid #b4bdac; border-radius: 6px; background: #222d29; box-shadow: 0 0 0 1px #a5ae9e, 0 1px 0 #ffffffb3; pointer-events: none; }
+  .activity-device .neural-header { padding: 0 0 10px; align-items: center; }
+  .activity-device .neural-header h2 { font-size: 20px; }
+  .activity-device .neural-canvas { border: 4px solid #b4bdac; border-radius: 6px; box-shadow: 0 0 0 1px #a5ae9e, 0 1px 0 #ffffffb3; }
+  .activity-device .neural-screen-toolbar,.activity-device .screen-metrics,.activity-device .neural-trace,.activity-device .neural-legend,.activity-device .neural-gesture-hint,.activity-device .signal-row { position: relative; z-index: 1; min-width: 0; }
+  .activity-device .neural-screen-toolbar { padding: 8px 12px 0; font-size: 8px; }
+  .activity-device .screen-metrics { padding: 8px 12px 4px; font-size: 10px; gap: 3px; }
+  .activity-device .screen-metrics strong { font-size: 16px; }
+  .activity-device .neural-trace { height: 68px; }
+  .activity-device .neural-legend { padding: 4px 12px; }
+  .activity-device .neural-gesture-hint { padding: 4px 12px; }
+  .activity-device .signal-row { padding: 8px 12px 12px; }
+  .activity-device .neural-hardware { padding: 4px 0 0; gap: 12px; }
+  .activity-device .device-footer .vent { left: 50%; }
+}
+
+/* NL–01: continuous glass above a single, aligned hardware strip. */
+@media(min-width:1001px) {
+  .activity-device {
+    padding: 12px;
+    grid-template-columns: minmax(0,1.12fr) minmax(0,1fr);
+    column-gap: 0;
+    grid-template-rows: 30px 62px 76px 28px 28px 38px 1fr 64px;
+  }
+  .activity-device::after {
+    grid-column: 1 / -1;
+    grid-row: 1 / 8;
+    margin: 0;
+    border: 3px solid #b4bdac;
+    border-radius: 6px;
+    background: #222d29;
+    box-shadow: 0 0 0 1px #a5ae9e, 0 1px 0 #ffffffb3;
+  }
+  .activity-device .neural-canvas {
+    position: relative;
+    z-index: 1;
+    grid-column: 1;
+    grid-row: 1 / 8;
+    width: calc(100% - 3px);
+    height: calc(100% - 6px);
+    margin: 3px 0 3px 3px;
+    border: 0;
+    border-radius: 3px 0 0 3px;
+    box-shadow: none;
+  }
+  .activity-device .neural-screen-toolbar { grid-row: 1; padding: 12px 16px 0 12px; margin-top: 3px; border-radius: 0; background: transparent; }
+  .activity-device .screen-metrics { grid-row: 2; padding: 10px 16px 6px 12px; background: transparent; }
+  .activity-device .neural-trace { grid-row: 3; width: calc(100% - 4px); height: 76px; background: transparent; }
+  .activity-device .neural-legend { grid-row: 4; padding: 5px 16px 4px 12px; background: transparent; }
+  .activity-device .neural-gesture-hint { grid-row: 5; padding: 5px 16px 4px 12px; background: transparent; }
+  .activity-device .signal-row { grid-row: 6; padding: 8px 16px 12px 12px; margin-right: 4px; border-radius: 0; background: transparent; border-bottom: 1px solid #a7b49b40; }
+  .activity-device .neural-header {
+    grid-column: 1;
+    grid-row: 8;
+    padding: 10px 18px 0 8px;
+    gap: 12px;
+    align-items: center;
+  }
+  .activity-device .neural-header h2 { font-size: 22px; letter-spacing: -1px; }
+  .activity-device .neural-hardware { grid-column: 2; grid-row: 8; padding: 12px 4px 0 8px; gap: 12px; }
+  .activity-device .device-footer { display: contents; }
+  .activity-device .device-footer .vent { top: 5px; height: 3px; }
+  .activity-device .screw { width: 5px; height: 5px; opacity: .35; }
+  .activity-device .top-left,.activity-device .top-right { top: 4px; }
+  .activity-device .bottom-left,.activity-device .bottom-right { bottom: 4px; }
+  .activity-device .top-left,.activity-device .bottom-left { left: 4px; }
+  .activity-device .top-right,.activity-device .bottom-right { right: 4px; }
+}
+
+/* Annotation pass: align the family’s typography and tighten the screen rims. */
+.neural-device .neural-header { padding-bottom: 0; }
+.activity-device .neural-header { justify-content: flex-start; gap: 12px; }
+.activity-device .neural-header h2 { white-space: nowrap; }
+.spectral-device { padding-left: 12px; padding-right: 12px; }
+.spectral-device .neural-header h2 { font-size: 22px; letter-spacing: -1px; }
+.spectral-device .neural-header { gap: 12px; }
+.spectral-device .neural-screen { border-width: 3px; }
+.drawing-device .faceplate { height: 58px; flex-basis: 58px; justify-content: flex-start; gap: 16px; padding-bottom: 0; }
+.drawing-device h1 { font-size: 22px; font-weight: 500; letter-spacing: -1px; }
+.drawing-device .model-number strong { font: 10px var(--mono); color: #818975; letter-spacing: .3px; }
+.drawing-device .wordmark { gap: 10px; }
+.drawing-device .brand-mark { transform: rotate(-12deg) scale(.8); }
+.drawing-device .control-panel { padding-top: 20px; }
+.drawing-device .paper-surround { padding: 8px 8px 0; border-radius: 11px; }
+.drawing-device .scene-view { border-radius: 5px; }
+.drawing-device .rail { height: 18px; }
+@media(min-width:1001px) {
+  .activity-device .neural-header { padding-bottom: 0; gap: 12px; }
+  .activity-device .mode-key { gap: 6px; }
+}
+
+.activity-device .screw,.spectral-device .screw { display: none; }
+.spectral-device .device-footer { height: 9px; flex: 0 0 9px; }
+/* Use the same actual chassis padding on the three exposed screen edges. */
+.spectral-device { padding: 0 12px 12px; }
+.spectral-device .device-footer { display: contents; }
+
+/* Wordmarks share a baseline; model identifiers sit directly alongside. */
+.drawing-device .faceplate { align-items: baseline; padding-top: 16px; }
+.drawing-device .wordmark { align-items: baseline; }
+.drawing-device .brand-mark { align-self: center; }
+.neural-device .neural-header { justify-content: flex-start; align-items: baseline; gap: 12px; }
+.spectral-device .neural-header { padding-top: 17px; }
+.neural-device .neural-model { line-height: 1; }
+.activity-device .screen-metrics { font-size: 12px; }
+.activity-device .screen-metrics strong { font-size: 20px; }
+.neural-screen-toolbar,.spectrum-status { font-size: 8px; }
+@media(min-width:1001px) {
+  .activity-device .neural-header { align-items: baseline; padding-top: 20px; }
+  .activity-device { grid-template-rows: 30px 74px 76px 28px 0 38px 1fr 64px; }
+}
+
+/* Neutral studio finish; signal and action colors remain unchanged. */
+:root { color: #343434; background: #e5e5e3; }
+.workbench { background: radial-gradient(ellipse at 48% 16%,#d6cfca 0%,#cac2bd 50%,#beb6b1 100%); }
+.instrument { background: linear-gradient(115deg,#eaeae7,#e1e1de 45%,#d9d9d6); border-color: #b9b9b5; border-bottom-color: #9d9d99; box-shadow: 0 2px 2px #fff inset,1px 0 1px #fff7 inset,-1px 0 1px #7774 inset,0 3px 1px #7777774d,0 14px 17px -10px #33333359,0 35px 58px -28px #3030305e; }
+.instrument::before { display: none; }
+.neural-device { background: linear-gradient(120deg,#ebebe8,#e1e1de 80%); border-color: #b9b9b5; border-bottom-color: #a3a3a0; box-shadow: 0 1px 1px #ffffffd9 inset,0 3px 3px #4b4b4b26,0 20px 28px -18px #35353566; }
+h1,h2,.model-number strong { color: #343434; }
+.brand-mark i { background: #373737; }
+.brand-mark i:last-child { background: var(--orange); }
+.neural-device .neural-model,.drawing-device .model-number strong { color: #80807c; }
+.paper-surround { background: #c9c9c5; border-color: #b2b2ae; box-shadow: 0 2px 5px #55555533 inset,0 1px 1px #fafaf799; }
+.drawing-device .scene-view { border-color: #bcbcb7; }
+.scene-status,.scene-hint { color: #62625e; }
+.shape-key { background: linear-gradient(#bfbfba,#999993); border-color: #aaaaa4; border-bottom-color: #94948e; color: #50504b; box-shadow: 0 1px 0 #fffffa,0 2px 1px #8b8b85,0 4px 6px #55555530; }
+.key-top { background: linear-gradient(135deg,#e9e9e3,#d9d9d2); box-shadow: 0 1px 2px #fff inset,-1px -1px 2px #80807844 inset; }
+.key-indicator { background: #afafa7; }
+.key-caption { color: #62625b; }.key-caption>span { color: #8e8e87; }
+.hardware-key { background: linear-gradient(145deg,#e8e8e1,#d3d3cb); color: #565650; border-color: #acaca3; }
+.neural-device .mode-key { box-shadow: 0 1px 0 #ffffffbd inset,0 2px 1px #96968d,0 3px 4px #4545451f; }
+.neural-device .mode-key[aria-pressed="true"] { background: linear-gradient(145deg,#7c7c75,#60605b); border-color: #53534d; color: #f0efda; }
+.mode-key i { background: #a5a59b; }
+.screw { background: linear-gradient(130deg,#d5d5d0,#b1b1ab); border-color: #aaa9a2; }.screw i { background: #909088; }
+.neural-screen,.spectral-device .neural-screen { background: #161919; border-color: #b6b6af; box-shadow: 0 0 0 1px #a6a69e,0 1px 0 #ffffffb3,0 2px 4px #10101055 inset; }
+.screen-metrics { color: #aaaead; }.activity-device .screen-metrics strong { color: #d7dad6; }
+.neural-screen-toolbar,.spectrum-status { color: #aeb3b1; }.screen-live { color: #a2a6a3; }
+.neural-screen .signal-track { background: #424645; }
+.neural-screen progress::-webkit-progress-bar { background: #424645; }
+.bench-footer p,.experiment-notes { color: #7d7d76; }.experiment-notes { border-top-color: #cdcdc7; }
+.footer-dots i { background: #a3a39a; }.footer-dots i:first-child { background: var(--orange); }
+.device-footer .vent { background: repeating-linear-gradient(90deg,#7c7c7666 0px,#7c7c7666 2px,transparent 2px,transparent 6px); }
+.sync-cable-body { stroke: #565650; }.sync-cable-highlight { stroke: #aeaea4; }
+@media(min-width:1001px) {
+  .activity-device::after { background: #161919; border-color: #b6b6af; box-shadow: 0 0 0 1px #a6a69e,0 1px 0 #ffffffb3; }
+  .activity-device .neural-canvas { background: #161919; }
+}
+
+/* Instrument readout: circuit totals, measured activity, then execution status. */
+.controller-status { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px 12px; color: #c9ceca; font: 10px 'Departure Mono', monospace; }
+.controller-status>span { display: flex; flex-direction: column; gap: 6px; }
+.controller-status small { color: #858f8a; font-size: 8px; }
+.controller-status b { font-weight: 400; }
+@media(min-width:1001px) {
+  .activity-device { grid-template-rows: 30px 66px 76px 30px 52px 38px 1fr 64px; }
+  .activity-device .controller-status { grid-column: 2; grid-row: 5; position: relative; z-index: 1; margin-right: 12px; padding: 10px 12px 4px; }
+  .activity-device .screen-metrics { padding-top: 10px; gap: 5px; }
+  .activity-device .screen-metrics>span { display: flex; align-items: baseline; gap: 8px; }
+  .activity-device .neural-legend { padding-top: 8px; padding-bottom: 8px; }
+  .activity-device .signal-row { border-bottom: 0; }
+}
+
+/* Give the time trace and the per-neuron color key distinct headings. */
+.neural-trace { height: 90px; flex-basis: 90px; }
+.rate-legend-title { color: #aab2ad; font: 9px 'Departure Mono', monospace; margin-bottom: 8px; }
+.activity-device .neural-legend,
+.activity-device .controller-status { border: 0; box-shadow: none; }
+@media(min-width:1001px) {
+  .activity-device { grid-template-rows: 30px 66px 90px 44px 52px 38px 1fr 64px; }
+  .activity-device .neural-trace { height: 90px; }
+  .activity-device .neural-legend { margin: 0 12px; padding: 8px 0; }
+  .activity-device .signal-row { padding-bottom: 10px; }
+}
+
+/* Full-width page footer, with expandable methods and quiet project credits. */
+.workbench { padding-bottom: 0; }
+.page-footer { width: 100vw; margin-top: auto; padding: 0 32px; border-top: 1px solid #bdbdb64d; display: flex; align-items: baseline; justify-content: space-between; gap: 24px; position: relative; top: 32px; background: inherit; }
+.page-footer .experiment-notes { width: auto; min-width: 0; flex: 1; margin: 0; border: 0; }
+.page-footer .experiment-notes summary { padding: 20px 0; }
+.footer-links { display: flex; align-items: center; gap: 24px; padding: 20px 0; white-space: nowrap; font: 10px 'Departure Mono', monospace; color: #777771; }
+.footer-links a { text-decoration: none; }
+.footer-links a:hover { color: #30342f; text-decoration: underline; text-underline-offset: 4px; }
+@media(max-width: 600px) { .page-footer { padding: 0 16px; flex-wrap: wrap; gap: 0; }.page-footer .experiment-notes { flex-basis: 100%; }.footer-links { width: 100%; justify-content: space-between; padding-top: 0; } }
+
+/* NS–01 labels float over the full-height neural scene. */
+.spectral-device .neural-screen { position: relative; overflow: hidden; }
+.spectral-device .neural-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.spectral-device .spectrum-status { position: absolute; top: 0; left: 0; right: 0; z-index: 1; background: rgb(0 0 0 / 15%); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); pointer-events: none; }
+.spectral-device .neural-legend { position: absolute; bottom: 0; left: 0; right: 0; z-index: 1; background: rgb(0 0 0 / 15%); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); pointer-events: none; }
+
+/* One-screen workbench with project information in a modal. */
+@font-face { font-family: Inter; src: url('/fonts/inter/InterVariable.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+html, body, #root { height: 100%; overflow: hidden; }
+.workbench { height: 100svh; min-height: 0; padding: 22px 32px 20px; justify-content: flex-start; gap: 24px; overflow: hidden; }
+.project-heading { flex-shrink: 0; text-align: center; font-family: Inter, sans-serif; }
+.project-heading h2 { margin: 0 0 9px; font-size: 17px; font-weight: 550; letter-spacing: -.4px; }
+.project-heading nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; font-size: 12px; color: #777773; }
+.project-heading a,.project-heading button { color: inherit; text-decoration: none; }
+.project-heading button { background: none; border: 0; padding: 0; cursor: pointer; }
+.project-heading a:hover,.project-heading button:hover { color: #30302d; }
+.device-stage { flex: 1; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; }
+.device-stage .device-pair { flex-shrink: 0; transform-origin: center; }
+.experiment-modal { margin: auto; padding: 28px; width: min(680px, calc(100vw - 32px)); max-height: calc(100svh - 48px); overflow: auto; border: 1px solid #c8c8c2; border-radius: 16px; background: #eeeee9; color: #494945; box-shadow: 0 24px 90px #0003; font-family: Inter, sans-serif; }
+.experiment-modal::backdrop { background: #0005; backdrop-filter: blur(8px); }
+.experiment-modal>header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; gap: 20px; }
+.experiment-modal h2 { font-size: 21px; font-weight: 550; letter-spacing: -.6px; margin: 0; }
+.experiment-modal header button { border: 0; background: #00000008; border-radius: 50%; width: 32px; height: 32px; font-size: 23px; cursor: pointer; }
+.experiment-modal .notes-content { padding: 0; font: 13px/1.75 Inter, sans-serif; }
+.experiment-modal .compact-evidence,.experiment-modal .credits { font-family: Inter, sans-serif; }
+@media(max-width: 600px) { .workbench { padding: 16px 12px; gap: 12px; }.project-heading nav { font-size: 10px; gap: 8px 12px; } }
+
+/* Quiet button edges, stationary hover, and cumulative speed indicators. */
+.drawing-device .shape-key { box-shadow: 0 3px 6px #55555525; transition: filter .15s ease; }
+.drawing-device .shape-key:hover { transform: none; box-shadow: 0 3px 6px #55555525; filter: brightness(1.035); }
+.drawing-device .shape-key:active { transform: translateY(2px); box-shadow: 0 1px 3px #55555520; }
+.shape-controls .key-caption { justify-content: center; }
+.drawing-device .speed-key { padding-bottom: 4px; box-shadow: 0 1px 3px #55555520; }
+.speed-key .key-top { box-shadow: 0 1px 3px #55555530 inset; }
+.speed-leds { position: absolute; bottom: 7px; display: flex; gap: 4px; }
+.speed-leds i { width: 4px; height: 4px; border-radius: 50%; background: #fff5de35; box-shadow: 0 1px 1px #0002 inset; }
+.speed-leds i.lit { background: #fff8e9; box-shadow: 0 0 4px #fff8e966; }
+.project-heading>p { margin: 0 0 15px; font-size: 13px; line-height: 1.5; color: #81817b; }
+.project-heading nav>a,.project-heading nav>button { display: inline-flex; align-items: center; gap: 6px; }
+.project-heading nav svg { width: 14px; height: 14px; stroke-width: 1.6; flex-shrink: 0; }
+
+/* Readable, concise experiment notes. */
+.experiment-modal { width: min(760px, calc(100vw - 32px)); padding: 32px; }
+.experiment-modal>header { margin-bottom: 30px; }
+.experiment-modal h2 { font-size: 25px; }
+.experiment-content { display: grid; gap: 28px; font: 15px/1.65 Inter, sans-serif; }
+.experiment-content h3 { margin: 0 0 9px; font-size: 16px; font-weight: 600; color: #353532; letter-spacing: -.2px; }
+.experiment-content p { margin: 0; }
+.display-explain { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.display-explain h4 { margin: 0 0 6px; font-size: 14px; font-weight: 550; color: #767670; }
+.experiment-content .experiment-caveat { margin-top: 10px; color: #777771; font-size: 14px; }
+.experiment-results { padding: 18px 20px; background: #00000005; border-radius: 10px; }
+.experiment-results h3 { display: flex; justify-content: space-between; gap: 12px; }
+.experiment-results h3>span { font-size: 12px; font-weight: 400; color: #81817b; }
+.experiment-results>div { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.experiment-results p { display: flex; flex-direction: column; }
+.experiment-results strong { font-size: 27px; font-weight: 500; font-variant-numeric: tabular-nums; color: #454541; }
+.experiment-results p>span { color: #777771; font-size: 13px; }
+.experiment-content a { color: inherit; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #aaa9a1; }
+.experiment-sources>p { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; margin-top: 8px; }
+.experiment-sources p>span { color: #81817b; font-size: 13px; }
+.experiment-sources .experiment-author { justify-content: flex-start; margin-top: 18px; color: #777771; }
+.experiment-author>a:last-child { margin-left: auto; }
+@media(max-width:600px) { .experiment-modal { padding: 24px; }.display-explain { grid-template-columns: 1fr; gap: 16px; }.experiment-sources>p { flex-wrap: wrap; }.experiment-results h3 { display: block; }.experiment-results h3>span { display: block; margin-top: 4px; } }
+
+.project-heading h2 { font-size: 36px; line-height: 1.15; letter-spacing: -1.1px; margin-bottom: 8px; }
+.project-heading>p { font-size: 20px; line-height: 1.45; margin-bottom: 18px; }
+@media(max-width:600px) { .project-heading h2 { font-size: 28px; }.project-heading>p { font-size: 16px; } }
+
+.project-heading h2 { font-size: 42px; font-weight: 600; letter-spacing: -1.8px; }
+.activity-device .neural-header { align-items: flex-start; padding-top: 8px; }
+@media(max-width:600px) { .project-heading h2 { font-size: 38px; } }
+
+.activity-device .neural-header { align-items: baseline; }
+
+.workbench { padding-top: 60px; gap: 20px; }
+
+.device-stage { margin-block: -20px; }
+
+/* Keep the heading and devices comfortably separated on shorter screens. */
+.workbench { padding-top: 32px; padding-bottom: 24px; gap: 28px; }
+.project-heading h2 { font-size: 36px; letter-spacing: -1.3px; }
+.project-heading>p { font-size: 18px; margin-bottom: 14px; }
+.device-stage { margin-block: 0; }
+@media(min-width:1001px) {
+  .device-stage .device-pair { grid-template-rows: 404px 412px; row-gap: 24px; }
+  .drawing-device { height: 840px; }
+  .activity-device { height: 404px; grid-template-rows: 30px 60px 84px 44px 48px 34px 1fr 64px; }
+  .activity-device .neural-trace { height: 84px; }
+  .spectral-device { height: 412px; }
+}
+@media(max-height:850px) {
+  .workbench { padding-top: 20px; padding-bottom: 20px; gap: 24px; }
+  .project-heading h2 { font-size: 32px; }
+  .project-heading>p { font-size: 16px; margin-bottom: 12px; }
+}
+
+/* Anchor devices beneath the heading and reserve breathing room below. */
+.workbench { padding-top: clamp(24px, 4svh, 48px); padding-bottom: clamp(48px, 7svh, 88px); gap: 32px; }
+.device-stage { align-items: flex-start; }
+.device-stage .device-pair { transform-origin: top center; }
+
+.workbench { justify-content: center; padding-block: clamp(32px, 5svh, 64px); }
+.device-stage { flex: 0 0 auto; }
+
+.workbench { gap: 48px; }
+
+.workbench { justify-content: flex-start; padding-top: clamp(32px, 4.5svh, 60px); }
+
+/* Use extra vertical space on larger displays, with a bounded device height. */
+@media(min-width:1001px) {
+  .device-stage .device-pair {
+    --device-height: clamp(840px, calc(100svh - 340px), 1040px);
+    --link-height: calc((var(--device-height) - 24px) * .4951);
+    --spectrum-height: calc((var(--device-height) - 24px) * .5049);
+    grid-template-rows: var(--link-height) var(--spectrum-height);
+  }
+  .drawing-device { height: var(--device-height); }
+  .activity-device { height: var(--link-height); }
+  .spectral-device { height: var(--spectrum-height); }
+}
+
+/* Tablet: give the neural instruments enough width for their readouts. */
+@media(min-width:1001px) and (max-width:1400px) {
+  .device-stage .device-pair { grid-template-columns: minmax(0,1.15fr) 48px minmax(0,1fr); width: calc(100% - 32px); }
+  .neural-companions { width: 100%; }
+  .activity-device { grid-template-columns: 48% 52%; }
+  .activity-device .screen-metrics>span { flex-wrap: wrap; gap: 2px 6px; }
+  .activity-device .screen-metrics { font-size: 10px; }
+  .activity-device .screen-metrics strong { font-size: 18px; }
+  .neural-model { white-space: nowrap; }
+  .spectral-device .neural-header h2 { white-space: nowrap; }
+  .drawing-device .control-panel { gap: 12px; }
+  .drawing-device .shape-controls { gap: 8px; flex: 1; }
+  .drawing-device .key-module { width: auto; flex: 1; min-width: 0; }
+}
+/* Narrow screens use the available width, with connected instruments in a stack. */
+@media(max-width:1000px) {
+  html,body,#root { height: auto; overflow: visible; }
+  .workbench { height: auto; min-height: 100svh; overflow: hidden; padding: 32px 32px 48px 16px; gap: 32px; }
+  .device-stage .device-pair { display: flex; flex-direction: column; width: 100%; gap: 44px; padding: 0; }
+  .device-stage .instrument,.device-stage .neural-companions { width: 100%; max-width: none; margin: 0; flex-shrink: 0; }
+  .device-stage .drawing-device { height: 560px; padding-inline: 14px; }
+  .device-stage .activity-device { height: 620px; padding: 0 12px 12px; display: flex; flex-direction: column; }
+  .device-stage .spectral-device { height: 480px; }
+  .neural-device .neural-header { flex-basis: 56px; min-height: 56px; }
+  .neural-device .neural-header h2 { font-size: 22px; white-space: nowrap; }
+  .activity-device .neural-header { padding-top: 16px; }
+  .activity-device .neural-screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .activity-device .neural-canvas { flex: 1; height: 0; min-height: 0; }
+  .drawing-device .faceplate { flex-basis: 58px; }
+  .drawing-device .control-panel { display: flex; flex-direction: column; gap: 18px; padding: 16px 0 10px; }
+  .drawing-device .shape-controls { width: 100%; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
+  .drawing-device .key-module { width: 100%; min-width: 0; }
+  .drawing-device .shape-controls .shape-key { height: 62px; }
+  .drawing-device .key-caption { font-size: 8px; letter-spacing: 0; }
+  .utility-controls { justify-content: center; width: 100%; }
+  .device-pair .sync-cable { display: block; }
+  .project-heading>p { font-size: 16px; }
+}
+
+/* Route cables below the opaque chassis, never over a display. */
+.device-pair { isolation: isolate; }
+.device-pair>.instrument,.device-pair>.neural-companions { position: relative; z-index: 1; }
+.device-pair>.sync-cable { z-index: 0; }
+@media(max-width:1000px) {
+  .workbench { padding-left: 12px; padding-right: 28px; }
+  .workbench .device-stage { width: 100%; max-width: none; }
+  .device-stage .device-pair { width: 100%; max-width: none; transform: none !important; }
+  .device-stage .activity-device { padding-bottom: 12px; }
+  .activity-device .device-footer { display: contents; }
+  .activity-device .neural-hardware { padding: 12px 0 0; }
+}
+
+@media(max-width:1000px) {
+  .device-stage .drawing-device { height: 680px; }
+  .drawing-device .utility-controls { order: 0; }
+  .drawing-device .shape-controls { order: 1; }
+}
+
+/* Mobile remains a scrollable document, including swipes over the scenes. */
+@media(max-width:1000px) {
+  html { height: auto; overflow-x: clip; overflow-y: auto; }
+  body,#root { height: auto; min-height: 100%; overflow: visible; }
+  .workbench { height: auto; overflow: visible; padding-bottom: 48px; }
+  .workbench .device-stage { height: auto !important; overflow: visible; }
+  .fly-scene canvas,.neural-canvas { touch-action: pan-y !important; }
+}

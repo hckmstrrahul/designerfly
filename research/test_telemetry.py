@@ -23,6 +23,12 @@ class TelemetryTests(unittest.TestCase):
             np.testing.assert_allclose(result['state'],state[0].numpy(),atol=2e-5)
             np.testing.assert_allclose(result['frames'][-1]['action'],actions[0].numpy(),atol=2e-5)
             self.assertEqual(result['neural_source'],'motor');self.assertAlmostEqual(result['sample_time'],.02)
+            wing_net=Circuit();wing_net.load_state_dict(torch.load(ROOT/'research/results/refined.pt',weights_only=False)['state_dict'])
+            with torch.no_grad():point,wing_state=wing_net(torch.tensor(features([1],[.25])),return_state=True)
+            np.testing.assert_allclose(result['wing_state'],wing_state[0].numpy(),atol=2e-5)
+            self.assertAlmostEqual(result['wing'],float(point[0,0]),places=5)
+            stopped=server.step(server.Step(session=created['session'],steps=2,wings=False))
+            self.assertIsNone(stopped['wing_state'])
         finally:server.remove(created['session'])
     def test_wing_payload_and_motion_come_from_the_same_neural_inference(self):
         net=Circuit();net.load_state_dict(torch.load(ROOT/'research/results/refined.pt',weights_only=False)['state_dict'])

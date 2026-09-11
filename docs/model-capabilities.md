@@ -15,7 +15,7 @@ The precise description is **a trained, connectome-constrained rate-network cont
 | Limited disturbance recovery | Tested starting-angle offsets and a brief force pulse are corrected in the validated scene. This does not imply recovery from arbitrary disturbances. |
 | Physical ink gating | Marks appear only while the simulated tip contacts the paper. Removing the paper removes all contact marks. |
 | Wing rhythm | The circle network’s output supplies a rhythm for visual wing joints. This is an engineered reuse of that signal, not a learned flight behavior. |
-| Neural activity display | Actual network states, indexed against the measured graph, are displayed. The motor network is shown during drawing; the wing-driving network is shown during idle flapping. |
+| Neural activity display | Actual network states, indexed against the measured graph, are displayed. Enabling flapping selects the wing network; Drawing / Wings selects either controller while both run. |
 
 ## Not demonstrated
 

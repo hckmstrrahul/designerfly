@@ -19,7 +19,7 @@ function box(w: number, h: number, d: number, color: string, x: number, y: numbe
 
 /** Anatomical rendering of measured MuJoCo poses. Only actual paper contacts leave ink. */
 export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () => void, fail: (e: string) => void) {
-  const scene = new T.Scene(); scene.background = new T.Color('#eeeee5');
+  const scene = new T.Scene(); scene.background = new T.Color('#ededeb');
   const renderer = new T.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = T.VSMShadowMap; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
@@ -35,10 +35,10 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
   const pmrem = new T.PMREMGenerator(renderer); const room = new RoomEnvironment(); const environment = pmrem.fromScene(room, .04); scene.environment = environment.texture; scene.environmentIntensity = .5; room.dispose(); pmrem.dispose();
   scene.add(new T.HemisphereLight('#fff8e9', '#b7bba8', .65));
   const sun = new T.DirectionalLight('#fff5de', 2.1); sun.position.set(-3, 7, 4); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -5; sun.shadow.camera.right = 5; sun.shadow.camera.top = 5; sun.shadow.camera.bottom = -5; sun.shadow.normalBias = .015; sun.shadow.bias = -.0001; sun.shadow.radius = 4; sun.shadow.blurSamples = 8; scene.add(sun);
-  const ground = new T.Mesh(new T.PlaneGeometry(200, 200), new T.MeshStandardMaterial({ color: '#e7e7dc', roughness: 1 })); ground.rotation.x = -Math.PI / 2; ground.position.y = -.04; ground.receiveShadow = true; scene.add(ground);
+  const ground = new T.Mesh(new T.PlaneGeometry(200, 200), new T.MeshStandardMaterial({ color: '#e5e5e2', roughness: 1 })); ground.rotation.x = -Math.PI / 2; ground.position.y = -.04; ground.receiveShadow = true; scene.add(ground);
   // A small artist's pedestal: weighted base, stem, timber drawing board, loose paper.
-  const stand = new T.Mesh(new T.CylinderGeometry(.43, .5, .1, 64), new T.MeshStandardMaterial({ color: '#bfc4b5', metalness: .3, roughness: .5 })); stand.position.set(1.55, .035, 0); stand.castShadow = true; stand.receiveShadow = true; scene.add(stand);
-  box(.12, .78, .12, '#aab09f', 1.55, .46, 0, scene);
+  const stand = new T.Mesh(new T.CylinderGeometry(.43, .5, .1, 64), new T.MeshStandardMaterial({ color: '#bfbfba', metalness: .3, roughness: .5 })); stand.position.set(1.55, .035, 0); stand.castShadow = true; stand.receiveShadow = true; scene.add(stand);
+  box(.12, .78, .12, '#acaca6', 1.55, .46, 0, scene);
   box(1.68, .075, 1.72, '#b9a07c', 1.55, .885, 0, scene);
   box(1.62, .015, 1.66, '#fffdf5', 1.55, .934, 0, scene);
   const paperCanvas = document.createElement('canvas'); paperCanvas.width = paperCanvas.height = 1024;
