@@ -19,7 +19,7 @@ function box(w: number, h: number, d: number, color: string, x: number, y: numbe
 
 /** Anatomical rendering of measured MuJoCo poses. Only actual paper contacts leave ink. */
 export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () => void, fail: (e: string) => void) {
-  const scene = new T.Scene(); scene.background = new T.Color('#ededeb');
+  const scene = new T.Scene(); scene.background = new T.Color('#e5e5e2');
   const renderer = new T.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = T.VSMShadowMap; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
@@ -29,13 +29,16 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.set(.1, .65, 0); controls.enableDamping = true; controls.dampingFactor = .09;
   controls.minPolarAngle = .08; controls.maxPolarAngle = Math.PI * .49; controls.minZoom = .65; controls.maxZoom = 3.5;
+  camera.zoom = .92; camera.updateProjectionMatrix();
   controls.update(); controls.saveState();
   const resize = () => { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h); const half = Math.max(2.25, 3.05 * h / w); camera.left = -half * w / h; camera.right = half * w / h; camera.top = half; camera.bottom = -half; camera.updateProjectionMatrix(); };
   const observer = new ResizeObserver(resize); observer.observe(host); resize();
   const pmrem = new T.PMREMGenerator(renderer); const room = new RoomEnvironment(); const environment = pmrem.fromScene(room, .04); scene.environment = environment.texture; scene.environmentIntensity = .5; room.dispose(); pmrem.dispose();
   scene.add(new T.HemisphereLight('#fff8e9', '#b7bba8', .65));
   const sun = new T.DirectionalLight('#fff5de', 2.1); sun.position.set(-3, 7, 4); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -5; sun.shadow.camera.right = 5; sun.shadow.camera.top = 5; sun.shadow.camera.bottom = -5; sun.shadow.normalBias = .015; sun.shadow.bias = -.0001; sun.shadow.radius = 4; sun.shadow.blurSamples = 8; scene.add(sun);
-  const ground = new T.Mesh(new T.PlaneGeometry(200, 200), new T.MeshStandardMaterial({ color: '#e5e5e2', roughness: 1 })); ground.rotation.x = -Math.PI / 2; ground.position.y = -.04; ground.receiveShadow = true; scene.add(ground);
+  const ground = new T.Mesh(new T.PlaneGeometry(200, 200), new T.MeshBasicMaterial({ color: '#e5e5e2', toneMapped: false })); ground.rotation.x = -Math.PI / 2; ground.position.y = -.04; scene.add(ground);
+  const groundShadow = new T.Mesh(new T.PlaneGeometry(200, 200), new T.ShadowMaterial({ color: '#555550', opacity: .22 }));
+  groundShadow.rotation.x = -Math.PI / 2; groundShadow.position.y = -.039; groundShadow.receiveShadow = true; scene.add(groundShadow);
   // A small artist's pedestal: weighted base, stem, timber drawing board, loose paper.
   const stand = new T.Mesh(new T.CylinderGeometry(.43, .5, .1, 64), new T.MeshStandardMaterial({ color: '#bfbfba', metalness: .3, roughness: .5 })); stand.position.set(1.55, .035, 0); stand.castShadow = true; stand.receiveShadow = true; scene.add(stand);
   box(.12, .78, .12, '#acaca6', 1.55, .46, 0, scene);

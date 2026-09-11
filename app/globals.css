@@ -743,3 +743,20 @@ html, body, #root { height: 100%; overflow: hidden; }
   .workbench .device-stage { height: auto !important; overflow: visible; }
   .fly-scene canvas,.neural-canvas { touch-action: pan-y !important; }
 }
+
+.drawing-device .scene-view { background: #e5e5e2; }
+.spectrum-legend { flex-wrap: wrap; gap: 6px 12px; }
+
+/* Keep drawing completion at the screen’s bottom as the device grows. */
+@media(min-width:1001px) {
+  .activity-device { grid-template-rows: 30px 60px 84px 44px 48px 1fr 34px 64px; }
+  .activity-device .signal-row { grid-row: 7; align-self: end; }
+}
+@media(max-width:1000px) {
+  .activity-device .signal-row { margin-top: auto; }
+}
+
+.activity-device .signal-row { padding-top: 10px; padding-bottom: 10px; }
+@media(min-width:1001px) {
+  .activity-device { grid-template-rows: 30px 60px 84px 44px 48px 1fr 38px 64px; }
+}
