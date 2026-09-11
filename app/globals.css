@@ -485,7 +485,7 @@ h1 { font-size: 24px; font-weight: 600; letter-spacing: -1.2px; margin: 0; }
 
 /* Neutral studio finish; signal and action colors remain unchanged. */
 :root { color: #343434; background: #e5e5e3; }
-.workbench { background: radial-gradient(ellipse at 48% 16%,#d6cfca 0%,#cac2bd 50%,#beb6b1 100%); }
+.workbench { background: radial-gradient(ellipse at 48% 16%,#d1d2ce 0%,#c5c7c1 50%,#b9bcb5 100%); }
 .instrument { background: linear-gradient(115deg,#eaeae7,#e1e1de 45%,#d9d9d6); border-color: #b9b9b5; border-bottom-color: #9d9d99; box-shadow: 0 2px 2px #fff inset,1px 0 1px #fff7 inset,-1px 0 1px #7774 inset,0 3px 1px #7777774d,0 14px 17px -10px #33333359,0 35px 58px -28px #3030305e; }
 .instrument::before { display: none; }
 .neural-device { background: linear-gradient(120deg,#ebebe8,#e1e1de 80%); border-color: #b9b9b5; border-bottom-color: #a3a3a0; box-shadow: 0 1px 1px #ffffffd9 inset,0 3px 3px #4b4b4b26,0 20px 28px -18px #35353566; }
