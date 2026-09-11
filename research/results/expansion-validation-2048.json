@@ -1,0 +1,370 @@
+{
+  "neurons": 2048,
+  "passed": true,
+  "strokes": 34,
+  "layouts": 8,
+  "results": [
+    {
+      "layout": 0,
+      "stroke": 0,
+      "rmse": 0.009858962504219946,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 0,
+      "stroke": 1,
+      "rmse": 0.007567044832420787,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 0,
+      "stroke": 2,
+      "rmse": 0.010140898746981446,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 0,
+      "stroke": 3,
+      "rmse": 0.007682692042926024,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 0,
+      "stroke": 4,
+      "rmse": 0.010392558241677967,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 0,
+      "stroke": 5,
+      "rmse": 0.01086590615913615,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 1,
+      "stroke": 0,
+      "rmse": 0.010710172537016524,
+      "contact_fraction": 0.993485342019544,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 1,
+      "stroke": 1,
+      "rmse": 0.01232309609002172,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 1,
+      "stroke": 2,
+      "rmse": 0.00857539499904039,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 1,
+      "stroke": 3,
+      "rmse": 0.012448224650197473,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 2,
+      "stroke": 0,
+      "rmse": 0.006952819261736905,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 2,
+      "stroke": 1,
+      "rmse": 0.010212669434191439,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 2,
+      "stroke": 2,
+      "rmse": 0.011822605487828344,
+      "contact_fraction": 0.9945054945054945,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 2,
+      "stroke": 3,
+      "rmse": 0.013802162693469589,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 3,
+      "stroke": 0,
+      "rmse": 0.012971066510481338,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 3,
+      "stroke": 1,
+      "rmse": 0.012950308265623638,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 3,
+      "stroke": 2,
+      "rmse": 0.012114737372841576,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 3,
+      "stroke": 3,
+      "rmse": 0.01179339775041749,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 4,
+      "stroke": 0,
+      "rmse": 0.013109187071546808,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 4,
+      "stroke": 1,
+      "rmse": 0.01345455715100367,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 4,
+      "stroke": 2,
+      "rmse": 0.011780639897581217,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 4,
+      "stroke": 3,
+      "rmse": 0.014778189164151165,
+      "contact_fraction": 0.9978768577494692,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 5,
+      "stroke": 0,
+      "rmse": 0.012760037162212195,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 5,
+      "stroke": 1,
+      "rmse": 0.01230538512311261,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 5,
+      "stroke": 2,
+      "rmse": 0.015291630357594769,
+      "contact_fraction": 0.9894179894179894,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 5,
+      "stroke": 3,
+      "rmse": 0.012580176127980607,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 6,
+      "stroke": 0,
+      "rmse": 0.010711550837069182,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 6,
+      "stroke": 1,
+      "rmse": 0.013220305493318027,
+      "contact_fraction": 0.9905362776025236,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 6,
+      "stroke": 2,
+      "rmse": 0.012795990619606503,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 6,
+      "stroke": 3,
+      "rmse": 0.01075584783762829,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 7,
+      "stroke": 0,
+      "rmse": 0.014328158828749906,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 7,
+      "stroke": 1,
+      "rmse": 0.007292173615455493,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 7,
+      "stroke": 2,
+      "rmse": 0.009342760459156434,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 7,
+      "stroke": 3,
+      "rmse": 0.01014935856737228,
+      "contact_fraction": 0.9947643979057592,
+      "completed": true,
+      "travel_contacts": 0
+    }
+  ],
+  "single": [
+    {
+      "shape": 0,
+      "condition": "normal",
+      "rmse": 0.013493092081314778,
+      "contact_fraction": 0.9983050847457627,
+      "recovery_error": 0.014578184321106784
+    },
+    {
+      "shape": 0,
+      "condition": "perturbed",
+      "rmse": 0.013417074995725147,
+      "contact_fraction": 0.9949152542372881,
+      "recovery_error": 0.014578307806858273
+    },
+    {
+      "shape": 0,
+      "condition": "core_removed",
+      "rmse": 1.4867172138968157,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.9549359452498964
+    },
+    {
+      "shape": 0,
+      "condition": "feedback_removed",
+      "rmse": 1.4171934939919453,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.6953134889326607
+    },
+    {
+      "shape": 1,
+      "condition": "normal",
+      "rmse": 0.013581595240438674,
+      "contact_fraction": 1.0,
+      "recovery_error": 0.014652993001884336
+    },
+    {
+      "shape": 1,
+      "condition": "perturbed",
+      "rmse": 0.013452088219212009,
+      "contact_fraction": 0.9949152542372881,
+      "recovery_error": 0.01465370692527153
+    },
+    {
+      "shape": 1,
+      "condition": "core_removed",
+      "rmse": 1.462144555178317,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.7005460442945768
+    },
+    {
+      "shape": 1,
+      "condition": "feedback_removed",
+      "rmse": 2.084719292500953,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.501622326552582
+    },
+    {
+      "shape": 2,
+      "condition": "normal",
+      "rmse": 0.014119601636999712,
+      "contact_fraction": 1.0,
+      "recovery_error": 0.016523377039699215
+    },
+    {
+      "shape": 2,
+      "condition": "perturbed",
+      "rmse": 0.014073594225289943,
+      "contact_fraction": 0.9983050847457627,
+      "recovery_error": 0.01651984358899062
+    },
+    {
+      "shape": 2,
+      "condition": "core_removed",
+      "rmse": 1.4511572255381542,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.7100964442725273
+    },
+    {
+      "shape": 2,
+      "condition": "feedback_removed",
+      "rmse": 2.256079438937987,
+      "contact_fraction": 0.0,
+      "recovery_error": 3.0232943802166687
+    }
+  ],
+  "worst_stroke_rmse": 0.015291630357594769,
+  "mean_stroke_rmse": 0.011407078408640232,
+  "seconds": 23.309455167036504,
+  "criteria": "Each stroke RMSE < .035 model mm, >95% contact, no travel contact, completed; normal single shapes meet same limits; recovery < .05; ablation >5x normal error."
+}

@@ -1,0 +1,109 @@
+{
+  "before_rmse": 0.39351943135261536,
+  "after_rmse": 0.07960551232099533,
+  "ablated_rmse": 0.5616418123245239,
+  "steps": 6000,
+  "seconds": 91.48902137530968,
+  "history": [
+    {
+      "step": 1,
+      "loss": 0.1440444141626358,
+      "validation_rmse": 0.4223877191543579,
+      "seconds": 0.05209891591221094
+    },
+    {
+      "step": 401,
+      "loss": 0.014278563670814037,
+      "validation_rmse": 0.1171698048710823,
+      "seconds": 5.1160245831124485
+    },
+    {
+      "step": 801,
+      "loss": 0.012299594469368458,
+      "validation_rmse": 0.10565730184316635,
+      "seconds": 10.448455875273794
+    },
+    {
+      "step": 1201,
+      "loss": 0.008185737766325474,
+      "validation_rmse": 0.09888100624084473,
+      "seconds": 15.660091999918222
+    },
+    {
+      "step": 1601,
+      "loss": 0.004231492523103952,
+      "validation_rmse": 0.09495525062084198,
+      "seconds": 21.07474987534806
+    },
+    {
+      "step": 2001,
+      "loss": 0.009815688244998455,
+      "validation_rmse": 0.09285544604063034,
+      "seconds": 26.472873833030462
+    },
+    {
+      "step": 2401,
+      "loss": 0.007391741033643484,
+      "validation_rmse": 0.08706346154212952,
+      "seconds": 32.02058500004932
+    },
+    {
+      "step": 2801,
+      "loss": 0.008020060136914253,
+      "validation_rmse": 0.08521512150764465,
+      "seconds": 38.19978529121727
+    },
+    {
+      "step": 3201,
+      "loss": 0.008017389103770256,
+      "validation_rmse": 0.08336080610752106,
+      "seconds": 44.798914791084826
+    },
+    {
+      "step": 3601,
+      "loss": 0.0077279661782085896,
+      "validation_rmse": 0.0819157138466835,
+      "seconds": 51.69087287504226
+    },
+    {
+      "step": 4001,
+      "loss": 0.005681511014699936,
+      "validation_rmse": 0.08187665790319443,
+      "seconds": 58.28725333325565
+    },
+    {
+      "step": 4401,
+      "loss": 0.007882408797740936,
+      "validation_rmse": 0.08078669756650925,
+      "seconds": 66.26247279113159
+    },
+    {
+      "step": 4801,
+      "loss": 0.007813000120222569,
+      "validation_rmse": 0.08005605638027191,
+      "seconds": 73.99279104126617
+    },
+    {
+      "step": 5201,
+      "loss": 0.006916534621268511,
+      "validation_rmse": 0.07992107421159744,
+      "seconds": 79.78166875010356
+    },
+    {
+      "step": 5601,
+      "loss": 0.005647778045386076,
+      "validation_rmse": 0.08011367172002792,
+      "seconds": 86.08387991599739
+    },
+    {
+      "step": 6000,
+      "loss": 0.008975409902632236,
+      "validation_rmse": 0.07960551232099533,
+      "seconds": 91.45128566632047
+    }
+  ],
+  "fixed_interfaces": true,
+  "input": "Neurally generated reference, joint angles and velocities, physical tip error, contact force",
+  "output": "Three incremental rotary actuator commands; no IK at inference",
+  "scope": "Tethered, reduced 3-DOF foreleg with rigid attached stylus; normalized physical parameters"
+}

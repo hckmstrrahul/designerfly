@@ -1,0 +1,17 @@
+{
+  "neurons": 2048,
+  "edges": 192267,
+  "steps": 2400,
+  "before_rmse": 0.056242745369672775,
+  "after_rmse": 0.05463109165430069,
+  "ablated_rmse": 0.5525083541870117,
+  "seconds": 59.069921917282045,
+  "inference_ms": 0.5505972504615784,
+  "dense_matrix_mib": 16.0,
+  "fixed_interfaces": true,
+  "runtime_parity": true,
+  "seed": 421,
+  "comparison": "Same pretrained 1024 composition motor, nested expansion, same 24000 offline examples and refinement budget; one seed. Validation selects checkpoint; physical acceptance uses separate layouts.",
+  "gain_mode": "softplus",
+  "new_edge_initial_gain": -3
+}

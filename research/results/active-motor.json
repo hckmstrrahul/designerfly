@@ -1,0 +1,6 @@
+{
+  "neurons": 2048,
+  "reason": "Requested expansion. Passed physical acceptance with approximately unchanged accuracy; 4096 is an additional comparison, not required for current shapes.",
+  "planner_neurons": 1024,
+  "wing_neurons": 1024
+}

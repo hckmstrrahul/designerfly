@@ -1,0 +1,32 @@
+[
+  {
+    "neurons": 1024,
+    "passed": true,
+    "strokes": 34,
+    "layouts": 8,
+    "worst_stroke_rmse": 0.015216696364085973,
+    "mean_stroke_rmse": 0.011376397769187026,
+    "seconds": 12.558818916790187,
+    "criteria": "Each stroke RMSE < .035 model mm, >95% contact, no travel contact, completed; normal single shapes meet same limits; recovery < .05; ablation >5x normal error."
+  },
+  {
+    "neurons": 2048,
+    "passed": true,
+    "strokes": 34,
+    "layouts": 8,
+    "worst_stroke_rmse": 0.015291630357594769,
+    "mean_stroke_rmse": 0.011407078408640232,
+    "seconds": 23.309455167036504,
+    "criteria": "Each stroke RMSE < .035 model mm, >95% contact, no travel contact, completed; normal single shapes meet same limits; recovery < .05; ablation >5x normal error."
+  },
+  {
+    "neurons": 4096,
+    "passed": true,
+    "strokes": 34,
+    "layouts": 8,
+    "worst_stroke_rmse": 0.015308434015435041,
+    "mean_stroke_rmse": 0.011422844047440794,
+    "seconds": 30.90815524989739,
+    "criteria": "Each stroke RMSE < .035 model mm, >95% contact, no travel contact, completed; normal single shapes meet same limits; recovery < .05; ablation >5x normal error."
+  }
+]

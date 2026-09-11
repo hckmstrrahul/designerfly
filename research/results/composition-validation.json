@@ -1,0 +1,543 @@
+{
+  "passed": true,
+  "criteria": "Every held-out stroke RMSE < .035 model mm, >95% contact; no travel contacts; completed layouts; ablations >5x normal error",
+  "layouts": 8,
+  "strokes": 32,
+  "results": [
+    {
+      "layout": 0,
+      "stroke": 0,
+      "spec": {
+        "shape": 0,
+        "x": 0,
+        "y": -0.64,
+        "width": 1.55,
+        "height": 0.28
+      },
+      "rmse": 0.010290309971732498,
+      "max_error": 0.0166675062695783,
+      "contact_fraction": 0.9978586723768736,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 0,
+      "stroke": 1,
+      "spec": {
+        "shape": 1,
+        "x": -0.52,
+        "y": -0.03,
+        "width": 0.43,
+        "height": 0.43
+      },
+      "rmse": 0.011178816004625102,
+      "max_error": 0.014018865082954203,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 0,
+      "stroke": 2,
+      "spec": {
+        "shape": 0,
+        "x": 0.29,
+        "y": -0.03,
+        "width": 0.78,
+        "height": 0.43
+      },
+      "rmse": 0.012229311020813649,
+      "max_error": 0.01628246362144162,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 0,
+      "stroke": 3,
+      "spec": {
+        "shape": 0,
+        "x": 0,
+        "y": 0.6,
+        "width": 1.55,
+        "height": 0.38
+      },
+      "rmse": 0.011580117048985435,
+      "max_error": 0.0199763188391506,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 1,
+      "stroke": 0,
+      "spec": {
+        "shape": 0,
+        "x": 0.1640835851430893,
+        "y": 0.06409896910190582,
+        "width": 0.39879629015922546,
+        "height": 0.3664059042930603
+      },
+      "rmse": 0.012138668937787783,
+      "max_error": 0.018756541111404505,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 1,
+      "stroke": 1,
+      "spec": {
+        "shape": 1,
+        "x": 0.03454684838652611,
+        "y": -0.4220110774040222,
+        "width": 0.5610945224761963,
+        "height": 0.5610945224761963
+      },
+      "rmse": 0.012445683701854041,
+      "max_error": 0.01586475973770803,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 1,
+      "stroke": 2,
+      "spec": {
+        "shape": 2,
+        "x": 0.11608891189098358,
+        "y": -0.45044854283332825,
+        "width": 0.9231958985328674,
+        "height": 0.9513128399848938
+      },
+      "rmse": 0.012778861050668715,
+      "max_error": 0.017779604940059687,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 1,
+      "stroke": 3,
+      "spec": {
+        "shape": 0,
+        "x": 0.17880217730998993,
+        "y": 0.4741150140762329,
+        "width": 1.5849746465682983,
+        "height": 0.44651469588279724
+      },
+      "rmse": 0.011383947177350666,
+      "max_error": 0.01881609768457576,
+      "contact_fraction": 0.9979035639412998,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 2,
+      "stroke": 0,
+      "spec": {
+        "shape": 1,
+        "x": 0.052318982779979706,
+        "y": -0.31858596205711365,
+        "width": 1.2076616287231445,
+        "height": 1.2076616287231445
+      },
+      "rmse": 0.013101965138672981,
+      "max_error": 0.017554829341717634,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 2,
+      "stroke": 1,
+      "spec": {
+        "shape": 2,
+        "x": 0.047018881887197495,
+        "y": 0.10530944913625717,
+        "width": 1.4357247352600098,
+        "height": 1.4649219512939453
+      },
+      "rmse": 0.0145009712963901,
+      "max_error": 0.0201154197001042,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 2,
+      "stroke": 2,
+      "spec": {
+        "shape": 0,
+        "x": 0.041993673890829086,
+        "y": -0.17394816875457764,
+        "width": 1.693682074546814,
+        "height": 1.6440048217773438
+      },
+      "rmse": 0.016160901328054603,
+      "max_error": 0.024774824597517862,
+      "contact_fraction": 0.9921568627450981,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 2,
+      "stroke": 3,
+      "spec": {
+        "shape": 1,
+        "x": -0.1449350267648697,
+        "y": -0.41898149251937866,
+        "width": 0.6732457876205444,
+        "height": 0.6732457876205444
+      },
+      "rmse": 0.012571544298568509,
+      "max_error": 0.015701496635582776,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 3,
+      "stroke": 0,
+      "spec": {
+        "shape": 2,
+        "x": -0.10235428810119629,
+        "y": -0.7886015176773071,
+        "width": 1.3260167837142944,
+        "height": 0.2402072548866272
+      },
+      "rmse": 0.008865259688882967,
+      "max_error": 0.016332867579874913,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 3,
+      "stroke": 1,
+      "spec": {
+        "shape": 0,
+        "x": 0.6241711974143982,
+        "y": 0.39078575372695923,
+        "width": 0.5972607135772705,
+        "height": 1.0733057260513306
+      },
+      "rmse": 0.014959313667934711,
+      "max_error": 0.02664006116110606,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 3,
+      "stroke": 2,
+      "spec": {
+        "shape": 1,
+        "x": -0.562014639377594,
+        "y": 0.7493510842323303,
+        "width": 0.40467795729637146,
+        "height": 0.40467795729637146
+      },
+      "rmse": 0.012176251254419918,
+      "max_error": 0.016573385182478483,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 3,
+      "stroke": 3,
+      "spec": {
+        "shape": 2,
+        "x": -0.13260549306869507,
+        "y": -0.2295423150062561,
+        "width": 1.4795407056808472,
+        "height": 0.8827749490737915
+      },
+      "rmse": 0.010756788965608756,
+      "max_error": 0.017860387885507464,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 4,
+      "stroke": 0,
+      "spec": {
+        "shape": 0,
+        "x": -0.16700232028961182,
+        "y": 0.32411617040634155,
+        "width": 1.529618263244629,
+        "height": 1.0370428562164307
+      },
+      "rmse": 0.014224890766726577,
+      "max_error": 0.02077635414482953,
+      "contact_fraction": 0.9978260869565218,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 4,
+      "stroke": 1,
+      "spec": {
+        "shape": 1,
+        "x": 0.7197777032852173,
+        "y": -0.17493219673633575,
+        "width": 0.4206068217754364,
+        "height": 0.4206068217754364
+      },
+      "rmse": 0.011417883260313694,
+      "max_error": 0.014964694477895876,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 4,
+      "stroke": 2,
+      "spec": {
+        "shape": 2,
+        "x": 0.012648452073335648,
+        "y": -0.051186468452215195,
+        "width": 1.7194607257843018,
+        "height": 1.6727430820465088
+      },
+      "rmse": 0.014362042804437074,
+      "max_error": 0.0206725071876297,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 4,
+      "stroke": 3,
+      "spec": {
+        "shape": 0,
+        "x": 0.14103880524635315,
+        "y": -0.13190650939941406,
+        "width": 0.5157771706581116,
+        "height": 0.8961972594261169
+      },
+      "rmse": 0.013535364085640609,
+      "max_error": 0.024305403600975713,
+      "contact_fraction": 0.9888888888888889,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 5,
+      "stroke": 0,
+      "spec": {
+        "shape": 1,
+        "x": -0.1397903859615326,
+        "y": 0.19274143874645233,
+        "width": 1.33938729763031,
+        "height": 1.33938729763031
+      },
+      "rmse": 0.014010971533614193,
+      "max_error": 0.018832312185291255,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 5,
+      "stroke": 1,
+      "spec": {
+        "shape": 2,
+        "x": -0.41288700699806213,
+        "y": 0.07928343117237091,
+        "width": 0.6764519810676575,
+        "height": 1.5182437896728516
+      },
+      "rmse": 0.011569867676967339,
+      "max_error": 0.016085523676561558,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 5,
+      "stroke": 2,
+      "spec": {
+        "shape": 0,
+        "x": -0.0464450977742672,
+        "y": -0.07432873547077179,
+        "width": 0.6347413659095764,
+        "height": 1.5228683948516846
+      },
+      "rmse": 0.012841131527314602,
+      "max_error": 0.02353647420699646,
+      "contact_fraction": 0.9934497816593887,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 5,
+      "stroke": 3,
+      "spec": {
+        "shape": 1,
+        "x": -0.05091029033064842,
+        "y": 0.03707234561443329,
+        "width": 1.2224820852279663,
+        "height": 1.2224820852279663
+      },
+      "rmse": 0.013527449638944058,
+      "max_error": 0.01868924641500652,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 6,
+      "stroke": 0,
+      "spec": {
+        "shape": 2,
+        "x": -0.13272596895694733,
+        "y": 0.23755022883415222,
+        "width": 1.6950132846832275,
+        "height": 1.2865349054336548
+      },
+      "rmse": 0.013205698933030334,
+      "max_error": 0.0215661347464795,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 6,
+      "stroke": 1,
+      "spec": {
+        "shape": 0,
+        "x": 0.07652514427900314,
+        "y": -0.2980775535106659,
+        "width": 1.6155551671981812,
+        "height": 0.9340632557868958
+      },
+      "rmse": 0.012408617001003402,
+      "max_error": 0.017691753072968226,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 6,
+      "stroke": 2,
+      "spec": {
+        "shape": 1,
+        "x": 0.4788539707660675,
+        "y": -0.2918526232242584,
+        "width": 0.542059063911438,
+        "height": 0.542059063911438
+      },
+      "rmse": 0.012982754755450115,
+      "max_error": 0.017189541897650738,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 6,
+      "stroke": 3,
+      "spec": {
+        "shape": 2,
+        "x": 0.5149134397506714,
+        "y": 0.16259722411632538,
+        "width": 0.3292723000049591,
+        "height": 0.9535748958587646
+      },
+      "rmse": 0.01204147395266842,
+      "max_error": 0.01847664853507822,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 7,
+      "stroke": 0,
+      "spec": {
+        "shape": 0,
+        "x": -0.2657085657119751,
+        "y": 0.1927318274974823,
+        "width": 0.8269816040992737,
+        "height": 1.5064741373062134
+      },
+      "rmse": 0.01412979075025988,
+      "max_error": 0.023766960471263927,
+      "contact_fraction": 0.9845474613686535,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 7,
+      "stroke": 1,
+      "spec": {
+        "shape": 1,
+        "x": 0.14146730303764343,
+        "y": -0.28856590390205383,
+        "width": 0.7190306782722473,
+        "height": 0.7190306782722473
+      },
+      "rmse": 0.01280584124333801,
+      "max_error": 0.017078833775242643,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 7,
+      "stroke": 2,
+      "spec": {
+        "shape": 2,
+        "x": -0.28512245416641235,
+        "y": 0.06537654250860214,
+        "width": 0.30823105573654175,
+        "height": 0.9223116040229797
+      },
+      "rmse": 0.010615957830074314,
+      "max_error": 0.01478411086401893,
+      "contact_fraction": 1.0,
+      "completed": true,
+      "travel_contacts": 0
+    },
+    {
+      "layout": 7,
+      "stroke": 3,
+      "spec": {
+        "shape": 0,
+        "x": -0.21466463804244995,
+        "y": -0.14226873219013214,
+        "width": 0.9877849817276001,
+        "height": 1.6931662559509277
+      },
+      "rmse": 0.013814814628642869,
+      "max_error": 0.023628861737945706,
+      "contact_fraction": 0.9980353634577603,
+      "completed": true,
+      "travel_contacts": 0
+    }
+  ],
+  "interventions": [
+    {
+      "condition": "normal",
+      "tracking_rmse": 0.010889105988782654
+    },
+    {
+      "condition": "core_removed",
+      "tracking_rmse": 1.593618143603132
+    },
+    {
+      "condition": "feedback_removed",
+      "tracking_rmse": 1.3157863984985696
+    }
+  ],
+  "scores": {
+    "before_refinement_rmse": 0.035834894256210906,
+    "trained_rmse": 0.03163680749160104,
+    "ablated_rmse": 0.5054710109071063
+  },
+  "fixed_interfaces": true,
+  "pytorch_runtime_parity": true,
+  "seconds": 5.676245333626866,
+  "scope": "Generated UI-like and held-out random layouts within x/y [-1,1] with .24\u20131.72 bounding-box dimensions. Geometry is placed explicitly; learned feedback commands physical joints."
+}

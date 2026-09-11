@@ -1,0 +1,6 @@
+.venv
+.cache
+research/data
+research/results/*.pt
+node_modules
+.git

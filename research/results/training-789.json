@@ -1,0 +1,158 @@
+{
+  "seed": 789,
+  "steps": 1600,
+  "seconds": 22.207902166061103,
+  "device": "cpu",
+  "train_samples": 720,
+  "heldout_samples": 723,
+  "validation": "Unseen phase samples inside three trained shape families; no claim of novel shape understanding.",
+  "before": {
+    "rmse": 0.7368673086166382,
+    "per_shape_rmse": {
+      "rectangle": 0.7545251846313477,
+      "circle": 0.7766900062561035,
+      "triangle": 0.6755477786064148
+    }
+  },
+  "after": {
+    "rmse": 0.020145725458860397,
+    "per_shape_rmse": {
+      "rectangle": 0.01782614178955555,
+      "circle": 0.02085857093334198,
+      "triangle": 0.02155688963830471
+    }
+  },
+  "ablated": {
+    "rmse": 0.7061708569526672,
+    "per_shape_rmse": {
+      "rectangle": 0.737060010433197,
+      "circle": 0.7417449355125427,
+      "triangle": 0.6344988942146301
+    }
+  },
+  "fixed_interfaces_and_topology_unchanged": true,
+  "gradient_audit": {
+    "gain": {
+      "nonzero": 38708,
+      "finite": true
+    },
+    "leak": {
+      "nonzero": 1023,
+      "finite": true
+    },
+    "bias": {
+      "nonzero": 1024,
+      "finite": true
+    }
+  },
+  "history": [
+    {
+      "step": 1,
+      "loss": 0.5711593627929688,
+      "seconds": 0.015116249676793814
+    },
+    {
+      "step": 101,
+      "loss": 0.06381349265575409,
+      "seconds": 1.2804051246494055
+    },
+    {
+      "step": 201,
+      "loss": 0.019802019000053406,
+      "seconds": 2.7218859577551484
+    },
+    {
+      "step": 301,
+      "loss": 0.0250179972499609,
+      "seconds": 4.296457582619041
+    },
+    {
+      "step": 401,
+      "loss": 0.002452877350151539,
+      "seconds": 5.681788249872625
+    },
+    {
+      "step": 501,
+      "loss": 0.0017363647930324078,
+      "seconds": 7.0183989577926695
+    },
+    {
+      "step": 601,
+      "loss": 0.01001543365418911,
+      "seconds": 8.325934791006148
+    },
+    {
+      "step": 701,
+      "loss": 0.0038921718951314688,
+      "seconds": 9.567003916017711
+    },
+    {
+      "step": 801,
+      "loss": 0.002400272525846958,
+      "seconds": 10.729708165861666
+    },
+    {
+      "step": 901,
+      "loss": 0.000730662199202925,
+      "seconds": 11.909002165775746
+    },
+    {
+      "step": 1001,
+      "loss": 0.0007892859866842628,
+      "seconds": 13.151849665679038
+    },
+    {
+      "step": 1101,
+      "loss": 0.0005715939332731068,
+      "seconds": 14.408882374875247
+    },
+    {
+      "step": 1201,
+      "loss": 0.0004854475555475801,
+      "seconds": 15.820070957764983
+    },
+    {
+      "step": 1301,
+      "loss": 0.0004570576420519501,
+      "seconds": 17.133229749742895
+    },
+    {
+      "step": 1401,
+      "loss": 0.0004609809839166701,
+      "seconds": 18.530478540807962
+    },
+    {
+      "step": 1501,
+      "loss": 0.00041746406350284815,
+      "seconds": 20.12745724990964
+    },
+    {
+      "step": 1600,
+      "loss": 0.0003989438700955361,
+      "seconds": 22.163289207965136
+    }
+  ],
+  "passed": true,
+  "graph": {
+    "dataset": "MaleCNS v1.0",
+    "license": "CC-BY-4.0",
+    "source": "https://male-cns.janelia.org/download/",
+    "source_sha256": {
+      "annotations.feather": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+      "weights.feather": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1"
+    },
+    "selection": "Traced vnc_* annotations. Top 128 motors by total incoming count; top 640 other VNC cells by outgoing count to these motors; top 256 sensory cells by outgoing count to those interneurons. Ties follow sorted bodyId. Keep every measured edge between selected IDs.",
+    "neurons": 1024,
+    "edges": 42944,
+    "sensory_neurons": 256,
+    "motor_neurons": 128,
+    "candidate_vnc_neurons": 20350,
+    "candidate_vnc_edges": 2596219,
+    "direction": "row=postsynaptic, column=presynaptic",
+    "circuit_sha256": "6ab4598eb95e2e8b89d92e08ba0f861e675df0160eecd134d318b4a552be3c0e",
+    "scope": "Selected motor subcircuit, not the whole fly brain. Approximate rate dynamics and engineered input/output mappings."
+  },
+  "model": "4-step rate network; immutable measured adjacency; trainable positive edge gains, biases and leaks; frozen random sensory and motor interfaces.",
+  "inputs": "3-way task code + 6 sine/cosine clock harmonics + constant. No coordinates/waypoints/teacher at inference.",
+  "output": "Two learned normalized pen coordinates. Stylus grasp and leg IK are engineered visual mappings; no muscle/contact/biological learning claim."
+}

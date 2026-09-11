@@ -1,0 +1,132 @@
+{
+  "engine": "MuJoCo",
+  "length_unit": "model millimetres; forces and time are normalized, not biologically calibrated",
+  "results": [
+    {
+      "shape": "rectangle",
+      "condition": "normal",
+      "rmse": 0.014196096735253164,
+      "max_error": 0.02117662330362636,
+      "tracking_rmse": 0.015259696995292206,
+      "contact_fraction": 0.9966101694915255,
+      "recovery_error": 0.015350607862877333,
+      "before_push_error": 0.0116374998882277
+    },
+    {
+      "shape": "rectangle",
+      "condition": "perturbed",
+      "rmse": 0.014119723242584292,
+      "max_error": 0.021176617697176364,
+      "tracking_rmse": 0.015153981210467071,
+      "contact_fraction": 0.9949152542372881,
+      "recovery_error": 0.015350842995486096,
+      "before_push_error": 0.011637497914871835
+    },
+    {
+      "shape": "rectangle",
+      "condition": "feedback_removed",
+      "rmse": 1.41719369031139,
+      "max_error": 1.8447186729572087,
+      "tracking_rmse": 1.417288155008048,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.6953134889326607,
+      "before_push_error": 1.6010432940003425
+    },
+    {
+      "shape": "rectangle",
+      "condition": "core_removed",
+      "rmse": 1.451056745559971,
+      "max_error": 1.8591014416720095,
+      "tracking_rmse": 1.4513343214572598,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.5627019238155782,
+      "before_push_error": 1.26671803687474
+    },
+    {
+      "shape": "circle",
+      "condition": "normal",
+      "rmse": 0.014208626533128004,
+      "max_error": 0.01846104189466923,
+      "tracking_rmse": 0.014077528302372813,
+      "contact_fraction": 1.0,
+      "recovery_error": 0.015990038061558118,
+      "before_push_error": 0.017181805768518237
+    },
+    {
+      "shape": "circle",
+      "condition": "perturbed",
+      "rmse": 0.01405905104394684,
+      "max_error": 0.018461039715761914,
+      "tracking_rmse": 0.013931538896764947,
+      "contact_fraction": 0.9966101694915255,
+      "recovery_error": 0.01599030482398038,
+      "before_push_error": 0.017181810839321496
+    },
+    {
+      "shape": "circle",
+      "condition": "feedback_removed",
+      "rmse": 2.006361910932581,
+      "max_error": 2.9638136226052216,
+      "tracking_rmse": 2.00642524923506,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.2991098184622585,
+      "before_push_error": 1.727816626441106
+    },
+    {
+      "shape": "circle",
+      "condition": "core_removed",
+      "rmse": 1.464039751949161,
+      "max_error": 1.8361796689028742,
+      "tracking_rmse": 1.46405411256032,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.3826591146784066,
+      "before_push_error": 1.360209793128647
+    },
+    {
+      "shape": "triangle",
+      "condition": "normal",
+      "rmse": 0.01502428535750641,
+      "max_error": 0.023205865509899514,
+      "tracking_rmse": 0.014989832708156849,
+      "contact_fraction": 1.0,
+      "recovery_error": 0.017634471849925292,
+      "before_push_error": 0.019459652790800825
+    },
+    {
+      "shape": "triangle",
+      "condition": "perturbed",
+      "rmse": 0.01494742876717349,
+      "max_error": 0.02320587541829856,
+      "tracking_rmse": 0.01490896420357491,
+      "contact_fraction": 1.0,
+      "recovery_error": 0.017630651004900123,
+      "before_push_error": 0.019459651852367275
+    },
+    {
+      "shape": "triangle",
+      "condition": "feedback_removed",
+      "rmse": 2.319188005894136,
+      "max_error": 3.1260419680484994,
+      "tracking_rmse": 2.319403275765126,
+      "contact_fraction": 0.0,
+      "recovery_error": 3.112736263851247,
+      "before_push_error": 2.7423948193973446
+    },
+    {
+      "shape": "triangle",
+      "condition": "core_removed",
+      "rmse": 1.4738352910222254,
+      "max_error": 1.8489608083531355,
+      "tracking_rmse": 1.4742929191286678,
+      "contact_fraction": 0.0,
+      "recovery_error": 1.412828898548032,
+      "before_push_error": 1.3786334667140987
+    }
+  ],
+  "seconds": 6.3718579593114555,
+  "passed": true,
+  "scope": "Tethered 3-DOF foreleg; rigid attached stylus; neural incremental joint commands; contact-gated ink",
+  "criteria": "Normal RMSE < 0.035 model mm, contact > 95%; perturbed recovery error < 0.05 model mm",
+  "feedback": "Joint angles, velocities, actual tip error and contact force feed the motor circuit every 20 ms",
+  "teacher_at_inference": false
+}

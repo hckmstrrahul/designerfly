@@ -1,0 +1,413 @@
+{
+  "before": {
+    "rectangle": {
+      "rmse": 0.02347446046769619,
+      "max_point_error": 0.07969710975885391,
+      "max_edge_deviation": 0.0649181604385376,
+      "max_corner_error": 0.04534417763352394
+    },
+    "circle": {
+      "rmse": 0.022918542847037315,
+      "max_point_error": 0.07522626966238022
+    },
+    "triangle": {
+      "rmse": 0.020671207457780838,
+      "max_point_error": 0.06732524186372757,
+      "max_edge_deviation": 0.05292576551437378,
+      "max_corner_error": 0.053601883351802826
+    }
+  },
+  "after": {
+    "rectangle": {
+      "rmse": 0.003913367632776499,
+      "max_point_error": 0.012332751415669918,
+      "max_edge_deviation": 0.008644521236419678,
+      "max_corner_error": 0.00653234263882041
+    },
+    "circle": {
+      "rmse": 0.002059195889160037,
+      "max_point_error": 0.007120028603821993
+    },
+    "triangle": {
+      "rmse": 0.00386621942743659,
+      "max_point_error": 0.013292934745550156,
+      "max_edge_deviation": 0.010907228104770184,
+      "max_corner_error": 0.005483255255967379
+    }
+  },
+  "seconds": 185.97333370894194,
+  "steps": 6000,
+  "validation": "997 off-grid phases per shape; no target path at inference",
+  "method": "Position + finite-difference derivative loss; corner oversampling; derivatives excluded across corners",
+  "history": [
+    {
+      "step": 1,
+      "loss": 0.015902185812592506,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.21735836565494537,
+          "max_point_error": 0.3681841492652893,
+          "max_edge_deviation": 0.33572840690612793,
+          "max_corner_error": 0.33625057339668274
+        },
+        "circle": {
+          "rmse": 0.21490007638931274,
+          "max_point_error": 0.37196940183639526
+        },
+        "triangle": {
+          "rmse": 0.21734321117401123,
+          "max_point_error": 0.3528069853782654,
+          "max_edge_deviation": 0.31327804923057556,
+          "max_corner_error": 0.32955360412597656
+        }
+      },
+      "seconds": 0.1209537498652935
+    },
+    {
+      "step": 401,
+      "loss": 0.006841849070042372,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.032362356781959534,
+          "max_point_error": 0.0964137390255928,
+          "max_edge_deviation": 0.07563644647598267,
+          "max_corner_error": 0.050254788249731064
+        },
+        "circle": {
+          "rmse": 0.016678838059306145,
+          "max_point_error": 0.05614515393972397
+        },
+        "triangle": {
+          "rmse": 0.025103859603405,
+          "max_point_error": 0.07027354836463928,
+          "max_edge_deviation": 0.05866613611578941,
+          "max_corner_error": 0.0341336652636528
+        }
+      },
+      "seconds": 10.894752124790102
+    },
+    {
+      "step": 801,
+      "loss": 0.0046570077538490295,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.022902464494109154,
+          "max_point_error": 0.06319926679134369,
+          "max_edge_deviation": 0.058970630168914795,
+          "max_corner_error": 0.039351604878902435
+        },
+        "circle": {
+          "rmse": 0.011209515854716301,
+          "max_point_error": 0.03331872820854187
+        },
+        "triangle": {
+          "rmse": 0.01916511356830597,
+          "max_point_error": 0.05613676831126213,
+          "max_edge_deviation": 0.05476761981844902,
+          "max_corner_error": 0.029668714851140976
+        }
+      },
+      "seconds": 22.415502584073693
+    },
+    {
+      "step": 1201,
+      "loss": 0.00379379210062325,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.019300656393170357,
+          "max_point_error": 0.054994236677885056,
+          "max_edge_deviation": 0.03425180912017822,
+          "max_corner_error": 0.037121422588825226
+        },
+        "circle": {
+          "rmse": 0.013822653330862522,
+          "max_point_error": 0.03364155441522598
+        },
+        "triangle": {
+          "rmse": 0.019356027245521545,
+          "max_point_error": 0.053196631371974945,
+          "max_edge_deviation": 0.04502744972705841,
+          "max_corner_error": 0.03301653265953064
+        }
+      },
+      "seconds": 32.87221337482333
+    },
+    {
+      "step": 1601,
+      "loss": 0.0021460182033479214,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.01257060095667839,
+          "max_point_error": 0.03798901289701462,
+          "max_edge_deviation": 0.03364229202270508,
+          "max_corner_error": 0.012910732068121433
+        },
+        "circle": {
+          "rmse": 0.0061819469556212425,
+          "max_point_error": 0.023318441584706306
+        },
+        "triangle": {
+          "rmse": 0.010248064063489437,
+          "max_point_error": 0.030692124739289284,
+          "max_edge_deviation": 0.02982199192047119,
+          "max_corner_error": 0.01801278069615364
+        }
+      },
+      "seconds": 43.09948887489736
+    },
+    {
+      "step": 2001,
+      "loss": 0.001747267902828753,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.010247670114040375,
+          "max_point_error": 0.028639109805226326,
+          "max_edge_deviation": 0.019510924816131592,
+          "max_corner_error": 0.01905003748834133
+        },
+        "circle": {
+          "rmse": 0.007671716623008251,
+          "max_point_error": 0.02045286074280739
+        },
+        "triangle": {
+          "rmse": 0.010761802084743977,
+          "max_point_error": 0.03248170390725136,
+          "max_edge_deviation": 0.028174033388495445,
+          "max_corner_error": 0.013974079862236977
+        }
+      },
+      "seconds": 55.11875958414748
+    },
+    {
+      "step": 2401,
+      "loss": 0.0015484364703297615,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.007917880080640316,
+          "max_point_error": 0.024853575974702835,
+          "max_edge_deviation": 0.021729767322540283,
+          "max_corner_error": 0.011768332682549953
+        },
+        "circle": {
+          "rmse": 0.005931932013481855,
+          "max_point_error": 0.01953406259417534
+        },
+        "triangle": {
+          "rmse": 0.007348323706537485,
+          "max_point_error": 0.022794252261519432,
+          "max_edge_deviation": 0.018963580951094627,
+          "max_corner_error": 0.015339022502303123
+        }
+      },
+      "seconds": 66.71768741682172
+    },
+    {
+      "step": 2801,
+      "loss": 0.0012915761908516288,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.007244002539664507,
+          "max_point_error": 0.021144021302461624,
+          "max_edge_deviation": 0.019849956035614014,
+          "max_corner_error": 0.008358960971236229
+        },
+        "circle": {
+          "rmse": 0.0050596012733876705,
+          "max_point_error": 0.013609625399112701
+        },
+        "triangle": {
+          "rmse": 0.0055910442024469376,
+          "max_point_error": 0.01860303059220314,
+          "max_edge_deviation": 0.015539884567260742,
+          "max_corner_error": 0.013606076128780842
+        }
+      },
+      "seconds": 78.43662841711193
+    },
+    {
+      "step": 3201,
+      "loss": 0.0010070973075926304,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.004967894870787859,
+          "max_point_error": 0.014517862349748611,
+          "max_edge_deviation": 0.01127159595489502,
+          "max_corner_error": 0.006603640969842672
+        },
+        "circle": {
+          "rmse": 0.0028466384392231703,
+          "max_point_error": 0.010059860534965992
+        },
+        "triangle": {
+          "rmse": 0.005213435273617506,
+          "max_point_error": 0.01853250525891781,
+          "max_edge_deviation": 0.015746114775538445,
+          "max_corner_error": 0.00816784705966711
+        }
+      },
+      "seconds": 88.64841825002804
+    },
+    {
+      "step": 3601,
+      "loss": 0.0012714928016066551,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.005372415296733379,
+          "max_point_error": 0.015548666939139366,
+          "max_edge_deviation": 0.012136101722717285,
+          "max_corner_error": 0.008157770149409771
+        },
+        "circle": {
+          "rmse": 0.003535751486197114,
+          "max_point_error": 0.01182053703814745
+        },
+        "triangle": {
+          "rmse": 0.0049806502647697926,
+          "max_point_error": 0.016825532540678978,
+          "max_edge_deviation": 0.01403188705444336,
+          "max_corner_error": 0.011991848237812519
+        }
+      },
+      "seconds": 98.53934683371335
+    },
+    {
+      "step": 4001,
+      "loss": 0.0009616015595383942,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.004538141191005707,
+          "max_point_error": 0.014368969015777111,
+          "max_edge_deviation": 0.008837878704071045,
+          "max_corner_error": 0.007683954667299986
+        },
+        "circle": {
+          "rmse": 0.0026892151217907667,
+          "max_point_error": 0.01062178984284401
+        },
+        "triangle": {
+          "rmse": 0.00446846941486001,
+          "max_point_error": 0.0149062629789114,
+          "max_edge_deviation": 0.013496317900717258,
+          "max_corner_error": 0.008624207228422165
+        }
+      },
+      "seconds": 111.58911800011992
+    },
+    {
+      "step": 4401,
+      "loss": 0.0012048694770783186,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.00432993471622467,
+          "max_point_error": 0.013758795335888863,
+          "max_edge_deviation": 0.012363851070404053,
+          "max_corner_error": 0.008543869480490685
+        },
+        "circle": {
+          "rmse": 0.0032132375054061413,
+          "max_point_error": 0.011700904928147793
+        },
+        "triangle": {
+          "rmse": 0.004790144506841898,
+          "max_point_error": 0.015070007182657719,
+          "max_edge_deviation": 0.012194173410534859,
+          "max_corner_error": 0.006653072778135538
+        }
+      },
+      "seconds": 125.33477883413434
+    },
+    {
+      "step": 4801,
+      "loss": 0.0013089312706142664,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.0048951017670333385,
+          "max_point_error": 0.01630459725856781,
+          "max_edge_deviation": 0.01045691967010498,
+          "max_corner_error": 0.006985547486692667
+        },
+        "circle": {
+          "rmse": 0.0030888060573488474,
+          "max_point_error": 0.009086815640330315
+        },
+        "triangle": {
+          "rmse": 0.00466600526124239,
+          "max_point_error": 0.015984706580638885,
+          "max_edge_deviation": 0.01203692052513361,
+          "max_corner_error": 0.007520230952650309
+        }
+      },
+      "seconds": 140.90377274993807
+    },
+    {
+      "step": 5201,
+      "loss": 0.0015236882027238607,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.003922151867300272,
+          "max_point_error": 0.0124436654150486,
+          "max_edge_deviation": 0.008364081382751465,
+          "max_corner_error": 0.0056075542233884335
+        },
+        "circle": {
+          "rmse": 0.0022631429601460695,
+          "max_point_error": 0.008230682462453842
+        },
+        "triangle": {
+          "rmse": 0.00427565723657608,
+          "max_point_error": 0.014009975828230381,
+          "max_edge_deviation": 0.011848286725580692,
+          "max_corner_error": 0.006373490672558546
+        }
+      },
+      "seconds": 152.20955916680396
+    },
+    {
+      "step": 5601,
+      "loss": 0.0012724658008664846,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.003966386429965496,
+          "max_point_error": 0.012625394389033318,
+          "max_edge_deviation": 0.009652316570281982,
+          "max_corner_error": 0.0054359943605959415
+        },
+        "circle": {
+          "rmse": 0.0022903219796717167,
+          "max_point_error": 0.00914447195827961
+        },
+        "triangle": {
+          "rmse": 0.003835686482489109,
+          "max_point_error": 0.01499922014772892,
+          "max_edge_deviation": 0.013337092474102974,
+          "max_corner_error": 0.007738270331174135
+        }
+      },
+      "seconds": 173.149016499985
+    },
+    {
+      "step": 6000,
+      "loss": 0.0008639240986667573,
+      "metrics": {
+        "rectangle": {
+          "rmse": 0.003913367632776499,
+          "max_point_error": 0.012332751415669918,
+          "max_edge_deviation": 0.008644521236419678,
+          "max_corner_error": 0.00653234263882041
+        },
+        "circle": {
+          "rmse": 0.002059195889160037,
+          "max_point_error": 0.007120028603821993
+        },
+        "triangle": {
+          "rmse": 0.00386621942743659,
+          "max_point_error": 0.013292934745550156,
+          "max_edge_deviation": 0.010907228104770184,
+          "max_corner_error": 0.005483255255967379
+        }
+      },
+      "seconds": 185.86317733395845
+    }
+  ],
+  "passed": true
+}

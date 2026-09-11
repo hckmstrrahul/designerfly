@@ -1,0 +1,10 @@
+{
+  "neurons": 2048,
+  "added_neurons": 1024,
+  "added_cells_with_nonzero_rate": 1024,
+  "added_edge_gradients_nonzero": 149323,
+  "added_edges": 149323,
+  "added_neuron_mean_absolute_rate": 0.002518591471016407,
+  "output_change_rmse_when_added_edges_removed": 0.0004360229067970067,
+  "interpretation": "Added cells and edges participate, but their contribution is small under this warm start. This is not evidence that expanding neuron count improves drawing."
+}

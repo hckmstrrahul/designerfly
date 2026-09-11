@@ -1,0 +1,141 @@
+{
+  "before_rmse": 0.054415564984083176,
+  "after_rmse": 0.048678699880838394,
+  "ablated_rmse": 0.49524861574172974,
+  "steps": 8000,
+  "seconds": 57.80894974991679,
+  "history": [
+    {
+      "step": 1,
+      "loss": 0.0029414212331175804,
+      "validation_rmse": 0.23459583520889282,
+      "seconds": 0.0434276657178998
+    },
+    {
+      "step": 401,
+      "loss": 0.0031809743959456682,
+      "validation_rmse": 0.05468742921948433,
+      "seconds": 2.908229249995202
+    },
+    {
+      "step": 801,
+      "loss": 0.0033933985978364944,
+      "validation_rmse": 0.05418476089835167,
+      "seconds": 5.7497962499037385
+    },
+    {
+      "step": 1201,
+      "loss": 0.0028917640447616577,
+      "validation_rmse": 0.054492104798555374,
+      "seconds": 8.577963625080884
+    },
+    {
+      "step": 1601,
+      "loss": 0.0033659376204013824,
+      "validation_rmse": 0.0549917109310627,
+      "seconds": 11.510404583066702
+    },
+    {
+      "step": 2001,
+      "loss": 0.00554541265591979,
+      "validation_rmse": 0.051877789199352264,
+      "seconds": 14.461278374772519
+    },
+    {
+      "step": 2401,
+      "loss": 0.0027716883923858404,
+      "validation_rmse": 0.051825545728206635,
+      "seconds": 17.273253915831447
+    },
+    {
+      "step": 2801,
+      "loss": 0.006911966949701309,
+      "validation_rmse": 0.051717184484004974,
+      "seconds": 20.088100249879062
+    },
+    {
+      "step": 3201,
+      "loss": 0.0015787609154358506,
+      "validation_rmse": 0.052832845598459244,
+      "seconds": 22.96829062467441
+    },
+    {
+      "step": 3601,
+      "loss": 0.0021572334226220846,
+      "validation_rmse": 0.05189621448516846,
+      "seconds": 25.810144915711135
+    },
+    {
+      "step": 4001,
+      "loss": 0.00326164229772985,
+      "validation_rmse": 0.0608908049762249,
+      "seconds": 28.63488949974999
+    },
+    {
+      "step": 4401,
+      "loss": 0.0024495802354067564,
+      "validation_rmse": 0.049504298716783524,
+      "seconds": 31.450119374785572
+    },
+    {
+      "step": 4801,
+      "loss": 0.006927437614649534,
+      "validation_rmse": 0.050085023045539856,
+      "seconds": 34.31534979073331
+    },
+    {
+      "step": 5201,
+      "loss": 0.0024051868822425604,
+      "validation_rmse": 0.05064699053764343,
+      "seconds": 37.158942207694054
+    },
+    {
+      "step": 5601,
+      "loss": 0.002678288146853447,
+      "validation_rmse": 0.04979279264807701,
+      "seconds": 40.03572066593915
+    },
+    {
+      "step": 6001,
+      "loss": 0.0017125919694080949,
+      "validation_rmse": 0.05003580451011658,
+      "seconds": 43.00619679084048
+    },
+    {
+      "step": 6401,
+      "loss": 0.0032532736659049988,
+      "validation_rmse": 0.05020526424050331,
+      "seconds": 45.84843724966049
+    },
+    {
+      "step": 6801,
+      "loss": 0.002185676945373416,
+      "validation_rmse": 0.048856914043426514,
+      "seconds": 48.70706162508577
+    },
+    {
+      "step": 7201,
+      "loss": 0.0021192736458033323,
+      "validation_rmse": 0.04886242747306824,
+      "seconds": 51.53216854063794
+    },
+    {
+      "step": 7601,
+      "loss": 0.004121685400605202,
+      "validation_rmse": 0.048981908708810806,
+      "seconds": 54.40908912476152
+    },
+    {
+      "step": 8000,
+      "loss": 0.0014842953532934189,
+      "validation_rmse": 0.048678699880838394,
+      "seconds": 57.78697149967775
+    }
+  ],
+  "fixed_interfaces": true,
+  "input": "Neurally generated reference, joint angles and velocities, physical tip error, contact force",
+  "output": "Three incremental rotary actuator commands; no IK at inference",
+  "scope": "Positioned and resized compositions with continuous physical travel, contact and lifts",
+  "placement": "Explicit affine transform of the trained canonical shape output",
+  "demonstrations": 16459
+}

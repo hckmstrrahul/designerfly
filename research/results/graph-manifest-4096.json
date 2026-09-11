@@ -1,0 +1,20 @@
+{
+  "dataset": "MaleCNS v1.0",
+  "license": "CC-BY-4.0",
+  "source": "https://male-cns.janelia.org/download/",
+  "source_sha256": {
+    "annotations.feather": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "weights.feather": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1"
+  },
+  "selection": "Original 1024 cells plus intrinsic VNC neighbors ranked by total measured incoming + outgoing synapses with the original circuit. Ties by bodyId. Frozen original 256 sensory and 128 motor interfaces; all induced measured edges retained.",
+  "neurons": 4096,
+  "edges": 534990,
+  "sensory_neurons": 256,
+  "motor_neurons": 128,
+  "candidate_vnc_neurons": 20350,
+  "candidate_vnc_edges": 2596219,
+  "direction": "row=postsynaptic, column=presynaptic",
+  "circuit_sha256": "415d4ea69679116c995c081d5787894e03e07e01f495f5b114acaf5eeef075d4",
+  "scope": "Selected motor subcircuit, not the whole fly brain. Approximate rate dynamics and engineered input/output mappings.",
+  "added_intrinsic": 3072
+}

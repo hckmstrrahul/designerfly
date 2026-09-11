@@ -1,0 +1,19 @@
+{
+  "dataset": "MaleCNS v1.0",
+  "license": "CC-BY-4.0",
+  "source": "https://male-cns.janelia.org/download/",
+  "source_sha256": {
+    "annotations.feather": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "weights.feather": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1"
+  },
+  "selection": "Traced vnc_* annotations. Top 128 motors by total incoming count; top 640 other VNC cells by outgoing count to these motors; top 256 sensory cells by outgoing count to those interneurons. Ties follow sorted bodyId. Keep every measured edge between selected IDs.",
+  "neurons": 1024,
+  "edges": 42944,
+  "sensory_neurons": 256,
+  "motor_neurons": 128,
+  "candidate_vnc_neurons": 20350,
+  "candidate_vnc_edges": 2596219,
+  "direction": "row=postsynaptic, column=presynaptic",
+  "circuit_sha256": "6ab4598eb95e2e8b89d92e08ba0f861e675df0160eecd134d318b4a552be3c0e",
+  "scope": "Selected motor subcircuit, not the whole fly brain. Approximate rate dynamics and engineered input/output mappings."
+}

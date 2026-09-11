@@ -1,0 +1,12 @@
+{
+  "samples": 2048,
+  "seed": 90511,
+  "validation": "Fresh actuator demonstration inputs, independent of all training batches and rollout examples; randomized force channel",
+  "scores": {
+    "untrained_rmse": 0.32392391562461853,
+    "trained_rmse": 0.038135968148708344,
+    "ablated_rmse": 0.4914170503616333
+  },
+  "sparse_pytorch_parity": true,
+  "fixed_interfaces": true
+}

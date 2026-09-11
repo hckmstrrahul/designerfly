@@ -1,0 +1,8 @@
+numpy==2.5.3
+pyarrow==25.0.1
+torch==2.14.0
+PyYAML==6.0.3
+scipy==1.18.1
+mujoco==3.13.0
+fastapi==0.141.1
+uvicorn==0.52.4
