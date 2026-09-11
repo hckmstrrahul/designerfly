@@ -32,9 +32,14 @@ There are no API keys, paid inference calls or database dependencies. Training
 and inference run on your machine. CPU speed affects how fast the simulation
 can advance. If the backend stops, drawing stops too; there is no fallback animation.
 
+In development, the Agentation button at bottom right lets you select an element,
+write feedback, and copy annotations to paste into your coding agent. It is excluded
+from production. Automatic delivery requires a separately configured Agentation MCP
+server; the default toolbar uses local copy/paste.
+
 ## Controls
 
-- **Rectangle / circle / triangle:** draw on a fresh sheet. Keyboard: `1`, `2`, `3`.
+- **Rectangle / circle / triangle:** draw on a fresh sheet. Press the selected shape again to stop, clear the paper, stop flapping, and restore the initial physical pose and camera. Keyboard: `1`, `2`, `3`. Arrange mode keeps adding shapes instead.
 - **Arrange:** place up to eight shapes on one sheet. Drag to move, use the corner
   handle to resize, then press Draw. The shape buttons add shapes while editing.
   **Search / feed** loads an editable six-shape wireframe: a search field, two
@@ -85,10 +90,12 @@ Neurotransmitter predictions and biologically calibrated dynamics are not includ
 
 ## What the neural screen means
 
-**Activity** shows located cell bodies and sampled connections. Blue, gray and
-coral encode signed model rates from −1 through 0 to +1; this sign is not a
-neurotransmitter label. Dot size shows magnitude. Pale rings show changes between
-received samples with a fixed 8× gain. Unchanged values remain still. The bottom
+**Activity** shows located cell bodies and sampled connections. Red encodes negative
+rates and green positive rates, with dark green at zero; this sign is not a
+neurotransmitter label. Every located cell keeps a pale 20%-opacity base dot.
+Color opacity, dot size and a restrained same-color glow show magnitude; changes
+between samples strengthen the glow. A fixed square-root display curve reveals
+small values, with 8× gain on the change component. Unchanged values remain still. The bottom
 trace is mean absolute rate across every neuron, including cells without positions.
 
 **Anatomy** shows 96 measured branching skeletons from the original circuit,
@@ -97,10 +104,16 @@ local-circuit cells and gold motor cells. It is a structural view; it does not
 simulate signals travelling down individual branches. Expanding the controller
 does not invent additional skeletons.
 
-During drawing, the screen uses the actual motor controller state. At rest with
-wings enabled, it switches to the 1,024-neuron shape network whose circle output
-drives wing rotation. Counts change with the displayed network. These are computed
-model states, not recordings of a biological fly's spikes.
+Enabling wings on either device selects the 1,024-neuron wing controller on both
+live monitors, even during drawing. The NL–01 Drawing button stops flapping and
+returns to the motor controller. Counts follow the selected network.
+
+**Neural Spectrum (NS–01)** shows the same 96 measured 3D skeletons in a separate
+interactive view below Anatomy. A stable hue identifies each neuron; opacity and
+line thickness follow the magnitude of its actual controller rate. This is a
+cell-level activity overlay, not simulated propagation along branches. Anatomy
+retains its structural class colors. All live values are computed model states,
+not recordings of a biological fly's spikes.
 
 ## What it can and cannot do
 
@@ -189,7 +202,17 @@ proxy and intentionally binds its backend to localhost.
 - **[Departure Mono](https://departuremono.com/)** — Helena Zhang; **SIL OFL 1.1**.
 - **[Lucide](https://lucide.dev/)** — interface icons; **ISC**.
 
-Original code is [MIT licensed](LICENSE). Third-party materials retain their own
+## Open use
+
+The original code is [MIT licensed](LICENSE): you can use, study, modify, share,
+and build on it, including commercially. Keep the copyright and license notice
+with copies or substantial portions of the code. The software comes without warranty.
+
+This permission does not replace the licenses of the datasets, trained data
+exports, meshes, fonts, or other third-party materials. Keep their attribution
+and comply with the source licenses listed above.
+
+Third-party materials retain their own
 licenses; see [full notices](THIRD_PARTY_NOTICES.md). References to Fly / Wirehead,
 Flyhard and Supabase are discussed in [the reference review](docs/reference-review.md).
 Their demos and results should not be confused with this experiment.
