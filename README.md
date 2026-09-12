@@ -39,27 +39,42 @@ server; the default toolbar uses local copy/paste.
 
 ## Controls
 
-- **Rectangle / circle / triangle:** draw on a fresh sheet. Press the selected shape again to stop, clear the paper, stop flapping, and restore the initial physical pose and camera. Keyboard: `1`, `2`, `3`. Arrange mode keeps adding shapes instead.
-- **Arrange:** compose up to 96 pen strokes. Add rectangles, squares, circles,
+- **Device modes:** Draw UI, Text and Emoji open separate views and retain separate canvases during the session. Shape buttons live inside Draw UI; Text, Emoji and Pen are icon-only tools below the shape palette. Pen draws directly on the composition rather than opening another mode.
+- **Draw UI:** compose up to 128 pen strokes. Add rectangles, squares, circles,
   ellipses and triangles; move or resize them directly on the sheet.
-  **UI Example** loads a detailed editorial wireframe with rounded cards,
+  The initial canvas contains a detailed editorial wireframe with rounded cards,
   landscape thumbnails, content lines and a small FLY masthead.
-- **Text:** inside Arrange, enter up to 20 characters, including spaces and line
+- **Pen:** in Draw UI, select Pen and drag on the canvas with a mouse, stylus or
+  finger. Each release adds one stroke. Use New for a blank sheet, then **Draw**
+  to send the paths to the fly. Tiny jitter is simplified and oversized
+  strokes are fitted to the supported area, with at most 256 points per stroke.
+  This uses supplied paths and the existing motor, not a sketch-recognition model.
+  Very small details or tightly packed scribbles may not reproduce accurately.
+- **Text:** in Text mode, enter up to 40 characters, including spaces and line
   breaks. Supports A–Z, 0–9 and `. ! ? -`; lowercase becomes uppercase. Long
-  lines wrap at seven characters. Text sits beside UI Example; opening it replaces
-  the canvas and shape toolbar with a large input. Choose **Preview lettering**,
-  then **Draw study**.
+  lines wrap at seven characters. The live preview sits at the bottom right; **Draw** sends it directly to the fly. In Draw UI, the compact monospace text panel adds lettering to the visible canvas.
+  The device Text mode uses its own sheet; the sidebar Text tool adds to the
+  current composition as a selectable group. New, Delete, Clear all and Reset sit beside the studio heading.
+  Reset appears when the canvas differs from the default UI example.
   The original single-line alphabet is supplied vector geometry, not learned
   language or a newly trained text model. The existing 2,048-neuron motor follows
   these paths through the same contact-based physics as other drawings.
+- **Emoji:** choose from 12 designs: Smile, Wink, Surprise, Cool, Heart, Star,
+  Laugh, Love, Sleepy, Sad, Sun and Lightning. These are original
+  minimal stroke drawings, executed by the same physical motor. The device Emoji
+  mode draws the selected emoji directly with **Draw**. The Draw UI sidebar adds each emoji as one group that moves, resizes and deletes together.
 - **Speed:** cycle through 1×, 2× and 4× simulation time. Each update runs 2, 4 or
   8 full control steps. The fixed physics timestep, feedback inference and every
   contact/ink sample are preserved. This is faster execution of the same
   simulation, not a controller trained to move faster in physical time. The orange
-  Speed button starts at 1×; one, two or three white LEDs indicate the speed.
+  Speed button shows 1×, 2× or 4× above its white LEDs; the caption stays SPEED.
   Wing inference uses the same speed-scaled clock while drawing or idle. Wing
   motion, NL–01 and NS–01 share each inference sample and its simulation timestamp;
   changing speed preserves phase instead of restarting the wing cycle.
+- **Camera:** cycles Angled → Paper close-up → Overhead. The angled view is the
+  initial default. The chosen preset is saved locally and restored after reloads
+  and simulation resets. Manual orbit/zoom remains available; only the preset
+  selected with the button is saved. NS–01 starts in a centered frontal view.
 - **Wings:** run the learned rhythm used to animate the wings.
 - **Drawing 01 / Drawing 02:** select the motor or wing controller on Neural Link.
   Drawing 02 starts wings; Drawing 01 stops them. Both neural displays follow the
@@ -68,9 +83,17 @@ server; the default toolbar uses local copy/paste.
   Focus the neural canvas for arrow-key rotation, Shift+arrow panning, `+`/`−`
   zoom and Home reset. The fly scene also supports rotate, pan and zoom.
 
-In Arrange, focused shapes support arrow keys to move, Shift+arrows to resize,
-and Delete to remove. Shapes stay inside a reachable 0.8 × 0.8 model-mm region
-on the larger paper. This is a geometric wireframe tool: no text or arbitrary paths.
+In Draw UI, focused shapes support arrow keys to move, Shift+arrows for larger moves,
+and Delete to remove. Shapes stay inside a reachable 0.88 × 0.88 model-mm region
+on the larger paper. Shapes, supplied lettering, grouped emojis and freehand paths
+can be combined on the same sheet.
+
+Canvas editing supports Delete/Backspace, Undo (Cmd/Ctrl+Z), and Redo (Cmd/Ctrl+Shift+Z or Ctrl+Y). Toolbar Undo/Redo also restore additions, grouped edits, clear/reset and completed pen strokes; each drag is one history step.
+
+The drawing action is labeled **Draw** in every mode. **Reset** restores the default
+UI example; **Clear all** empties the current canvas. Hardware button housings remain
+fixed on press, with a subtle inset face movement. Scroll and pinch zoom respond
+faster across all three displays, with a range of 0.15×–12×.
 
 ## The devices
 
@@ -85,7 +108,7 @@ Desktop fits the devices on one screen. Heights grow on taller displays, up to
 the two neural devices share a width. Narrow screens use a wider, vertically
 scrollable stack with cables between adjacent devices. Vertical swipes over the
 scenes scroll the mobile page. The simulator's circular controls sit above its
-four evenly sized shape/Arrange buttons in this layout.
+six square studio/shape buttons in this layout.
 
 **About this experiment** opens a modal with the method, limitations, validation
 figures and source credits. Project information uses locally hosted Inter; device
@@ -96,7 +119,7 @@ readouts retain Departure Mono.
 1. **A learned path.** A 1,024-neuron network receives the selected shape and a
    generic phase encoding. Its output is a canonical pen path. During live
    inference it does not call the analytic shape teacher used in training.
-2. **A specified layout.** Arrange applies an explicit position/size transform. Rounded UI details and lettering use supplied polylines with arc-length interpolation, bypassing the three-shape planner but retaining the trained motor and physics.
+2. **A specified layout.** Draw UI applies an explicit position/size transform. Rounded UI details and lettering use supplied polylines with arc-length interpolation, bypassing the three-shape planner but retaining the trained motor and physics.
    A sequencer supplies travel, lowering, drawing and lifting phases. These
    decisions are ordinary application code.
 3. **Neural feedback control.** The active **2,048-neuron, 192,267-connection** motor
@@ -184,6 +207,7 @@ npm run build
 .venv/bin/python research/test_composition.py
 .venv/bin/python research/validate_detailed_strokes.py
 .venv/bin/python research/test_paper_coordinates.py
+.venv/bin/python research/validate_freehand.py
 .venv/bin/python research/evaluate_expansion.py
 node scripts/check-fly-clearance.mjs research/results/expansion-poses-2048.json
 ```
@@ -212,13 +236,13 @@ stages and their limitations, read [the neural experiment](docs/neural-experimen
 
 S–01 now uses a dark grid surface, selective glossy cuticle and eye materials,
 stronger thorax stripes and warmer leg/abdomen colors. These are artistic material
-choices, not new anatomical measurements. The paper is 1.07 × 1.07 model units,
-with matching collision bounds; the reachable drawing region remains 0.8 × 0.8.
-This makes the drawing fill more of the paper without claiming extra motor reach.
+choices, not new anatomical measurements. The paper is 1.15 × 1.15 model units,
+with matching collision bounds; the drawing region is now 0.88 × 0.88.
+This makes the drawing fill more of the paper with the expanded region checked in physics.
 
 The physical check covers the UI example, `HELLO` / `WORLD`, the alphabet,
-numbers and supported punctuation. All four sessions completed with 100% contact
-on sampled drawing frames. XY tracking RMSE ranged from 0.00554 to 0.00709 model
+numbers, supported punctuation and 12 minimal emoji designs. All sixteen sessions completed with 100% contact
+on sampled drawing frames. XY tracking RMSE ranged from 0.00606 to 0.00879 model
 units. See [the recorded results](research/results/detailed-strokes-validation.json).
 These are smoke checks, not a comprehensive handwriting benchmark or a guarantee
 for every arrangement. Letter geometry is original code in `lib/lettering.ts`;
@@ -260,3 +284,4 @@ Third-party materials retain their own
 licenses; see [full notices](THIRD_PARTY_NOTICES.md). References to Fly / Wirehead,
 Flyhard and Supabase are discussed in [the reference review](docs/reference-review.md).
 Their demos and results should not be confused with this experiment.
+

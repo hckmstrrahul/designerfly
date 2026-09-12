@@ -12,7 +12,7 @@ BASE=np.array([.16,-.514,1.07]); L1=.705; L2=1.36
 BASE_ROLL=np.pi/4
 BASE_ROT=np.array([[1,0,0],[0,np.cos(BASE_ROLL),-np.sin(BASE_ROLL)],[0,np.sin(BASE_ROLL),np.cos(BASE_ROLL)]])
 PAPER_Z=.946; TIP_RADIUS=.009
-CENTER=np.array([1.55,0.,PAPER_Z]); SCALE=.40
+CENTER=np.array([1.55,0.,PAPER_Z]); SCALE=.44
 
 def paper_xy(point):
     """Editor X-right/Y-down to MuJoCo XY; rendering maps world Z to -Y."""
@@ -25,7 +25,7 @@ XML=f'''<mujoco model="DF-02 tethered foreleg">
 <geom contype="0" conaffinity="0" density="100"/>
 <position kp="60" kv="3" forcelimited="true" forcerange="-12 12"/></default>
 <worldbody>
-<geom name="paper" type="box" pos="1.55 0 {PAPER_Z-.025}" size=".535 .535 .025" contype="1" conaffinity="1" friction=".08 .001 .0001" solref=".04 1" solimp=".8 .8 .001 .5 2"/>
+<geom name="paper" type="box" pos="1.55 0 {PAPER_Z-.025}" size=".575 .575 .025" contype="1" conaffinity="1" friction=".08 .001 .0001" solref=".04 1" solimp=".8 .8 .001 .5 2"/>
 <body name="femur" pos="{' '.join(map(str,BASE))}" quat="{np.cos(BASE_ROLL/2)} {np.sin(BASE_ROLL/2)} 0 0">
 <joint name="yaw" axis="0 0 1" range="-1.2 1.2"/>
 <joint name="pitch" axis="0 1 0" range="-2 1.5"/>

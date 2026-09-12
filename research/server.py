@@ -17,7 +17,7 @@ class Stroke(BaseModel):
     x:float=Field(ge=-1,le=1);y:float=Field(ge=-1,le=1)
     width:float=Field(ge=.02,le=1.72);height:float=Field(ge=.02,le=1.72)
     points:list[tuple[float,float]] | None=Field(default=None,min_length=2,max_length=256)
-class CompositionStart(BaseModel):strokes:list[Stroke]=Field(min_length=1,max_length=96)
+class CompositionStart(BaseModel):strokes:list[Stroke]=Field(min_length=1,max_length=128)
 class Step(BaseModel):session:str;steps:int=Field(default=2,ge=1,le=8);wings:bool=False;push:bool=False;wing_phase:float=Field(default=0,ge=0,le=1)
 @app.get('/health')
 def health():

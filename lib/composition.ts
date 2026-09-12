@@ -1,6 +1,6 @@
 import { letteringPaths, type PenPoint } from './lettering.ts';
-export interface PlacedShape { id: number; shape: number; x: number; y: number; width: number; height: number; variant?: 'square' | 'ellipse'; points?: PenPoint[] }
-export const MAX_SHAPES = 96;
+export interface PlacedShape { id: number; groupId?: number; groupLabel?: string; shape: number; x: number; y: number; width: number; height: number; variant?: 'square' | 'ellipse'; points?: PenPoint[] }
+export const MAX_SHAPES = 128;
 export const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 export function constrainShape(s: PlacedShape): PlacedShape {
   const width = clamp(s.width, s.points ? .02 : .24, 1.72), height = (s.shape === 1 && s.variant !== 'ellipse') || s.variant === 'square' ? width : clamp(s.height, s.points ? .02 : .24, 1.72);

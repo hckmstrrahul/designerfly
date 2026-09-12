@@ -7,8 +7,7 @@ from composition import CompositionSession,load_placement,load_composition_motor
 from active_motor import policy_or
 motor=policy_or(load_composition_motor());planner=load_placement()
 results={}
-fixtures=json.loads(subprocess.check_output(['node','--experimental-strip-types','-e', "import('./lib/composition.ts').then(m=>console.log(JSON.stringify({ui:m.UI_EXAMPLE,text:m.textStudy('HELLO\\nWORLD'),alphabet:m.textStudy('ABCDEFGHIJKLMNOPQRST'),remaining:m.textStudy('UVWXYZ0123456789.!?-')})))"],cwd=ROOT))
-fixtures.update(json.loads(subprocess.check_output(['node','--experimental-strip-types','-e', "import('./lib/emoji.ts').then(m=>console.log(JSON.stringify(Object.fromEntries(m.EMOJIS.map(e=>['emoji-'+e.id,m.emojiStudy(e.id)])))))"],cwd=ROOT)))
+fixtures=json.loads(subprocess.check_output(['node','--experimental-strip-types','-e', "import('./lib/freehand.ts').then(m=>console.log(JSON.stringify({wave:[m.freehandStroke(Array.from({length:300},(_,i)=>[-.75+i/299*1.5,Math.sin(i/299*Math.PI*4)*.4]),1)],loop:[m.freehandStroke(Array.from({length:401},(_,i)=>[Math.cos(i/400*Math.PI*2)*.7,Math.sin(i/400*Math.PI*2)*.55]),1)],corners:[m.freehandStroke([[-.7,.6],[-.7,-.6],[.7,-.6],[.7,.6],[0,0],[-.7,.6]],1)]})))"],cwd=ROOT))
 for name,strokes in fixtures.items():
  s=CompositionSession(strokes,planner,motor);errors=[];contacts=[];ink=[];start=time.time()
  for i in range(50000):
@@ -22,4 +21,4 @@ for name,strokes in fixtures.items():
 for record in results.values():
  del record['ink']
  assert record['completed'] and record['contact_fraction']>.95 and record['rmse']<.035
-(ROOT/'research/results/detailed-strokes-validation.json').write_text(json.dumps({'passed':True,'training':'No new training; supplied geometry executed by the existing active motor','results':results},indent=2))
+(ROOT/'research/results/freehand-validation.json').write_text(json.dumps({'passed':True,'training':'No new training; supplied geometry executed by the existing active motor','results':results},indent=2))

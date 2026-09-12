@@ -5,7 +5,7 @@ import { activityTrace, recordActivity, type NeuralSource } from '@/lib/neural-t
 import { activityColor, activityChange, CELL_COLORS } from '@/lib/neural-colors';
 type Anatomy = { cells: { bodyId: string; neuron: number; points: number[][]; edges: [number, number][] }[] };
 type Camera = { yaw: number; pitch: number; zoom: number; x: number; y: number };
-const home = (mode: 'activity' | 'anatomy' | 'spectrum'): Camera => ({ yaw: .38, pitch: .12, zoom: mode === 'activity' ? 1.16 * .8 * 1.1 : mode === 'spectrum' ? 1.15 : 1, x: 0, y: 0 });
+const home = (mode: 'activity' | 'anatomy' | 'spectrum'): Camera => ({ yaw: mode === 'spectrum' ? 0 : .38, pitch: mode === 'spectrum' ? 0 : .12, zoom: mode === 'activity' ? 1.16 * .8 * 1.1 : mode === 'spectrum' ? .96 : 1, x: 0, y: 0 });
 
 export function NeuralDisplay({ model, live, source, mode }: { model: CircuitView; live: RefObject<LiveDrawing>; source: NeuralSource; mode: 'activity' | 'anatomy' | 'spectrum' }) {
   const traceRef = useRef<HTMLCanvasElement>(null);
@@ -36,21 +36,25 @@ export function NeuralDisplay({ model, live, source, mode }: { model: CircuitVie
       const dx = e.clientX - previous.x, dy = e.clientY - previous.y, other = [...pointers.entries()].find(([id]) => id !== e.pointerId)?.[1];
       if (other) {
         const before = Math.hypot(previous.x - other.x, previous.y - other.y), after = Math.hypot(e.clientX - other.x, e.clientY - other.y);
-        camera.current.zoom = Math.max(.4, Math.min(5, camera.current.zoom * after / Math.max(1, before)));
+        camera.current.zoom = Math.max(.15, Math.min(12, camera.current.zoom * Math.pow(after / Math.max(1, before), 2.5)));
         camera.current.x += dx / 2; camera.current.y += dy / 2;
       } else if (e.buttons === 2 || e.shiftKey) { camera.current.x += dx; camera.current.y += dy; }
       else { camera.current.yaw += dx * .008; camera.current.pitch = Math.max(-1.5, Math.min(1.5, camera.current.pitch + dy * .008)); }
       pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     };
     const up = (e: PointerEvent) => { pointers.delete(e.pointerId); };
-    const wheel = (e: WheelEvent) => { e.preventDefault(); camera.current.zoom = Math.max(.4, Math.min(5, camera.current.zoom * Math.exp(-e.deltaY * .0015))); };
+    const wheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const pixels = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? canvas.clientHeight : 1);
+      camera.current.zoom = Math.max(.15, Math.min(12, camera.current.zoom * Math.exp(-pixels * .0045 * (e.ctrlKey ? 3 : 1))));
+    };
     const reset = () => { camera.current = home(mode); }, context = (e: Event) => e.preventDefault();
     const key = (e: KeyboardEvent) => {
       if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', '+', '=', '-', '0', 'Home'].includes(e.key)) return;
       e.preventDefault();
       if (e.key === 'Home' || e.key === '0') reset();
-      else if (e.key === '+' || e.key === '=') camera.current.zoom = Math.min(5, camera.current.zoom * 1.1);
-      else if (e.key === '-') camera.current.zoom = Math.max(.4, camera.current.zoom / 1.1);
+      else if (e.key === '+' || e.key === '=') camera.current.zoom = Math.min(12, camera.current.zoom * 1.25);
+      else if (e.key === '-') camera.current.zoom = Math.max(.15, camera.current.zoom / 1.25);
       else if (e.shiftKey) { camera.current.x += e.key === 'ArrowLeft' ? -10 : e.key === 'ArrowRight' ? 10 : 0; camera.current.y += e.key === 'ArrowUp' ? -10 : e.key === 'ArrowDown' ? 10 : 0; }
       else { camera.current.yaw += e.key === 'ArrowLeft' ? -.1 : e.key === 'ArrowRight' ? .1 : 0; camera.current.pitch = Math.max(-1.5, Math.min(1.5, camera.current.pitch + (e.key === 'ArrowUp' ? -.1 : e.key === 'ArrowDown' ? .1 : 0))); }
     };

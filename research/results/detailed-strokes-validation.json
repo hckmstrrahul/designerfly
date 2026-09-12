@@ -4,31 +4,115 @@
   "results": {
     "ui": {
       "completed": true,
-      "steps": 8407,
-      "rmse": 0.007085741503481178,
+      "steps": 8487,
+      "rmse": 0.007870050296327006,
       "contact_fraction": 1.0,
-      "seconds": 4.526748180389404
+      "seconds": 5.7251551151275635
     },
     "text": {
       "completed": true,
-      "steps": 3455,
-      "rmse": 0.0059550076199273985,
+      "steps": 3464,
+      "rmse": 0.006512274910259753,
       "contact_fraction": 1.0,
-      "seconds": 1.841993808746338
+      "seconds": 3.2346079349517822
     },
     "alphabet": {
       "completed": true,
-      "steps": 7906,
-      "rmse": 0.005966900164787845,
+      "steps": 7929,
+      "rmse": 0.006504763181288183,
       "contact_fraction": 1.0,
-      "seconds": 4.342774868011475
+      "seconds": 6.47608208656311
     },
     "remaining": {
       "completed": true,
-      "steps": 6710,
-      "rmse": 0.005536925299572307,
+      "steps": 6736,
+      "rmse": 0.00606329904243252,
       "contact_fraction": 1.0,
-      "seconds": 3.599882125854492
+      "seconds": 4.731966972351074
+    },
+    "emoji-smile": {
+      "completed": true,
+      "steps": 1697,
+      "rmse": 0.008404629271622634,
+      "contact_fraction": 1.0,
+      "seconds": 1.1919960975646973
+    },
+    "emoji-wink": {
+      "completed": true,
+      "steps": 1697,
+      "rmse": 0.008365759799459964,
+      "contact_fraction": 1.0,
+      "seconds": 1.1735210418701172
+    },
+    "emoji-surprise": {
+      "completed": true,
+      "steps": 1668,
+      "rmse": 0.008207951353269315,
+      "contact_fraction": 1.0,
+      "seconds": 1.360476016998291
+    },
+    "emoji-cool": {
+      "completed": true,
+      "steps": 1829,
+      "rmse": 0.00868155923492394,
+      "contact_fraction": 1.0,
+      "seconds": 1.2662110328674316
+    },
+    "emoji-heart": {
+      "completed": true,
+      "steps": 860,
+      "rmse": 0.008702625777603546,
+      "contact_fraction": 1.0,
+      "seconds": 0.595587968826294
+    },
+    "emoji-star": {
+      "completed": true,
+      "steps": 998,
+      "rmse": 0.00873378711679062,
+      "contact_fraction": 1.0,
+      "seconds": 0.6444230079650879
+    },
+    "emoji-laugh": {
+      "completed": true,
+      "steps": 1866,
+      "rmse": 0.008324790479116493,
+      "contact_fraction": 1.0,
+      "seconds": 1.279334306716919
+    },
+    "emoji-love": {
+      "completed": true,
+      "steps": 1871,
+      "rmse": 0.00866310955615792,
+      "contact_fraction": 1.0,
+      "seconds": 1.5815060138702393
+    },
+    "emoji-sleepy": {
+      "completed": true,
+      "steps": 1958,
+      "rmse": 0.00849016214861635,
+      "contact_fraction": 1.0,
+      "seconds": 1.4516539573669434
+    },
+    "emoji-sad": {
+      "completed": true,
+      "steps": 1678,
+      "rmse": 0.008073274379935316,
+      "contact_fraction": 1.0,
+      "seconds": 1.1712069511413574
+    },
+    "emoji-sun": {
+      "completed": true,
+      "steps": 2369,
+      "rmse": 0.007222390330334898,
+      "contact_fraction": 1.0,
+      "seconds": 1.7912812232971191
+    },
+    "emoji-lightning": {
+      "completed": true,
+      "steps": 871,
+      "rmse": 0.008788428719175546,
+      "contact_fraction": 1.0,
+      "seconds": 0.6467199325561523
     }
   }
 }

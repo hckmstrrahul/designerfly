@@ -11,8 +11,8 @@ class PaperCoordinates(unittest.TestCase):
         outline=np.array([[-.6,.7],[-.6,-.7],[.5,-.7],[-.6,-.7],[-.6,0],[.2,0]])
         for editor in outline:
             physical=paper_xy(editor)
-            canvas=np.array([(physical[0]-1.55)/1.07,-physical[1]/1.07])+.5
-            expected=editor*.4/1.07+.5
+            canvas=np.array([(physical[0]-1.55)/1.15,-physical[1]/1.15])+.5
+            expected=editor*.44/1.15+.5
             np.testing.assert_allclose(canvas,expected,atol=1e-12)
 
 if __name__=='__main__':unittest.main()

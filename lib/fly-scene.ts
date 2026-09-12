@@ -7,9 +7,10 @@ import type { NeuralFrame } from './circuit';
 import type { PhysicsFrame } from './physics';
 import { aimJoint, plantLeg, applyPhysicalPose } from './fly-pose';
 import { flySurfaceMaps, softenSurface, surfaceUV } from './fly-surfaces';
+import { CAMERA_PRESETS } from './camera-presets';
 import { createJointRig, type Rig } from './fly-rig';
 
-export interface LiveDrawing { frame: NeuralFrame | null; drawing: boolean; run: number; physical: PhysicsFrame | null; ink: PhysicsFrame[]; wings: boolean; wing: number; resetView: number; }
+export interface LiveDrawing { frame: NeuralFrame | null; drawing: boolean; run: number; physical: PhysicsFrame | null; ink: PhysicsFrame[]; wings: boolean; wing: number; resetView: number; cameraPreset: number; }
 const UP = new T.Vector3(0, 1, 0);
 
 function box(w: number, h: number, d: number, color: string, x: number, y: number, z: number, scene: T.Object3D) {
@@ -28,9 +29,17 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
   camera.position.set(3.9, 6.4, 7.6); camera.lookAt(.1, .65, 0);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.set(.1, .65, 0); controls.enableDamping = true; controls.dampingFactor = .09;
-  controls.minPolarAngle = .08; controls.maxPolarAngle = Math.PI * .49; controls.minZoom = .65; controls.maxZoom = 3.5;
-  camera.zoom = .92; camera.updateProjectionMatrix();
-  controls.update(); controls.saveState();
+  controls.minPolarAngle = .0001; controls.maxPolarAngle = Math.PI * .49; controls.minZoom = .15; controls.maxZoom = 12; controls.zoomSpeed = 3;
+  const applyCameraPreset = () => {
+    const preset=CAMERA_PRESETS[live.cameraPreset] || CAMERA_PRESETS[0];
+    // Clear pending orbit damping before applying the exact saved preset.
+    controls.enableDamping=false;controls.reset();
+    camera.position.fromArray(preset.position);controls.target.fromArray(preset.target);
+    camera.zoom=preset.zoom;camera.lookAt(controls.target);camera.updateProjectionMatrix();
+    controls.update();controls.saveState();controls.enableDamping=true;
+    renderer.domElement.dataset.cameraPreset=preset.name;
+  };
+  applyCameraPreset();
   const resize = () => { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h); const half = Math.max(2.25, 3.05 * h / w); camera.left = -half * w / h; camera.right = half * w / h; camera.top = half; camera.bottom = -half; camera.updateProjectionMatrix(); };
   const observer = new ResizeObserver(resize); observer.observe(host); resize();
   const pmrem = new T.PMREMGenerator(renderer); const room = new RoomEnvironment(); const environment = pmrem.fromScene(room, .04); scene.environment = environment.texture; scene.environmentIntensity = .5; room.dispose(); pmrem.dispose();
@@ -43,15 +52,15 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
   // A small artist's pedestal: weighted base, stem, timber drawing board, loose paper.
   const stand = new T.Mesh(new T.CylinderGeometry(.43, .5, .1, 64), new T.MeshStandardMaterial({ color: '#bfbfba', metalness: .3, roughness: .5 })); stand.position.set(1.55, .035, 0); stand.castShadow = true; stand.receiveShadow = true; scene.add(stand);
   box(.12, .78, .12, '#acaca6', 1.55, .46, 0, scene);
-  box(1.16, .075, 1.16, '#b9a07c', 1.55, .885, 0, scene);
-  box(1.10, .015, 1.10, '#fffdf5', 1.55, .934, 0, scene);
+  box(1.24, .075, 1.24, '#b9a07c', 1.55, .885, 0, scene);
+  box(1.18, .015, 1.18, '#fffdf5', 1.55, .934, 0, scene);
   const paperCanvas = document.createElement('canvas'); paperCanvas.width = paperCanvas.height = 1024;
   const context = paperCanvas.getContext('2d')!;
   const clearPaper = () => { context.fillStyle = '#fffdf7'; context.fillRect(0, 0, 1024, 1024); };
   clearPaper(); const paperTexture = new T.CanvasTexture(paperCanvas); paperTexture.colorSpace = T.SRGBColorSpace; paperTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-  const paper = new T.Mesh(new T.PlaneGeometry(1.07, 1.07), new T.MeshStandardMaterial({ map: paperTexture, roughness: 1 })); paper.rotation.x = -Math.PI / 2; paper.position.set(1.55, .946, 0); paper.receiveShadow = true; scene.add(paper);
+  const paper = new T.Mesh(new T.PlaneGeometry(1.15, 1.15), new T.MeshStandardMaterial({ map: paperTexture, roughness: 1 })); paper.rotation.x = -Math.PI / 2; paper.position.set(1.55, .946, 0); paper.receiveShadow = true; scene.add(paper);
   // Two small brass clips keep the sheet in place, without any text on the canvas.
-  for (const z of [-.44, .44]) box(.12, .022, .12, '#ada58e', 2.03, .962, z, scene);
+  for (const z of [-.48, .48]) box(.12, .022, .12, '#ada58e', 2.07, .962, z, scene);
   const stylus = new T.Group(); scene.add(stylus);
   const shaft = new T.Mesh(new T.CylinderGeometry(.023, .023, .44, 12), new T.MeshStandardMaterial({ color: '#e56835', roughness: .48 })); shaft.position.y = .34; stylus.add(shaft);
   const wood = new T.Mesh(new T.ConeGeometry(.023, .12, 12), new T.MeshStandardMaterial({ color: '#ccb38b' })); wood.rotation.z = Math.PI; wood.position.y = .08; stylus.add(wood);
@@ -130,7 +139,7 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
     if (disposed) return;
     const dt = Math.min((time - lastTime) / 1000, .05); lastTime = time;
     if (live.run !== lastRun) { clearPaper(); paperTexture.needsUpdate = true; previous = null; lastRun = live.run; }
-    if (live.resetView !== viewRevision) { controls.reset(); viewRevision = live.resetView; }
+    if (live.resetView !== viewRevision) { applyCameraPreset(); viewRevision = live.resetView; }
     controls.update();
     const physical = live.physical;
     if (physical) pen.set(physical.tip[0], physical.tip[2] - .009, -physical.tip[1]);
@@ -138,8 +147,8 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
     stylus.position.copy(pen);
     for (const sample of live.ink.splice(0)) {
       if (!sample.contact || !sample.drawing) { previous = null; continue; }
-      const p = new T.Vector2((sample.tip[0] - 1.55) / 1.07 * 1024 + 512, -sample.tip[1] / 1.07 * 1024 + 512);
-      if (previous) { context.beginPath(); context.moveTo(previous.x, previous.y); context.lineTo(p.x, p.y); context.lineWidth = 2.6; context.strokeStyle = '#252b21'; context.lineCap = 'round'; context.lineJoin = 'round'; context.stroke(); paperTexture.needsUpdate = true; }
+      const p = new T.Vector2((sample.tip[0] - 1.55) / 1.15 * 1024 + 512, -sample.tip[1] / 1.15 * 1024 + 512);
+      if (previous) { context.beginPath(); context.moveTo(previous.x, previous.y); context.lineTo(p.x, p.y); context.lineWidth = 5.2; context.strokeStyle = '#252b21'; context.lineCap = 'round'; context.lineJoin = 'round'; context.stroke(); paperTexture.needsUpdate = true; }
       previous = p;
     }
     if (loaded && physical) applyPhysicalPose(joints, stylus, physical);

@@ -41,5 +41,16 @@ void test('lettering is bounded, supports line breaks and rejects unsupported in
   const strokes=textStudy(text);assert.ok(strokes.length>0&&strokes.length<=MAX_SHAPES);
   for(const s of strokes){assert.deepEqual(constrainShape(s),s);assert.ok(s.points!.every(p=>p.every(v=>Number.isFinite(v)&&Math.abs(v)<=.500001)));}
  }
- assert.equal(validText('a short name'),true);assert.equal(validText('é'),false);assert.equal(validText('x'.repeat(21)),false);
+ assert.equal(validText('a short name'),true);assert.equal(validText('é'),false);assert.equal(validText('x'.repeat(40)),true);assert.equal(validText('x'.repeat(41)),false);
+});
+
+void test('40 high-stroke letters fit the drawing budget and workspace', async()=>{
+ const {textStudy,MAX_SHAPES}=await import('../lib/composition.ts');
+ const shapes=textStudy('H'.repeat(40));
+ assert.equal(shapes.length,120);
+ assert.ok(shapes.length<=MAX_SHAPES);
+ for(const s of shapes) for(const [x,y] of s.points!){
+  assert.ok(Math.abs(s.x+x*s.width)<=1);
+  assert.ok(Math.abs(s.y+y*s.height)<=1);
+ }
 });

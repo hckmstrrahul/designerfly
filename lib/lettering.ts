@@ -15,9 +15,10 @@ const glyphs: Record<string, string> = {
  '9':'42 12 01 10 30 41 43 34 04','-':'02 42','.':'24 25','!':'20 22|24 25','?':'00 30 41 22|24 25',
 };
 export const normalizeText = (value: string) => value.toUpperCase();
-export const validText = (value: string) => value.length <= 20 && /^[A-Z0-9 .!?\-\n]*$/.test(normalizeText(value));
+export const MAX_TEXT_LENGTH = 40;
+export const validText = (value: string) => value.length <= MAX_TEXT_LENGTH && /^[A-Z0-9 .!?\-\n]*$/.test(normalizeText(value));
 export function letteringPaths(value: string): PenPoint[][] {
- if (!validText(value)) throw new Error('Use up to 20 letters, numbers, spaces or . ! ? -');
+ if (!validText(value)) throw new Error(`Use up to ${MAX_TEXT_LENGTH} letters, numbers, spaces or . ! ? -`);
  const lines = normalizeText(value).split('\n').flatMap(line => line.match(/.{1,7}/g) || ['']);
  const paths: PenPoint[][] = [], columns = Math.max(1,...lines.map(l=>l.length));
  const step = Math.min(.25,1.7/columns), h = Math.min(.32,1.65/Math.max(1,lines.length));

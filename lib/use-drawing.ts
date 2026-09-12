@@ -3,6 +3,7 @@ import type { CircuitModel, CircuitView, NeuralFrame } from './circuit';
 import { createFlyScene, type LiveDrawing } from './fly-scene';
 import { physics, type PhysicsFrame, type PhysicsReport } from './physics';
 import type { PlacedShape } from './composition';
+import { CAMERA_PRESETS, CAMERA_STORAGE_KEY, savedCameraPreset } from './camera-presets';
 import { stepsAtSpeed, wingClock } from './simulation-clock';
 
 export function useDrawing() {
@@ -15,7 +16,8 @@ export function useDrawing() {
   const [shape, setShape] = useState<number | null>(null), [phase, setPhase] = useState('loading');
   const [progress, setProgress] = useState(0), [completed, setCompleted] = useState(0), [wings, setWings] = useState(false), [contact, setContact] = useState(false);
   const host = useRef<HTMLDivElement>(null);
-  const live = useRef<LiveDrawing>({ frame: null, drawing: false, run: 0, physical: null, ink: [], wings: false, wing: 0, resetView: 0 });
+  const [cameraPreset,setCameraPreset] = useState(savedCameraPreset);
+  const live = useRef<LiveDrawing>({ frame: null, drawing: false, run: 0, physical: null, ink: [], wings: false, wing: 0, resetView: 0, cameraPreset });
   const session = useRef(''), active = useRef(false), alive = useRef(false), selection = useRef<(i: number) => void>(() => {});
   const sequence = useRef(0);
   const [speed, setSpeed] = useState(1), speedRef = useRef(1);
@@ -120,6 +122,11 @@ export function useDrawing() {
     selectNeuralSource(live.current.wings ? 'wing' : 'motor');
   }
   function resetView() { live.current.resetView++; }
+  function cycleCamera() {
+    const next=(live.current.cameraPreset+1)%CAMERA_PRESETS.length;
+    live.current.cameraPreset=next;live.current.resetView++;setCameraPreset(next);
+    try{localStorage.setItem(CAMERA_STORAGE_KEY,String(next));}catch{/* Storage can be unavailable in private sessions. */}
+  }
   function cycleSpeed() { speedRef.current = speedRef.current === 4 ? 1 : speedRef.current * 2; setSpeed(speedRef.current); }
-  return { model: neuralSource === 'motor' && motorModel ? motorModel : model, report, error, shape, phase, progress, completed, host, live, ready, draw, wings, toggleWings, contact, resetView, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed };
+  return { model: neuralSource === 'motor' && motorModel ? motorModel : model, report, error, shape, phase, progress, completed, host, live, ready, draw, wings, toggleWings, contact, resetView, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera };
 }
