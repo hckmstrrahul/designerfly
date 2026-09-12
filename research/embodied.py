@@ -13,6 +13,11 @@ BASE_ROLL=np.pi/4
 BASE_ROT=np.array([[1,0,0],[0,np.cos(BASE_ROLL),-np.sin(BASE_ROLL)],[0,np.sin(BASE_ROLL),np.cos(BASE_ROLL)]])
 PAPER_Z=.946; TIP_RADIUS=.009
 CENTER=np.array([1.55,0.,PAPER_Z]); SCALE=.40
+
+def paper_xy(point):
+    """Editor X-right/Y-down to MuJoCo XY; rendering maps world Z to -Y."""
+    return CENTER[:2]+np.asarray(point)*np.array([SCALE,-SCALE])
+
 DT=.001; CONTROL_DT=.02
 XML=f'''<mujoco model="DF-02 tethered foreleg">
 <compiler angle="radian"/><option timestep="{DT}" gravity="0 0 -9.81" integrator="implicitfast" cone="elliptic" iterations="100" tolerance="1e-10"/>

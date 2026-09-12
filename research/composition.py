@@ -6,7 +6,7 @@ between strokes or calls IK/analytic shape geometry during step().
 import numpy as np
 import torch
 from core import ROOT,Circuit,numpy_infer,features
-from embodied import Foreleg,CENTER,PAPER_Z,CONTROL_DT
+from embodied import Foreleg,CENTER,PAPER_Z,CONTROL_DT,paper_xy
 
 def load_placement():
     net=Circuit()
@@ -43,7 +43,7 @@ class CompositionSession:
         point,_=self.planner(features([s['shape']],[phase])[0])
         return place_point(point,s)
     def _travel_duration(self):
-        start=CENTER[:2]+self.planned(0)*.4
+        start=paper_xy(self.planned(0))
         return max(1.,float(np.linalg.norm(start-self.origin[:2]))/.26)
     def step(self,ablated=False,feedback=True,push=None):
         s=self.strokes[self.index];duration=max(3.,6.*max(s['width'],s['height']))
@@ -51,7 +51,7 @@ class CompositionSession:
             length=np.linalg.norm(np.diff(np.asarray(s['points'])*[s['width'],s['height']],axis=0),axis=1).sum()
             duration=max(1.2,float(length)*3.)
         phase=float(np.clip(self.elapsed/duration,0,1)) if self.stage=='draw' else (1. if self.stage in ['lift','done'] else 0.)
-        point=self.planned(phase);xy=CENTER[:2]+point*.4
+        point=self.planned(phase);xy=paper_xy(point)
         raised=1.14;down=PAPER_Z+.004
         if self.stage=='travel':
             t=min(1.,self.elapsed/self.travel_duration);t=t*t*(3-2*t)

@@ -3,7 +3,7 @@ import json
 import numpy as np
 import torch
 from core import ROOT,Circuit,features,numpy_infer
-from embodied import Foreleg,CENTER,SCALE,PAPER_Z,TIP_RADIUS
+from embodied import Foreleg,CENTER,SCALE,PAPER_Z,TIP_RADIUS,paper_xy
 
 def load_policies():
     planner=Circuit();planner.load_state_dict(torch.load(ROOT/'research/results/refined.pt',weights_only=False)['state_dict'])
@@ -19,7 +19,7 @@ class DrawingSession:
         planned,planner_state=self.planner(features([self.shape],[phase])[0])
         height=1.12 if t<.7 else (1.12+(PAPER_Z+.004-1.12)*min(1,(t-.7)/.5))
         if t>13.5:height=PAPER_Z+.004+min(.20,(t-13.5)*.6)
-        reference=np.array([CENTER[0]+planned[0]*SCALE,planned[1]*SCALE,height])
+        reference=np.r_[paper_xy(planned),height]
         obs=self.env.sense(reference)
         if self.frozen is None:self.frozen=obs.copy()
         if not feedback:

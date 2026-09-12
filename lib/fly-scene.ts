@@ -37,9 +37,9 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
   scene.add(new T.HemisphereLight('#fff8e9', '#b7bba8', .65));
   const sun = new T.DirectionalLight('#fff5de', 2.1); sun.position.set(-3, 7, 4); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -5; sun.shadow.camera.right = 5; sun.shadow.camera.top = 5; sun.shadow.camera.bottom = -5; sun.shadow.normalBias = .015; sun.shadow.bias = -.0001; sun.shadow.radius = 4; sun.shadow.blurSamples = 8; scene.add(sun);
   const ground = new T.Mesh(new T.PlaneGeometry(200, 200), new T.MeshBasicMaterial({ color: '#151a19', toneMapped: false })); ground.rotation.x = -Math.PI / 2; ground.position.y = -.04; scene.add(ground);
-  const groundShadow = new T.Mesh(new T.PlaneGeometry(200, 200), new T.ShadowMaterial({ color: '#555550', opacity: .22 }));
+  const groundShadow = new T.Mesh(new T.PlaneGeometry(200, 200), new T.ShadowMaterial({ color: '#000000', opacity: .48, toneMapped: false }));
   groundShadow.rotation.x = -Math.PI / 2; groundShadow.position.y = -.039; groundShadow.receiveShadow = true; scene.add(groundShadow);
-  const grid = new T.GridHelper(200, 800, '#303936', '#252d2b'); grid.position.y = -.038; scene.add(grid);
+  const grid = new T.GridHelper(200, 800, '#303936', '#252d2b'); grid.position.y = -.0395; scene.add(grid);
   // A small artist's pedestal: weighted base, stem, timber drawing board, loose paper.
   const stand = new T.Mesh(new T.CylinderGeometry(.43, .5, .1, 64), new T.MeshStandardMaterial({ color: '#bfbfba', metalness: .3, roughness: .5 })); stand.position.set(1.55, .035, 0); stand.castShadow = true; stand.receiveShadow = true; scene.add(stand);
   box(.12, .78, .12, '#acaca6', 1.55, .46, 0, scene);

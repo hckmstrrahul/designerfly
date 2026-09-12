@@ -180,6 +180,7 @@ npm run build
 .venv/bin/python research/test_physics.py
 .venv/bin/python research/test_composition.py
 .venv/bin/python research/validate_detailed_strokes.py
+.venv/bin/python research/test_paper_coordinates.py
 .venv/bin/python research/evaluate_expansion.py
 node scripts/check-fly-clearance.mjs research/results/expansion-poses-2048.json
 ```
@@ -214,7 +215,7 @@ This makes the drawing fill more of the paper without claiming extra motor reach
 
 The physical check covers the UI example, `HELLO` / `WORLD`, the alphabet,
 numbers and supported punctuation. All four sessions completed with 100% contact
-on sampled drawing frames. XY tracking RMSE ranged from 0.00635 to 0.00736 model
+on sampled drawing frames. XY tracking RMSE ranged from 0.00554 to 0.00709 model
 units. See [the recorded results](research/results/detailed-strokes-validation.json).
 These are smoke checks, not a comprehensive handwriting benchmark or a guarantee
 for every arrangement. Letter geometry is original code in `lib/lettering.ts`;
