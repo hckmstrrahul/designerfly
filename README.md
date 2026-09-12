@@ -63,11 +63,11 @@ server; the default toolbar uses local copy/paste.
   Laugh, Love, Sleepy, Sad, Sun and Lightning. These are original
   minimal stroke drawings, executed by the same physical motor. The device Emoji
   mode draws the selected emoji directly with **Draw**. The Draw UI sidebar adds each emoji as one group that moves, resizes and deletes together.
-- **Speed:** cycle through 1×, 2× and 4× simulation time. Each update runs 2, 4 or
-  8 full control steps. The fixed physics timestep, feedback inference and every
+- **Speed:** cycle through 1×, 3× and 6× simulation time. Each update runs 2, 6 or
+  12 full control steps. The fixed physics timestep, feedback inference and every
   contact/ink sample are preserved. This is faster execution of the same
   simulation, not a controller trained to move faster in physical time. The orange
-  Speed button shows 1×, 2× or 4× above its white LEDs; the caption stays SPEED.
+  Speed button shows 1×, 3× or 6× above its white LEDs; the caption stays SPEED.
   Wing inference uses the same speed-scaled clock while drawing or idle. Wing
   motion, NL–01 and NS–01 share each inference sample and its simulation timestamp;
   changing speed preserves phase instead of restarting the wing cycle.
@@ -254,7 +254,20 @@ Nothing is deployed by the local commands. `npm run build` produces the frontend
 in `dist`. **Vercel hosting of the static frontend alone will not run the physics
 service.** A deployed version needs a separately hosted Python backend and an API
 proxy, or a future browser physics port. The current app uses Vite's `/physics`
-proxy and intentionally binds its backend to localhost.
+proxy and defaults to localhost for development.
+
+To connect the deployed frontend:
+
+1. Run the repository on a persistent Python 3.12 host with `research/requirements.txt`
+   installed. Keep the tracked `research/data`, model checkpoints and `public` assets.
+2. Start `python research/server.py` with `HOST=0.0.0.0`, the host's assigned `PORT`,
+   and `ALLOWED_ORIGINS=https://designerfly.vercel.app`. Use one process/replica:
+   drawing sessions currently live in memory, and the service allows eight sessions.
+3. Verify the backend's HTTPS `/health` endpoint returns JSON with `ready: true`.
+4. Set `VITE_PHYSICS_URL` in Vercel to that HTTPS backend URL (no `/physics` suffix),
+   then rebuild/redeploy. Without this setting, local development uses `/physics`.
+
+The backend host has not yet been configured. Vercel currently hosts the frontend only.
 
 ## Sources and licenses
 

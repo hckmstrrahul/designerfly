@@ -78,7 +78,7 @@ export function useDrawing() {
       const initial = await physics<{ session: string; frame: PhysicsFrame }>('/session', { shape: 0 });
       if (disposed) { void physics(`/session/${initial.session}`, undefined, 'DELETE').catch(() => {}); return; }
       session.current = initial.session; live.current.physical = initial.frame; setReport(health); setPhase('ready');
-    }).catch(() => { if (!disposed) setError('Start the local physics service with npm run physics, then reload.'); });
+    }).catch(() => { if (!disposed) setError(location.hostname==='localhost'||location.hostname==='127.0.0.1'?'Start the local physics service with npm run physics, then reload.':'The drawing service is currently unavailable. Please try again shortly.'); });
     const tick = async () => {
       const start = performance.now(), run = live.current.run;
       try {
@@ -127,6 +127,6 @@ export function useDrawing() {
     live.current.cameraPreset=next;live.current.resetView++;setCameraPreset(next);
     try{localStorage.setItem(CAMERA_STORAGE_KEY,String(next));}catch{/* Storage can be unavailable in private sessions. */}
   }
-  function cycleSpeed() { speedRef.current = speedRef.current === 4 ? 1 : speedRef.current * 2; setSpeed(speedRef.current); }
+  function cycleSpeed() { speedRef.current = speedRef.current === 1 ? 3 : speedRef.current === 3 ? 6 : 1; setSpeed(speedRef.current); }
   return { model: neuralSource === 'motor' && motorModel ? motorModel : model, report, error, shape, phase, progress, completed, host, live, ready, draw, wings, toggleWings, contact, resetView, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera };
 }

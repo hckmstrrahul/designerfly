@@ -1,5 +1,5 @@
 """Local-only physics service. Launch with npm run physics."""
-import time,uuid
+import time,uuid,os
 import numpy as np
 from fastapi import FastAPI,HTTPException
 from pydantic import BaseModel,Field
@@ -9,6 +9,10 @@ from composition import CompositionSession,load_placement,load_composition_motor
 from active_motor import configuration,policy_or
 
 app=FastAPI();planner,motor=load_policies();motor=policy_or(motor);sessions={}
+# Set ALLOWED_ORIGINS when the frontend connects directly from another host.
+from fastapi.middleware.cors import CORSMiddleware
+origins=[origin.strip() for origin in os.getenv('ALLOWED_ORIGINS','').split(',') if origin.strip()]
+if origins:app.add_middleware(CORSMiddleware,allow_origins=origins,allow_methods=['GET','POST','DELETE'],allow_headers=['Content-Type'])
 placement_planner=None
 composition_motor=None
 class Start(BaseModel):shape:int=Field(ge=0,le=2)
@@ -18,7 +22,7 @@ class Stroke(BaseModel):
     width:float=Field(ge=.02,le=1.72);height:float=Field(ge=.02,le=1.72)
     points:list[tuple[float,float]] | None=Field(default=None,min_length=2,max_length=256)
 class CompositionStart(BaseModel):strokes:list[Stroke]=Field(min_length=1,max_length=128)
-class Step(BaseModel):session:str;steps:int=Field(default=2,ge=1,le=8);wings:bool=False;push:bool=False;wing_phase:float=Field(default=0,ge=0,le=1)
+class Step(BaseModel):session:str;steps:int=Field(default=2,ge=1,le=12);wings:bool=False;push:bool=False;wing_phase:float=Field(default=0,ge=0,le=1)
 @app.get('/health')
 def health():
     config=configuration();summary=reports()
@@ -70,4 +74,4 @@ def wing(phase:float=0):
 
 if __name__=='__main__':
     import uvicorn
-    uvicorn.run(app,host='127.0.0.1',port=5192,log_level='warning')
+    uvicorn.run(app,host=os.getenv('HOST','127.0.0.1'),port=int(os.getenv('PORT','5192')),log_level='warning')
