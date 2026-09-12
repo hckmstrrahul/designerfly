@@ -7,7 +7,7 @@ type Anatomy = { cells: { bodyId: string; neuron: number; points: number[][]; ed
 type Camera = { yaw: number; pitch: number; zoom: number; x: number; y: number };
 const home = (mode: 'activity' | 'anatomy' | 'spectrum'): Camera => ({ yaw: mode === 'spectrum' ? 0 : .38, pitch: mode === 'spectrum' ? 0 : .12, zoom: mode === 'activity' ? 1.16 * .8 * 1.1 : mode === 'spectrum' ? .96 : 1, x: 0, y: 0 });
 
-export function NeuralDisplay({ model, live, source, mode }: { model: CircuitView; live: RefObject<LiveDrawing>; source: NeuralSource; mode: 'activity' | 'anatomy' | 'spectrum' }) {
+export function NeuralDisplay({ model, live, source, mode, onReady, onError }: { model: CircuitView; live: RefObject<LiveDrawing>; source: NeuralSource; mode: 'activity' | 'anatomy' | 'spectrum'; onReady?: (ready:boolean)=>void; onError?: (error:string)=>void }) {
   const traceRef = useRef<HTMLCanvasElement>(null);
   const ref = useRef<HTMLCanvasElement>(null), camera = useRef(home(mode));
   const [anatomyData, setAnatomy] = useState<Anatomy | null>(null), [anatomyError, setAnatomyError] = useState(false);
@@ -25,9 +25,9 @@ export function NeuralDisplay({ model, live, source, mode }: { model: CircuitVie
     fetch('/models/neural-anatomy.json', { signal: controller.signal }).then(r => { if (!r.ok) throw new Error('Anatomy unavailable'); return r.json(); }).then((data: Anatomy) => {
       if (!data.cells.every(c => model.bodyIds.includes(c.bodyId))) throw new Error('Anatomy identity mismatch');
       setAnatomy(data);
-    }).catch(() => { if (!controller.signal.aborted) setAnatomyError(true); });
+    }).catch(() => { if (!controller.signal.aborted) {setAnatomyError(true);onError?.('Neural anatomy could not load. Reload to retry.');} });
     return () => controller.abort();
-  }, [mode, anatomy, model]);
+  }, [mode, anatomy, model, onError]);
   useEffect(() => {
     const canvas = ref.current!, pointers = new Map<number, { x: number; y: number }>();
     const down = (e: PointerEvent) => { canvas.setPointerCapture(e.pointerId); pointers.set(e.pointerId, { x: e.clientX, y: e.clientY }); };
@@ -70,7 +70,7 @@ export function NeuralDisplay({ model, live, source, mode }: { model: CircuitVie
       for (const p of positions) if (p) { lo = Math.min(lo, p[axis]); hi = Math.max(hi, p[axis]); }
       return { center: (lo + hi) / 2, range: Math.max(1, hi - lo) };
     });
-    let animation = 0, cachedView = '';
+    let animation = 0, cachedView = '', announced = false;
     // Reuse small feathered sprites instead of blurring thousands of dots per frame.
     const glows = new Map<number, HTMLCanvasElement>();
     const glowSprite = (value: number) => {
@@ -181,6 +181,7 @@ export function NeuralDisplay({ model, live, source, mode }: { model: CircuitVie
         });
       }
       ctx.restore();
+      if (!announced && (mode === 'activity' || anatomy)) { announced = true; onReady?.(true); }
       if (mode !== 'activity') return;
       const traceCanvas = traceRef.current;
       if (!traceCanvas) return;
@@ -206,11 +207,11 @@ export function NeuralDisplay({ model, live, source, mode }: { model: CircuitVie
 
     };
     animation = requestAnimationFrame(draw); return () => cancelAnimationFrame(animation);
-  }, [model, live, source, mode, anatomy, anatomyPoints, anatomyError]);
+  }, [model, live, source, mode, anatomy, anatomyPoints, anatomyError, onReady]);
   return <>
     {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role */}
-    <canvas ref={ref} className="neural-canvas" tabIndex={0} role="img" aria-label={`${source} ${mode} interactive 3D view. ${mode === 'activity' ? 'Computed signed rates: red negative, dark green zero, green positive. Soft glow shows activity strength and changes between received samples.' : mode === 'spectrum' ? 'Measured 3D skeletons: rainbow hue identifies each neuron, brightness shows its computed rate magnitude. No branch signal propagation is modeled.' : 'Measured neuron skeletons: sensory cyan, local circuit purple, motor gold.'} Drag or arrow keys rotate; scroll or plus/minus zoom; Shift-drag or Shift-arrows pan; double-click or Home resets.`} />
-    {mode === 'activity' && <canvas ref={traceRef} className="neural-trace" aria-label="Mean absolute activity across all controller neurons" />}
-    <div className="neural-legend">{mode === 'activity' ? <><div className="rate-legend-title" title="This scale maps each neuron’s signed model value to color; it is separate from the average activity graph.">Neuron color scale</div><div className="rate-legend"><span>−1</span><i /><span>+1</span></div></> : mode === 'spectrum' ? <div className="spectrum-legend"><div title="Each hue identifies one of the 96 measured neurons"><span className="spectrum-swatches" aria-hidden="true">{['#ff718a','#da7aff','#77aaff','#70e7bb','#e3e87a'].map(color => <i key={color} style={{ background: color }} />)}</span><span>Neuron identity</span></div><div title="Brightness follows the neuron’s actual computed activity magnitude"><span className="strength-swatches" aria-hidden="true">{[.2,.4,.6,.8,1].map(opacity => <i key={opacity} style={{ opacity }} />)}</span><span>Activity strength</span></div></div> : <div className="cell-legend">{[['vnc_sensory', 'Sensory'], ['vnc_intrinsic', 'Local circuit'], ['vnc_motor', 'Motor']].map(([type, label]) => <span key={type}><i style={{ background: CELL_COLORS[type] }} />{label}</span>)}</div>}</div>
+    <canvas ref={ref} className="neural-canvas" tabIndex={0} role="img" aria-label={`${source} ${mode} interactive 3D view. ${source === 'spiking' ? `Experimental LIF firing rates, smoothed over 100 milliseconds. ${mode === 'spectrum' ? 'Hue identifies the neuron; brightness represents firing rate.' : 'Green brightness represents firing rate.'} Display saturates at 100 Hz. Not biological recordings.` : mode === 'activity' ? 'Computed signed rates: red negative, dark green zero, green positive. Soft glow shows activity strength and changes between received samples.' : mode === 'spectrum' ? 'Measured 3D skeletons: rainbow hue identifies each neuron, brightness shows its computed rate magnitude. No branch signal propagation is modeled.' : 'Measured neuron skeletons: sensory cyan, local circuit purple, motor gold.'} Drag or arrow keys rotate; scroll or plus/minus zoom; Shift-drag or Shift-arrows pan; double-click or Home resets.`} />
+    {mode === 'activity' && <canvas ref={traceRef} className="neural-trace" aria-label={source === 'spiking' ? 'Mean normalized firing rate, display capped at 100 Hz per cell' : 'Mean absolute activity across all controller neurons'} />}
+    <div className="neural-legend">{mode === 'activity' ? <><div className="rate-legend-title" title={source === 'spiking' ? 'Computed firing rate from this physical session. Color saturates at 100 Hz; this is not transmitter identity.' : 'This scale maps each neuron’s signed model value to color; it is separate from the average activity graph.'}>{source === 'spiking' ? 'Firing rate · 100 ms smoothing' : 'Neuron color scale'}</div><div className="rate-legend"><span>{source === 'spiking' ? '0 Hz' : '−1'}</span><i style={source === 'spiking' ? {background:'linear-gradient(to right,#17291c,#76ce69)'} : undefined}/><span>{source === 'spiking' ? '100+ Hz' : '+1'}</span></div></> : mode === 'spectrum' ? <div className="spectrum-legend"><div title="Each hue identifies one of the 96 measured neurons"><span className="spectrum-swatches" aria-hidden="true">{['#ff718a','#da7aff','#77aaff','#70e7bb','#e3e87a'].map(color => <i key={color} style={{ background: color }} />)}</span><span>Neuron identity</span></div><div title="Brightness follows the neuron’s actual computed activity magnitude"><span className="strength-swatches" aria-hidden="true">{[.2,.4,.6,.8,1].map(opacity => <i key={opacity} style={{ opacity }} />)}</span><span>Activity strength</span></div></div> : <div className="cell-legend">{[['vnc_sensory', 'Sensory'], ['vnc_intrinsic', 'Local circuit'], ['vnc_motor', 'Motor']].map(([type, label]) => <span key={type}><i style={{ background: CELL_COLORS[type] }} />{label}</span>)}</div>}</div>
   </>;
 }

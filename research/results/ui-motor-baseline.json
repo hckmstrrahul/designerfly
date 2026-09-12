@@ -1,0 +1,88 @@
+{
+  "checkpoint_sha256": "a3f15f098aed1ee643340948c8ccd21782bc476325ed123807df6b7d0235e7fd",
+  "checkpoint_unchanged": true,
+  "units": "Model millimetres; aggregate metrics are equally weighted per fixture, not pooled samples.",
+  "roughness_definition": "RMS normal second differences, contiguous contact samples, interior of straight segments >=0.04 model mm; excludes curvature and corner transitions.",
+  "completed": true,
+  "travel_contact_frames": 0,
+  "aggregate": {
+    "tracking_rmse": 0.020381554460028234,
+    "contact_cross_track_rmse": 0.011210388542064673,
+    "contact_cross_track_p95": 0.022914861904012727,
+    "straight_roughness_rms": 0.0006472559061217715,
+    "contact_fraction": 0.9959832606492169
+  },
+  "results": {
+    "horizontal_rule": {
+      "completed": true,
+      "steps": 313,
+      "drawing_samples": 153,
+      "contact_samples": 152,
+      "contact_fraction": 0.9934640522875817,
+      "travel_contact_frames": 0,
+      "tracking_rmse": 0.015824955573666897,
+      "contact_cross_track_rmse": 0.01090816595782185,
+      "contact_cross_track_p95": 0.022464426080276025,
+      "straight_roughness_rms": 0.0005779159948971562,
+      "straight_roughness_samples": 105,
+      "seconds": 1.6802226250001695
+    },
+    "vertical_rule": {
+      "completed": true,
+      "steps": 300,
+      "drawing_samples": 113,
+      "contact_samples": 113,
+      "contact_fraction": 1.0,
+      "travel_contact_frames": 0,
+      "tracking_rmse": 0.012636086515572669,
+      "contact_cross_track_rmse": 0.006861516646170817,
+      "contact_cross_track_p95": 0.016627703878501772,
+      "straight_roughness_rms": 0.0007152733935305682,
+      "straight_roughness_samples": 78,
+      "seconds": 1.4147876250026457
+    },
+    "thumbnail_corner": {
+      "completed": true,
+      "steps": 383,
+      "drawing_samples": 223,
+      "contact_samples": 222,
+      "contact_fraction": 0.9955156950672646,
+      "travel_contact_frames": 0,
+      "tracking_rmse": 0.016732179656727714,
+      "contact_cross_track_rmse": 0.008059623346985142,
+      "contact_cross_track_p95": 0.018505059293867886,
+      "straight_roughness_rms": 0.0007172225594529536,
+      "straight_roughness_samples": 159,
+      "seconds": 1.7891237500007264
+    },
+    "rounded_card": {
+      "completed": true,
+      "steps": 532,
+      "drawing_samples": 331,
+      "contact_samples": 328,
+      "contact_fraction": 0.9909365558912386,
+      "travel_contact_frames": 0,
+      "tracking_rmse": 0.02172286541083318,
+      "contact_cross_track_rmse": 0.011030541819168668,
+      "contact_cross_track_p95": 0.020786353877331704,
+      "straight_roughness_rms": 0.0005371255257094947,
+      "straight_roughness_samples": 178,
+      "seconds": 2.9605193750030594
+    },
+    "thumbnail_detail": {
+      "completed": true,
+      "steps": 312,
+      "drawing_samples": 139,
+      "contact_samples": 139,
+      "contact_fraction": 1.0,
+      "travel_contact_frames": 0,
+      "tracking_rmse": 0.03499168514334071,
+      "contact_cross_track_rmse": 0.019192094940176884,
+      "contact_cross_track_p95": 0.03619076639008626,
+      "straight_roughness_rms": 0.0006887420570186853,
+      "straight_roughness_samples": 98,
+      "seconds": 1.8342011669992644
+    }
+  },
+  "seconds": 9.678854542005865
+}

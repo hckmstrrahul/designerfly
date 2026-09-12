@@ -1,7 +1,7 @@
 """The editor and the ink texture must have the same handedness."""
 import unittest
 import numpy as np
-from embodied import paper_xy
+from embodied import paper_xy, SCALE
 
 class PaperCoordinates(unittest.TestCase):
     def test_editor_points_round_trip_through_physics_and_paper_texture(self):
@@ -12,7 +12,7 @@ class PaperCoordinates(unittest.TestCase):
         for editor in outline:
             physical=paper_xy(editor)
             canvas=np.array([(physical[0]-1.55)/1.15,-physical[1]/1.15])+.5
-            expected=editor*.44/1.15+.5
+            expected=editor*SCALE/1.15+.5
             np.testing.assert_allclose(canvas,expected,atol=1e-12)
 
 if __name__=='__main__':unittest.main()

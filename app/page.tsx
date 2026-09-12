@@ -1,6 +1,7 @@
 import { Wind, LayoutTemplate, Activity, FlaskConical, Scale, ArrowUpRight, Type, Smile, Camera } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDrawing } from '@/lib/use-drawing';
+import { DeviceLoader } from './device-loader';
 import { DeviceCable } from './device-cable';
 import { NeuralDisplay } from './neural-display';
 import { CompositionEditor, type EditorMode, type EditorTool } from './composition-editor';
@@ -11,7 +12,12 @@ function Screw({ position }: { position: string }) { return <span aria-hidden="t
 function Screws() { return <>{['top-left', 'top-right', 'bottom-left', 'bottom-right'].map(p => <Screw key={p} position={p} />)}</>; }
 
 export default function DesignerFly() {
-  const { model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact } = useDrawing();
+  const { model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact, controller, selectController } = useDrawing();
+  const [activityReady,setActivityReady]=useState(false);
+  const [spectrumReady,setSpectrumReady]=useState(false);
+  const [spectrumError,setSpectrumError]=useState('');
+  const spiking=neuralSource==='spiking';
+  const displayModel=model, displayLive=live, displaySource=neuralSource;
   const [arranging, setArranging] = useState(false);
   const [editorMode,setEditorMode] = useState<EditorMode>('arrange');
   const [canvases,setCanvases] = useState<Record<EditorMode,PlacedShape[]>>({arrange:UI_EXAMPLE,text:[],emoji:[]});
@@ -94,7 +100,7 @@ export default function DesignerFly() {
                 <span>{status}</span>
               </output>
               <div className="scene-hint">Drag to rotate · Scroll to zoom</div>
-              {!ready && <div className="scene-loading">{error || 'Preparing the little studio…'}</div>}
+              {!ready && <DeviceLoader label="Preparing the studio" error={error}/> }
               {arranging && <CompositionEditor mode={editorMode} tool={editorTool} onTool={setEditorTool} shapes={study} onChange={setStudy} onClose={() => setArranging(false)} onDraw={(paths) => { if(!paths.length)return; setStudy(paths); setArranging(false); void draw(paths[0].shape, paths); }} />}
             </section>
             <div className="rail" aria-hidden="true"><div className="rail-ticks" /></div>
@@ -117,12 +123,21 @@ export default function DesignerFly() {
             <span title="Right-drag to pan · Double-click to reset">Drag to rotate · Scroll to zoom</span>
             <span className={`screen-live ${monitoring ? 'active' : ''}`}>{monitoring ? '● Live' : '● Paused'}</span>
           </div>
-            <div className="screen-metrics" title="Selected controller totals. The scene displays neurons with measured locations; the trace includes all neurons."><span><strong>{model?.neurons.toLocaleString('en-US') || '…'}</strong> neurons</span><span><strong>{model?.edges.toLocaleString('en-US') || '…'}</strong> connections</span></div>
-            {model && <NeuralDisplay model={model} live={live} source={neuralSource} mode="activity" />}
-            <div className="controller-status" aria-label="Controller and stylus status"><span><small>Controller</small><b>{neuralSource === 'wing' ? 'Wing rhythm' : 'Foreleg motor'}</b></span><span><small>Stylus</small><b>{contact ? 'On paper' : 'Lifted'}</b></span></div>
+            <div className="screen-metrics" title="Selected controller totals. The scene displays neurons with measured locations; the trace includes all neurons."><span><strong>{displayModel?.neurons.toLocaleString('en-US') || '…'}</strong> neurons</span><span><strong>{displayModel?.edges.toLocaleString('en-US') || '…'}</strong> connections</span></div>
+            {displayModel && <NeuralDisplay model={displayModel} live={displayLive} source={displaySource} mode="activity" onReady={setActivityReady} />}
+            <div className="controller-status" aria-label="Controller and stylus status"><span><small>Controller</small><b>{neuralSource === 'wing' ? 'Wing rhythm' : controller==='spiking' ? 'Spiking foreleg' : 'Trained foreleg'}</b></span><span><small>Stylus</small><b>{contact ? 'On paper' : 'Lifted'}</b></span></div>
+            {spiking && <div className="spiking-motor-note">Frozen anatomy · trained interfaces</div>}
             <div className="signal-row"><span>{isComposition ? 'Study' : 'Drawing'}</span><progress className="signal-track" aria-label={isComposition ? 'Study progress' : 'Drawing progress'} value={progress} max={1} /><span>{Math.round(progress * 100)}%</span></div>
+            {!activityReady && <DeviceLoader label="Loading neural activity" error={error}/> }
           </div>
-          <div className="neural-hardware" aria-label="Neural signal source"><button className="hardware-key mode-key" aria-pressed={neuralSource === 'motor'} title="Show drawing activity and stop wing flapping" onClick={() => { if (wings) toggleWings(); else selectNeuralSource('motor'); }}><Activity size={19} /><span>Drawing 01</span><i /></button><button className="hardware-key mode-key" aria-pressed={neuralSource === 'wing'} title="Start wing flapping and show its activity" onClick={() => { if (!wings) toggleWings(); else selectNeuralSource('wing'); }} disabled={!ready}><Wind size={19} /><span>Drawing 02</span><i /></button></div>
+          <div className="neural-hardware controller-controls" aria-label="Neural signal source">
+            <div className="controller-selector">
+              <button className="hardware-key mode-key" aria-pressed={!spiking && neuralSource==='motor'} disabled={!ready || busy} onClick={()=>void selectController('trained')}><Activity size={17}/><span>Motor</span><i/></button>
+              <button className="hardware-key mode-key" aria-pressed={!spiking && neuralSource==='wing'} disabled={!ready} onClick={()=>{if(!wings)toggleWings();else selectNeuralSource('wing');}}><Wind size={17}/><span>Wings</span><i/></button>
+              <button className="hardware-key mode-key" aria-pressed={spiking} disabled={!ready || busy || !report?.spiking?.available} title={report?.spiking?.available ? 'Draw using the spiking foreleg controller' : 'Spiking controller validation pending'} onClick={()=>void selectController('spiking')}><Activity size={17}/><span>Spikes</span><i/></button>
+            </div>
+
+          </div>
           <footer className="device-footer" aria-hidden="true"><span className="vent" /></footer>
         </aside>
         <div className="neural-companions">
@@ -131,7 +146,8 @@ export default function DesignerFly() {
           <header className="neural-header"><h2>neural spectrum<span>.</span></h2><span className="neural-model">NS–01</span></header>
           <div className="neural-screen">
             <div className="anatomy-caption spectrum-status"><span title="Right-drag to pan · Double-click to reset">Drag to rotate · Scroll to zoom</span><span>{monitoring ? '● Live' : '● Paused'}</span></div>
-            {model && <NeuralDisplay model={model} live={live} source={neuralSource} mode="spectrum" />}
+            {displayModel && <NeuralDisplay model={displayModel} live={displayLive} source={displaySource} mode="spectrum" onReady={setSpectrumReady} onError={setSpectrumError} />}
+            {!spectrumReady && <DeviceLoader label="Loading neural spectrum" error={spectrumError || error}/> }
           </div>
           <footer className="device-footer" aria-hidden="true"><span className="vent" /></footer>
         </aside>
@@ -146,12 +162,13 @@ export default function DesignerFly() {
         <div className="experiment-content">
           <section><h3>From neurons to pencil</h3><p>A trained planner traces a shape. A feedback network uses joint motion, pencil error and contact to drive three foreleg joints in MuJoCo. Ink appears only when the pencil touches paper.</p></section>
           <section><h3>Reading the displays</h3><div className="display-explain">
-            <div><h4>Neural Link</h4><p>A selected MaleCNS circuit: red and green show signed model activity; brightness shows strength. The graph averages activity magnitude across all controller neurons.</p></div>
+            <div><h4>Neural Link</h4><p>A selected MaleCNS circuit. Motor and Wings show signed rate activity in red and green. Spikes shows firing rates from the physical drawing session in green, smoothed over 100 ms. Colors do not identify excitatory or inhibitory cells.</p></div>
             <div><h4>Neural Spectrum</h4><p>96 measured neuron skeletons. Color identifies each neuron; brightness follows its computed activity. Missing locations are omitted.</p></div>
           </div></section>
           <section><h3>What this prototype can do</h3><p>Draw shapes, rounded wireframes and short lettering with one controlled foreleg. Letter paths are supplied; the existing trained motor draws them. The body stays fixed; wing flapping is neural animation without flight physics. It cannot understand prompts or design interfaces on its own.</p><p className="experiment-caveat">These are model values, not recorded spikes or signals travelling along branches. This is a partial circuit, not a full brain. Biological accuracy and an advantage over random wiring remain unproven.</p></section>
+          <section><h3>Spiking drawing</h3><p>Spikes uses persistent spiking neurons with frozen, synapse-count-based connections and predicted transmitter effects. A trained output interface turns motor-cell firing into foreleg commands. Sensory mapping and pen timing are engineered; receptor-specific effects remain unresolved. This is not drawing without training.</p></section>
           <section><h3>Faster simulation</h3><p>1×, 3× and 6× run more complete physics and neural steps per update, preserving the timestep and ink samples. Actual speed depends on your computer.</p></section>
-          {motorScores && <section className="experiment-results"><h3>Held-out command error <span>Lower is better</span></h3><div><p><strong>{motorScores.trained_rmse.toFixed(3)}</strong><span>Trained controller</span></p><p><strong>{motorScores.ablated_rmse.toFixed(3)}</strong><span>Connections removed</span></p></div></section>}
+          {motorScores && <section className="experiment-results"><h3>Rate motor command error <span>Lower is better</span></h3><div><p><strong>{motorScores.trained_rmse.toFixed(3)}</strong><span>Trained controller</span></p><p><strong>{motorScores.ablated_rmse.toFixed(3)}</strong><span>Connections removed</span></p></div></section>}
           <section className="experiment-sources"><h3>Sources &amp; credits</h3><p><a href="https://male-cns.janelia.org/" target="_blank" rel="noreferrer">MaleCNS / FlyEM ↗</a><span>Neural data · CC BY 4.0</span></p><p><a href="https://github.com/NeLy-EPFL/flygym" target="_blank" rel="noreferrer">NeuroMechFly / FlyGym ↗</a><span>Fly anatomy · Apache 2.0</span></p><p className="experiment-author">Built by <a href="https://github.com/hckmstrrahul" target="_blank" rel="noreferrer">@hckmstrrahul</a><a href="https://github.com/hckmstrrahul/designerfly" target="_blank" rel="noreferrer">Code &amp; methods ↗</a></p></section>
         </div>
       </dialog>

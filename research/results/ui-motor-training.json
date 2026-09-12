@@ -1,0 +1,87 @@
+{
+  "selected_checkpoint_sha256": "b540cf61ab97b80975640f0ae3de8e33156d5ff0930b38c0241112851093db15",
+  "baseline_checkpoint_sha256": "a3f15f098aed1ee643340948c8ccd21782bc476325ed123807df6b7d0235e7fd",
+  "graph_sha256": "56e311413375155044b15128040238831eb1392bc7b13bf9e519d39d009b03f8",
+  "seed": 73192,
+  "rollouts": 32,
+  "demonstrations": 12555,
+  "teacher": "Offline inverse-kinematics feedback labels; mixed teacher/previous-policy rollouts. No teacher at inference.",
+  "ridge_penalty": 10,
+  "adjacent_action_smoothness_penalty": 25,
+  "new_readout_fraction": 0.15,
+  "baseline_readout_fraction": 0.85,
+  "elbow_bias": 0,
+  "internal_weights_frozen": true,
+  "sensory_projection_frozen": true,
+  "selection": "Five small UI fixtures for selection; nine full physical regression cases; separate locked seven-fixture test. Minimum per-stroke contact >95% required for adoption.",
+  "rejected": "Full decoder replacements, stronger blends and elbow-bias candidates lost small-detail contact or increased tracking error. Also explored rate-teacher and broader mixed curricula; not selected.",
+  "training_fit_report": {
+    "seed": 73192,
+    "rollouts": 32,
+    "samples": 12555,
+    "baseline_sha256": "a3f15f098aed1ee643340948c8ccd21782bc476325ed123807df6b7d0235e7fd",
+    "internal_weights_frozen": true,
+    "input_projection_frozen": true,
+    "teacher": "offline IK feedback controller; half teacher rollouts, half existing motor rollouts",
+    "curriculum": "horizontal/vertical lines, rectangles, rounded rectangles; varied size and location",
+    "runtime_ik": false,
+    "seconds": 64.16552710533142,
+    "candidates": [
+      {
+        "checkpoint": "work/ui-training/candidate-r1-s0.npz",
+        "ridge": 1.0,
+        "smoothness": 0.0,
+        "action_training_rmse": 0.11017096424364978
+      },
+      {
+        "checkpoint": "work/ui-training/candidate-r1-s5.npz",
+        "ridge": 1.0,
+        "smoothness": 5.0,
+        "action_training_rmse": 0.12073396584287868
+      },
+      {
+        "checkpoint": "work/ui-training/candidate-r1-s25.npz",
+        "ridge": 1.0,
+        "smoothness": 25.0,
+        "action_training_rmse": 0.14398483411104557
+      },
+      {
+        "checkpoint": "work/ui-training/candidate-r10-s0.npz",
+        "ridge": 10.0,
+        "smoothness": 0.0,
+        "action_training_rmse": 0.11017247517390437
+      },
+      {
+        "checkpoint": "work/ui-training/candidate-r10-s5.npz",
+        "ridge": 10.0,
+        "smoothness": 5.0,
+        "action_training_rmse": 0.1207623648127799
+      },
+      {
+        "checkpoint": "work/ui-training/candidate-r10-s25.npz",
+        "ridge": 10.0,
+        "smoothness": 25.0,
+        "action_training_rmse": 0.14399243740882237
+      },
+      {
+        "checkpoint": "work/ui-training/candidate-r100-s0.npz",
+        "ridge": 100.0,
+        "smoothness": 0.0,
+        "action_training_rmse": 0.1102635186891894
+      },
+      {
+        "checkpoint": "work/ui-training/candidate-r100-s5.npz",
+        "ridge": 100.0,
+        "smoothness": 5.0,
+        "action_training_rmse": 0.12104145948759472
+      },
+      {
+        "checkpoint": "work/ui-training/candidate-r100-s25.npz",
+        "ridge": 100.0,
+        "smoothness": 25.0,
+        "action_training_rmse": 0.14406765387700926
+      }
+    ]
+  },
+  "reproduce": ".venv/bin/python research/train_ui_motor.py --checkpoint research/results/spiking-motor-base.npz --output-dir work/ui-reproduction --teacher ik --rollouts 32 --blend .15; selected candidate-r10-s25.npz must independently pass validation before installation."
+}

@@ -12,7 +12,7 @@ BASE=np.array([.16,-.514,1.07]); L1=.705; L2=1.36
 BASE_ROLL=np.pi/4
 BASE_ROT=np.array([[1,0,0],[0,np.cos(BASE_ROLL),-np.sin(BASE_ROLL)],[0,np.sin(BASE_ROLL),np.cos(BASE_ROLL)]])
 PAPER_Z=.946; TIP_RADIUS=.009
-CENTER=np.array([1.55,0.,PAPER_Z]); SCALE=.44
+CENTER=np.array([1.55,0.,PAPER_Z]); SCALE=.52
 
 def paper_xy(point):
     """Editor X-right/Y-down to MuJoCo XY; rendering maps world Z to -Y."""
