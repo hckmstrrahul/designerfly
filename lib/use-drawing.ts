@@ -4,7 +4,8 @@ import { createFlyScene, type LiveDrawing } from './fly-scene';
 import { physics, type PhysicsFrame, type PhysicsReport } from './physics';
 import { drawingStroke, type PlacedShape } from './composition';
 import { CAMERA_PRESETS, CAMERA_STORAGE_KEY, savedCameraPreset } from './camera-presets';
-import { stepsAtSpeed, wingClock } from './simulation-clock';
+import { stepsAtSpeed } from './simulation-clock';
+import { PlaybackBuffer } from './playback-buffer';
 
 export function useDrawing() {
   const [model, setModel] = useState<CircuitModel | null>(null), [report, setReport] = useState<PhysicsReport | null>(null);
@@ -69,7 +70,9 @@ export function useDrawing() {
   }, []);
   useEffect(() => {
     alive.current = true; let disposed = false, timer = 0;
-    const wingTime = wingClock();
+    type Sample = { duration: number; frames: PhysicsFrame[]; state: number[]; wing: number; wing_state: number[] | null; sample_time: number; neural_source: 'motor' | 'spiking'; wing_time: number; wing_phase: number };
+    const buffer = new PlaybackBuffer<Sample>();
+    let bufferKey = '', pending: object | null = null, requestedWingTime = 0, lastTick = performance.now(), started = false, exhausted = false;
     Promise.all([fetch('/models/circuit-refined.json').then(r => { if (!r.ok) throw new Error('Model unavailable'); return r.json(); }), physics<PhysicsReport>('/health')]).then(async ([network, health]) => {
       if (disposed) return;
       setModel(network);
@@ -81,34 +84,51 @@ export function useDrawing() {
       if (disposed) { void physics(`/session/${initial.session}`, undefined, 'DELETE').catch(() => {}); return; }
       session.current = initial.session; live.current.physical = initial.frame; setReport(health); setPhase('ready');
     }).catch(() => { if (!disposed) setError(location.hostname==='localhost'||location.hostname==='127.0.0.1'?'Start the local physics service with npm run physics, then reload.':'The drawing service is currently unavailable. Please try again shortly.'); });
-    const tick = async () => {
-      const start = performance.now(), run = live.current.run;
-      try {
-        if (!document.hidden && active.current && session.current) {
-          const wingSample = live.current.wings ? wingTime.advance(speedRef.current) : null;
-          const result = await physics<{ frames: PhysicsFrame[]; state: number[]; wing: number; wing_state: number[] | null; sample_time: number; neural_source:'motor'|'spiking' }>('/step', { session: session.current, steps: stepsAtSpeed(speedRef.current), wings: !!wingSample, wing_phase: wingSample?.phase ?? 0 });
-          if (!disposed && run === live.current.run) {
-            const f = result.frames.at(-1)!; live.current.physical = f; live.current.ink.push(...result.frames); live.current.wing = result.wing;
+    const tick = () => {
+      const now = performance.now(), elapsed = Math.min(.08, (now - lastTick) / 1000);
+      lastTick = now;
+      const run = live.current.run;
+      const drawing = active.current && !!session.current;
+      const key = `${run}:${drawing ? session.current : `wing:${live.current.wings}`}`;
+      if (key !== bufferKey) { bufferKey = key; buffer.clear(); pending = null; started = false; exhausted = false; }
+      if (!document.hidden && (drawing || live.current.wings)) {
+        // Prefetch independently of playback; only one request per run is in flight.
+        if (!pending && !exhausted && buffer.seconds < .6 * speedRef.current) {
+          const token = {}; pending = token;
+          const steps = stepsAtSpeed(speedRef.current), count = started ? 20 : 4; started = true;
+          const wingStart = requestedWingTime;
+          requestedWingTime += count * steps * .02;
+          void physics<{ samples: Sample[] }>('/playback', { session: drawing ? session.current : null, steps, count, wings: live.current.wings, wing_time: wingStart }).then(result => {
+            if (!disposed && run === live.current.run && key === bufferKey) {
+              buffer.push(result.samples);
+              exhausted = !!result.samples.at(-1)?.frames.at(-1)?.done;
+            }
+          }).catch(() => {
+            if (!disposed && run === live.current.run && key === bufferKey) {
+              active.current = false; live.current.drawing = false;
+              setError('The drawing service disconnected. Please reload and try again.');
+            }
+          }).finally(() => { if (pending === token) pending = null; });
+        }
+        for (const result of buffer.take(elapsed * speedRef.current)) {
+          const f = result.frames.at(-1);
+          if (drawing && f) {
+            live.current.physical = f; live.current.ink.push(...result.frames);
             motorFrame.current = { point: f.point as [number, number], state: new Float32Array(result.state), phase: f.phase || 0, run, source: result.neural_source, time: result.sample_time, sequence: ++sequence.current };
-            if (live.current.wings && result.wing_state && wingSample) wingFrame.current = { point: [0, 0], state: new Float32Array(result.wing_state), phase: wingSample.phase, run, source: 'wing', time: wingSample.time, sequence: ++sequence.current };
-            publishNeuralFrame();
             live.current.drawing = !!f.drawing; setContact(f.contact); setProgress(f.phase || 0);
             setPhase(f.done ? 'done' : f.stage ? f.stage : f.time < 1.2 ? 'approach' : 'drawing');
             if (f.shape !== undefined) setShape(f.shape);
             if (f.stroke_index !== undefined) setStrokeIndex(f.stroke_index);
             if (f.done) { active.current = false; live.current.drawing = false; setCompleted(n => n + 1); }
           }
-        } else if (!document.hidden && live.current.wings) {
-          const wingSample = wingTime.advance(speedRef.current);
-          const result = await physics<{ wing: number; state: number[] }>(`/wing?phase=${wingSample.phase}`);
-          if (!disposed && run === live.current.run && !active.current && live.current.wings) {
+          if (live.current.wings && result.wing_state) {
             live.current.wing = result.wing;
-            wingFrame.current = { point: [0, 0], state: new Float32Array(result.state), phase: wingSample.phase, run, source: 'wing', time: wingSample.time, sequence: ++sequence.current };
-            publishNeuralFrame();
+            wingFrame.current = { point: [0, 0], state: new Float32Array(result.wing_state), phase: result.wing_phase, run, source: 'wing', time: result.wing_time, sequence: ++sequence.current };
           }
+          publishNeuralFrame();
         }
-      } catch { if (!disposed && run === live.current.run) { active.current = false; live.current.drawing = false; setError('Physics disconnected. Run npm run physics and reload.'); } }
-      if (!disposed) timer = window.setTimeout(tick, Math.max(0, 40 - (performance.now() - start)));
+      }
+      if (!disposed) timer = window.setTimeout(tick, 16);
     };
     timer = window.setTimeout(tick, 40);
     const keydown = (e: KeyboardEvent) => {

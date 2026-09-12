@@ -40,4 +40,26 @@ class ControllerAPITests(unittest.TestCase):
         server.remove(a['session'])
         with self.assertRaises(HTTPException):server.step(server.Step(session=a['session']))
 
+    def test_playback_matches_sequential_steps_and_neural_timestamps(self):
+        with patch.object(server,'session_motor',side_effect=lambda kind,fallback:StatefulMotor()):
+            a=server.create(server.Start(shape=0));b=server.create(server.Start(shape=0))
+        batch=server.playback(server.Playback(session=a['session'],steps=2,count=4,wings=True))['samples']
+        self.assertEqual(len(batch),4)
+        for index,sample in enumerate(batch):
+            expected=server.step(server.Step(session=b['session'],steps=2,wings=True,wing_phase=sample['wing_phase']))
+            self.assertEqual(sample['frames'],expected['frames'])
+            self.assertEqual(sample['state'],expected['state'])
+            self.assertEqual(sample['sample_time'],expected['sample_time'])
+            self.assertEqual(sample['wing_state'],expected['wing_state'])
+            self.assertAlmostEqual(sample['wing_time'],(index+1)*.04)
+        with self.assertRaises(ValidationError):server.Playback(count=31)
+    def test_wing_playback_and_completed_drawing_are_bounded(self):
+        samples=server.playback(server.Playback(wings=True,count=3,steps=12))['samples']
+        self.assertEqual(len(samples),3)
+        self.assertAlmostEqual(samples[-1]['wing_time'],.72)
+        with patch.object(server,'session_motor',return_value=StatefulMotor()):
+            a=server.create(server.Start(shape=0))
+        with patch.object(server,'advance_session',return_value={'frames':[{'done':True}]}):
+            self.assertEqual(len(server.playback(server.Playback(session=a['session'],count=20))['samples']),1)
+
 if __name__=='__main__':unittest.main()

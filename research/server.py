@@ -10,11 +10,14 @@ from runtime import DrawingSession,load_policies,reports
 from composition import CompositionSession,load_placement,load_composition_motor
 from active_motor import configuration,policy_or
 
-app=FastAPI();planner,motor=load_policies();motor=policy_or(motor);sessions={};registry_lock=RLock()
+app=FastAPI()
+from starlette.middleware.gzip import GZipMiddleware
+app.add_middleware(GZipMiddleware,minimum_size=1000,compresslevel=3)
+planner,motor=load_policies();motor=policy_or(motor);sessions={};registry_lock=RLock()
 # Set ALLOWED_ORIGINS when the frontend connects directly from another host.
 from fastapi.middleware.cors import CORSMiddleware
 origins=[origin.strip() for origin in os.getenv('ALLOWED_ORIGINS','').split(',') if origin.strip()]
-if origins:app.add_middleware(CORSMiddleware,allow_origins=origins,allow_methods=['GET','POST','DELETE'],allow_headers=['Content-Type'])
+if origins:app.add_middleware(CORSMiddleware,allow_origins=origins,allow_methods=['GET','POST','DELETE'],allow_headers=['Content-Type'],max_age=86400)
 from spiking_api import router as spiking_router
 app.include_router(spiking_router)
 placement_planner=None
@@ -101,6 +104,40 @@ def advance_session(session,request):
     if request.wings:
         out,rate=planner(features([1],[request.wing_phase])[0]);wing=float(out[0]);wing_state=rate.tolist()
     return {'frames':frames,'state':session.last_state.tolist(),'wing':wing,'wing_state':wing_state,'neural_source':'spiking' if session.controller=='spiking' else 'motor','sample_time':session.env.data.time-.02}
+class Playback(BaseModel):
+    session: str | None = None
+    steps: int = Field(default=2,ge=1,le=12)
+    count: int = Field(default=20,ge=1,le=30)
+    wings: bool = False
+    wing_time: float = Field(default=0,ge=0,le=1e9)
+
+@app.post('/playback')
+def playback(request:Playback):
+    # Keep per-session physics ordered, but amortize the network round trip over
+    # several display samples. Each sample retains its matching neural state.
+    duration=request.steps*.02
+    def sample(i,session=None):
+        wing_time=request.wing_time+(i+1)*duration
+        phase=(wing_time*1.6)%1
+        if session is not None:
+            value=advance_session(session,Step(session=request.session,steps=request.steps,wings=request.wings,wing_phase=phase))
+        else:
+            out,state=planner(features([1],[phase])[0])
+            value={'frames':[],'state':[],'wing':float(out[0]),'wing_state':state.tolist(),'sample_time':wing_time,'neural_source':'motor'}
+        return dict(value,duration=duration,wing_time=wing_time,wing_phase=phase)
+    if request.session is None:
+        if not request.wings:raise HTTPException(422,'A drawing session or wings is required')
+        return {'samples':[sample(i) for i in range(request.count)]}
+    with registry_lock:
+        if request.session not in sessions:raise HTTPException(404,'Drawing session expired')
+        session,_=sessions[request.session]
+    with session.request_lock:
+        samples=[]
+        for i in range(request.count):
+            value=sample(i,session);samples.append(value)
+            if value['frames'][-1].get('done'):break
+        return {'samples':samples}
+
 @app.delete('/session/{key}')
 def remove(key:str):
     with registry_lock:

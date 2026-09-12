@@ -276,6 +276,15 @@ Both the trained and Spikes controllers passed deployed session creation and
 12-frame stepping smoke checks, with production-origin CORS verified. These checks
 verify hosting connectivity; physical accuracy is covered by the validation reports.
 
+Drawing playback prefetches up to 20 display samples per request (four for the
+initial response), then consumes them on the browser clock at 1×, 3× or 6×.
+Each sample includes its corresponding neural state, so telemetry follows the
+visible movement. Queues are bounded, reset with the drawing session, and stop
+advancing in hidden tabs. Compressed responses reduce transfer size. The physics
+service is configured for Singapore to reduce network distance for users in India.
+Network stalls or server load can still interrupt playback; buffering is not a
+retraining change or a guarantee of real-time performance on every connection.
+
 ## Sources and licenses
 
 - **[MaleCNS / FlyEM](https://male-cns.janelia.org/)** — v1.0 connectivity,
