@@ -3,6 +3,7 @@ import type { CircuitModel, CircuitView, NeuralFrame } from './circuit';
 import { createFlyScene, type LiveDrawing } from './fly-scene';
 import { physics, type PhysicsFrame, type PhysicsReport } from './physics';
 import type { PlacedShape } from './composition';
+import { stepsAtSpeed, wingClock } from './simulation-clock';
 
 export function useDrawing() {
   const [model, setModel] = useState<CircuitModel | null>(null), [report, setReport] = useState<PhysicsReport | null>(null);
@@ -64,6 +65,7 @@ export function useDrawing() {
   }, []);
   useEffect(() => {
     alive.current = true; let disposed = false, timer = 0;
+    const wingTime = wingClock();
     Promise.all([fetch('/models/circuit-refined.json').then(r => { if (!r.ok) throw new Error('Model unavailable'); return r.json(); }), physics<PhysicsReport>('/health')]).then(async ([network, health]) => {
       if (disposed) return;
       setModel(network);
@@ -79,11 +81,12 @@ export function useDrawing() {
       const start = performance.now(), run = live.current.run;
       try {
         if (!document.hidden && active.current && session.current) {
-          const result = await physics<{ frames: PhysicsFrame[]; state: number[]; wing: number; wing_state: number[] | null; sample_time: number }>('/step', { session: session.current, steps: 2 * speedRef.current, wings: live.current.wings, wing_phase: (start * .0016) % 1 });
+          const wingSample = live.current.wings ? wingTime.advance(speedRef.current) : null;
+          const result = await physics<{ frames: PhysicsFrame[]; state: number[]; wing: number; wing_state: number[] | null; sample_time: number }>('/step', { session: session.current, steps: stepsAtSpeed(speedRef.current), wings: !!wingSample, wing_phase: wingSample?.phase ?? 0 });
           if (!disposed && run === live.current.run) {
             const f = result.frames.at(-1)!; live.current.physical = f; live.current.ink.push(...result.frames); live.current.wing = result.wing;
             motorFrame.current = { point: f.point as [number, number], state: new Float32Array(result.state), phase: f.phase || 0, run, source: 'motor', time: result.sample_time, sequence: ++sequence.current };
-            if (live.current.wings && result.wing_state) wingFrame.current = { point: [0, 0], state: new Float32Array(result.wing_state), phase: 0, run, source: 'wing', time: start / 1000, sequence: ++sequence.current };
+            if (live.current.wings && result.wing_state && wingSample) wingFrame.current = { point: [0, 0], state: new Float32Array(result.wing_state), phase: wingSample.phase, run, source: 'wing', time: wingSample.time, sequence: ++sequence.current };
             publishNeuralFrame();
             live.current.drawing = !!f.drawing; setContact(f.contact); setProgress(f.phase || 0);
             setPhase(f.done ? 'done' : f.stage ? f.stage : f.time < 1.2 ? 'approach' : 'drawing');
@@ -92,10 +95,11 @@ export function useDrawing() {
             if (f.done) { active.current = false; live.current.drawing = false; setCompleted(n => n + 1); }
           }
         } else if (!document.hidden && live.current.wings) {
-          const result = await physics<{ wing: number; state: number[] }>(`/wing?phase=${(performance.now() * .0016) % 1}`);
+          const wingSample = wingTime.advance(speedRef.current);
+          const result = await physics<{ wing: number; state: number[] }>(`/wing?phase=${wingSample.phase}`);
           if (!disposed && run === live.current.run && !active.current && live.current.wings) {
             live.current.wing = result.wing;
-            wingFrame.current = { point: [0, 0], state: new Float32Array(result.state), phase: 0, run, source: 'wing', time: start / 1000, sequence: ++sequence.current };
+            wingFrame.current = { point: [0, 0], state: new Float32Array(result.state), phase: wingSample.phase, run, source: 'wing', time: wingSample.time, sequence: ++sequence.current };
             publishNeuralFrame();
           }
         }

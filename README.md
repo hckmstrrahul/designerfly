@@ -57,6 +57,9 @@ server; the default toolbar uses local copy/paste.
   contact/ink sample are preserved. This is faster execution of the same
   simulation, not a controller trained to move faster in physical time. The orange
   Speed button starts at 1×; one, two or three white LEDs indicate the speed.
+  Wing inference uses the same speed-scaled clock while drawing or idle. Wing
+  motion, NL–01 and NS–01 share each inference sample and its simulation timestamp;
+  changing speed preserves phase instead of restarting the wing cycle.
 - **Wings:** run the learned rhythm used to animate the wings.
 - **Drawing 01 / Drawing 02:** select the motor or wing controller on Neural Link.
   Drawing 02 starts wings; Drawing 01 stops them. Both neural displays follow the
