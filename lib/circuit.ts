@@ -37,4 +37,4 @@ export function infer(model: CircuitModel, shape: number, phase: number, ablated
   return { point, state };
 }
 
-export interface NeuralFrame { point: [number, number]; state: Float32Array; phase: number; run: number; source?: 'motor' | 'wing'; time?: number; sequence?: number; }
+export interface NeuralFrame { point: [number, number]; state: Float32Array; phase: number; run: number; source?: 'motor' | 'wing' | 'spiking'; time?: number; sequence?: number; }

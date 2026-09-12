@@ -1,0 +1,44 @@
+{
+  "scope": "Development only; bounded tonic-release revision",
+  "v2_sha256": "bd884db920afc32c84834fc9ff50dcfb39b17650d09e9bbc915bf3a281209b34",
+  "source_sha256": {
+    "passive": "d4a8c10f2700fe06f142da438e52797c99636fbbad2e1c04c1cc29c9fe080abd",
+    "active": "24679042c8c5de43b26f94406c019d6c49064f70767732b5983eac417fc9a9b3",
+    "drive": "c7e159f3c430ae648cc0bf3708c07c87a696a0441572aa1a2ed4e377cf87c750"
+  },
+  "contract_sha256": "81e371eae8237e12ee6581bca9e6bdd507330297f8719de586fb32d802584dd1",
+  "protocol_sha256": "86bc9a51ee7e0914030ec45d41ff37c3e4396cef75fdb3342a55eb83f36635a4",
+  "source_code_sha256": "e395d612ce466f740a770426c11121d553f08440b9488cf438c5cdbde4cd06f5",
+  "v2_code_sha256": "5d00f2b89f1e1464cc4fc897240c4c4740dd0bc79773b776109bc552102efa0f",
+  "helper_code_sha256": "0b469d35b515dacfd1250acbe3a7ef88dd88a0345d8eafa5835d72ec10c5a20a",
+  "betas": [
+    0.5,
+    2.0,
+    8.0
+  ],
+  "outer_folds": [
+    [
+      "3",
+      "4",
+      "5",
+      "8",
+      "11",
+      "13"
+    ],
+    [
+      "1",
+      "6",
+      "9",
+      "12",
+      "14"
+    ],
+    [
+      "2",
+      "7",
+      "10",
+      "15",
+      "16"
+    ]
+  ],
+  "reserved_tests_read": false
+}

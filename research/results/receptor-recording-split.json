@@ -1,0 +1,130 @@
+{
+  "status": "inputs verified; calibration not yet performed",
+  "split": {
+    "test": [
+      "11",
+      "13",
+      "3"
+    ],
+    "validation": [
+      "4",
+      "7",
+      "8"
+    ],
+    "train": [
+      "1",
+      "9",
+      "12",
+      "6",
+      "5",
+      "10",
+      "15",
+      "2",
+      "14",
+      "16"
+    ]
+  },
+  "recordings": [
+    {
+      "file": "claw_treadmill.parquet",
+      "sha256": "73e7fe09f8b1b28d4a3aba74af9d5bded3881ec9152b9b5484fccd2e2c416ec2",
+      "animals": [
+        "1",
+        "10",
+        "12",
+        "13",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "score_mask": "analyze=1"
+    },
+    {
+      "file": "club_treadmill.parquet",
+      "sha256": "af982bd24058fca9fb56ae6bbc714e966863cfae9908fb10de0b968252acd233",
+      "animals": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "score_mask": "analyze=1"
+    },
+    {
+      "file": "hook_flexion_01_magnet_Mamiya2018.parquet",
+      "sha256": "ea61eee2d26a5e6fddb7aebaee06e13e11c9b87427d0f70b350760ab0ae545be",
+      "animals": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "score_mask": "analyze=1"
+    },
+    {
+      "file": "hook_flexion_01_magnet.parquet",
+      "sha256": "d4a8c10f2700fe06f142da438e52797c99636fbbad2e1c04c1cc29c9fe080abd",
+      "animals": [
+        "1",
+        "10",
+        "11",
+        "4",
+        "5",
+        "8",
+        "9"
+      ],
+      "score_mask": "analyze=1"
+    },
+    {
+      "file": "hook_flexion_01_treadmill_platform.parquet",
+      "sha256": "24679042c8c5de43b26f94406c019d6c49064f70767732b5983eac417fc9a9b3",
+      "animals": [
+        "1",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "score_mask": "analyze=1"
+    },
+    {
+      "file": "hook_flexion_03_bdn2.parquet",
+      "sha256": "fe8c05508abb5ee71f29920db4f65999c098dc08d4ac6f8c7b412773cba7d2ed",
+      "animals": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "score_mask": "all finite observations; intervention file has no analyze flag"
+    }
+  ],
+  "unit": "animal_id across files, conservatively shared when identifiers coincide",
+  "protocol": "Fit only training animals; choose hyperparameters on validation animals; evaluate test once. Reset observation/gate state per trial, retain excluded frames for time evolution, score only analyze=1.",
+  "limits": "This preflight does not establish receptor kinetics or validated motor improvement."
+}

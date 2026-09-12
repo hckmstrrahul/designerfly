@@ -1,0 +1,103 @@
+{
+  "version": 2,
+  "data_doi": "10.5061/dryad.gqnk98t16",
+  "files": [
+    {
+      "file": "hook_flexion_01_treadmill_platform.parquet",
+      "role": "development_active",
+      "sha256": "24679042c8c5de43b26f94406c019d6c49064f70767732b5983eac417fc9a9b3",
+      "animals": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "excluded_animals": []
+    },
+    {
+      "file": "hook_flexion_01_magnet.parquet",
+      "role": "development_passive",
+      "sha256": "d4a8c10f2700fe06f142da438e52797c99636fbbad2e1c04c1cc29c9fe080abd",
+      "animals": [
+        1,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11
+      ],
+      "excluded_animals": []
+    },
+    {
+      "file": "9A_treadmill_platform.parquet",
+      "role": "development_9a_observation",
+      "sha256": "c7e159f3c430ae648cc0bf3708c07c87a696a0441572aa1a2ed4e377cf87c750",
+      "animals": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "excluded_animals": []
+    },
+    {
+      "file": "hook_flexion_02_treadmill.parquet",
+      "role": "reserved_active",
+      "sha256": "304b5e2554da4eb539fc9d6962b5f640c30a1b31173aa38cc0eac3b7cecc30b5",
+      "animals": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "excluded_animals": []
+    },
+    {
+      "file": "hook_flexion_01_magnet_Mamiya2018.parquet",
+      "role": "reserved_passive",
+      "sha256": "ea61eee2d26a5e6fddb7aebaee06e13e11c9b87427d0f70b350760ab0ae545be",
+      "animals": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "excluded_animals": [
+        1
+      ]
+    }
+  ],
+  "reserved_outcomes_read": false,
+  "exposure_note": "Only metadata/identity columns read for hook02. Two Mamiya animal1 outcome rows were viewed earlier; exclude animal1 from reserved passive evaluation. All hook01 and 9A development data may be used for training/cross-validation.",
+  "identity_note": "hook02 uses JR252 versus hook01 R21D12; numerical IDs do not imply identical animals across driver cohorts. Treat all ROIs/trials within each cohort animal together. Mamiya2018 is a distinct historical cohort.",
+  "test_rule": "Freeze all choices and verify protocol+model hashes before reading reserved outcomes; failed final test cannot be retuned and relabeled fresh."
+}

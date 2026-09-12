@@ -1,0 +1,79 @@
+{
+  "scope": "Development only; previously exposed hook01 data; no hook02 or Mamiya reads",
+  "seed": 20260913,
+  "outer_folds": [
+    [
+      "3",
+      "4",
+      "5",
+      "8",
+      "11",
+      "13"
+    ],
+    [
+      "1",
+      "6",
+      "9",
+      "12",
+      "14"
+    ],
+    [
+      "2",
+      "7",
+      "10",
+      "15",
+      "16"
+    ]
+  ],
+  "source_sha256": {
+    "passive": "d4a8c10f2700fe06f142da438e52797c99636fbbad2e1c04c1cc29c9fe080abd",
+    "active": "24679042c8c5de43b26f94406c019d6c49064f70767732b5983eac417fc9a9b3",
+    "drive": "c7e159f3c430ae648cc0bf3708c07c87a696a0441572aa1a2ed4e377cf87c750"
+  },
+  "source_files": {
+    "passive": "hook_flexion_01_magnet.parquet",
+    "active": "hook_flexion_01_treadmill_platform.parquet",
+    "drive": "9A_treadmill_platform.parquet"
+  },
+  "helper_code_sha256": "0b469d35b515dacfd1250acbe3a7ef88dd88a0345d8eafa5835d72ec10c5a20a",
+  "contract_sha256": "171671882478c6f6dc7a5478a1638610f020e025dab22e7d187ac1056c072d26",
+  "protocol_sha256": "045d36be7b1b468564aff0069f8dee82180f1443b80cd5ce49d19f80f9d8a843",
+  "source_code_sha256": "5d00f2b89f1e1464cc4fc897240c4c4740dd0bc79773b776109bc552102efa0f",
+  "grids": {
+    "responses": [
+      [
+        "binary",
+        20.0
+      ],
+      [
+        "binary",
+        100.0
+      ],
+      [
+        "saturating",
+        50.0
+      ],
+      [
+        "saturating",
+        200.0
+      ]
+    ],
+    "calcium_decay_seconds": [
+      0.15,
+      0.3,
+      0.6
+    ],
+    "drive_tau_seconds": [
+      0.03,
+      0.1,
+      0.3,
+      1.0
+    ],
+    "suppression_beta": [
+      0.0,
+      0.5,
+      2.0,
+      8.0
+    ]
+  }
+}

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { CircuitModel, CircuitView, NeuralFrame } from './circuit';
 import { createFlyScene, type LiveDrawing } from './fly-scene';
 import { physics, type PhysicsFrame, type PhysicsReport } from './physics';
-import type { PlacedShape } from './composition';
+import { drawingStroke, type PlacedShape } from './composition';
 import { CAMERA_PRESETS, CAMERA_STORAGE_KEY, savedCameraPreset } from './camera-presets';
 import { stepsAtSpeed, wingClock } from './simulation-clock';
 
@@ -10,8 +10,10 @@ export function useDrawing() {
   const [model, setModel] = useState<CircuitModel | null>(null), [report, setReport] = useState<PhysicsReport | null>(null);
   const [motorModel, setMotorModel] = useState<CircuitView | null>(null);
   const [sceneReady, setSceneReady] = useState(false), [error, setError] = useState('');
-  const [neuralSource, setNeuralSource] = useState<'motor' | 'wing'>('motor');
-  const selectedSource = useRef<'motor' | 'wing'>('motor');
+  const [neuralSource, setNeuralSource] = useState<'motor' | 'wing' | 'spiking'>('motor');
+  const [controller,setController]=useState<'trained'|'spiking'>('trained');
+  const controllerRef=useRef<'trained'|'spiking'>('trained');
+  const selectedSource = useRef<'motor' | 'wing' | 'spiking'>('motor');
   const motorFrame = useRef<NeuralFrame | null>(null), wingFrame = useRef<NeuralFrame | null>(null);
   const [shape, setShape] = useState<number | null>(null), [phase, setPhase] = useState('loading');
   const [progress, setProgress] = useState(0), [completed, setCompleted] = useState(0), [wings, setWings] = useState(false), [contact, setContact] = useState(false);
@@ -23,20 +25,20 @@ export function useDrawing() {
   const [speed, setSpeed] = useState(1), speedRef = useRef(1);
   const [strokeCount, setStrokeCount] = useState(1), [strokeIndex, setStrokeIndex] = useState(0);
   const [isComposition, setIsComposition] = useState(false);
-  const ready = !!model && !!report && sceneReady && !error;
+  const ready = !!model && !!report && sceneReady && !error && phase!=='resetting';
   const publishNeuralFrame = () => { live.current.frame = selectedSource.current === 'wing' ? wingFrame.current : motorFrame.current; };
-  const selectNeuralSource = (source: 'motor' | 'wing') => { selectedSource.current = source; setNeuralSource(source); publishNeuralFrame(); };
+  const selectNeuralSource = (source: 'motor' | 'wing' | 'spiking') => { selectedSource.current = source; setNeuralSource(source); publishNeuralFrame(); };
   async function resetSimulation() {
     const run = ++live.current.run;
     active.current = false; live.current.drawing = false; live.current.ink.length = 0;
     live.current.wings = false; live.current.wing = 0; live.current.resetView++;
-    motorFrame.current = null; wingFrame.current = null; selectNeuralSource('motor');
+    motorFrame.current = null; wingFrame.current = null; selectNeuralSource(controllerRef.current==='spiking'?'spiking':'motor');
     setWings(false); setShape(null); setProgress(0); setContact(false); setPhase('resetting');
     setIsComposition(false); setStrokeCount(1); setStrokeIndex(0);
     const old = session.current; session.current = '';
     try {
       if (old) await physics(`/session/${old}`, undefined, 'DELETE');
-      const initial = await physics<{ session: string; frame: PhysicsFrame }>('/session', { shape: 0 });
+      const initial = await physics<{ session: string; frame: PhysicsFrame }>('/session', { shape: 0, controller:controllerRef.current });
       if (!alive.current || run !== live.current.run) { void physics(`/session/${initial.session}`, undefined, 'DELETE').catch(() => {}); return; }
       session.current = initial.session; live.current.physical = initial.frame; setPhase('ready');
     } catch { if (alive.current && run === live.current.run) setError('Physics disconnected. Run npm run physics and reload.'); }
@@ -46,7 +48,7 @@ export function useDrawing() {
     if (!composition && shape === i && !isComposition) { await resetSimulation(); return; }
     const run = ++live.current.run; active.current = false; live.current.ink.length = 0; live.current.drawing = false;
     motorFrame.current = null;
-    if (!live.current.wings) selectNeuralSource('motor');
+    if (!live.current.wings) selectNeuralSource(controllerRef.current==='spiking'?'spiking':'motor');
     else publishNeuralFrame();
     const old = session.current; session.current = '';
     setShape(i); setPhase('approach'); setProgress(0); setContact(false);
@@ -54,7 +56,7 @@ export function useDrawing() {
     setIsComposition(!!composition);
     try {
       if (old) await physics(`/session/${old}`, undefined, 'DELETE');
-      const next = await physics<{ session: string; frame: PhysicsFrame }>(composition ? '/composition' : '/session', composition ? { strokes: composition.map(({ shape, x, y, width, height, points }) => ({ shape, x, y, width, height, points })) } : { shape: i });
+      const next = await physics<{ session: string; frame: PhysicsFrame }>(composition ? '/composition' : '/session', composition ? { controller:controllerRef.current, strokes: composition.map(drawingStroke).map(({ shape, x, y, width, height, points }) => ({ shape, x, y, width, height, points })) } : { shape: i, controller:controllerRef.current });
       if (!alive.current || run !== live.current.run) { void physics(`/session/${next.session}`, undefined, 'DELETE').catch(() => {}); return; }
       session.current = next.session; live.current.physical = next.frame; active.current = true;
     } catch { if (alive.current && run === live.current.run) setError('Physics disconnected. Run npm run physics and reload.'); }
@@ -75,7 +77,7 @@ export function useDrawing() {
         const response = await fetch(health.motor_model); if (!response.ok) throw new Error('Motor graph unavailable');
         const graph = await response.json(); if (disposed) return; setMotorModel(graph);
       }
-      const initial = await physics<{ session: string; frame: PhysicsFrame }>('/session', { shape: 0 });
+      const initial = await physics<{ session: string; frame: PhysicsFrame }>('/session', { shape: 0, controller:controllerRef.current });
       if (disposed) { void physics(`/session/${initial.session}`, undefined, 'DELETE').catch(() => {}); return; }
       session.current = initial.session; live.current.physical = initial.frame; setReport(health); setPhase('ready');
     }).catch(() => { if (!disposed) setError(location.hostname==='localhost'||location.hostname==='127.0.0.1'?'Start the local physics service with npm run physics, then reload.':'The drawing service is currently unavailable. Please try again shortly.'); });
@@ -84,10 +86,10 @@ export function useDrawing() {
       try {
         if (!document.hidden && active.current && session.current) {
           const wingSample = live.current.wings ? wingTime.advance(speedRef.current) : null;
-          const result = await physics<{ frames: PhysicsFrame[]; state: number[]; wing: number; wing_state: number[] | null; sample_time: number }>('/step', { session: session.current, steps: stepsAtSpeed(speedRef.current), wings: !!wingSample, wing_phase: wingSample?.phase ?? 0 });
+          const result = await physics<{ frames: PhysicsFrame[]; state: number[]; wing: number; wing_state: number[] | null; sample_time: number; neural_source:'motor'|'spiking' }>('/step', { session: session.current, steps: stepsAtSpeed(speedRef.current), wings: !!wingSample, wing_phase: wingSample?.phase ?? 0 });
           if (!disposed && run === live.current.run) {
             const f = result.frames.at(-1)!; live.current.physical = f; live.current.ink.push(...result.frames); live.current.wing = result.wing;
-            motorFrame.current = { point: f.point as [number, number], state: new Float32Array(result.state), phase: f.phase || 0, run, source: 'motor', time: result.sample_time, sequence: ++sequence.current };
+            motorFrame.current = { point: f.point as [number, number], state: new Float32Array(result.state), phase: f.phase || 0, run, source: result.neural_source, time: result.sample_time, sequence: ++sequence.current };
             if (live.current.wings && result.wing_state && wingSample) wingFrame.current = { point: [0, 0], state: new Float32Array(result.wing_state), phase: wingSample.phase, run, source: 'wing', time: wingSample.time, sequence: ++sequence.current };
             publishNeuralFrame();
             live.current.drawing = !!f.drawing; setContact(f.contact); setProgress(f.phase || 0);
@@ -119,7 +121,12 @@ export function useDrawing() {
   function toggleWings() {
     live.current.wings = !live.current.wings; setWings(live.current.wings);
     if (live.current.wings) wingFrame.current = null;
-    selectNeuralSource(live.current.wings ? 'wing' : 'motor');
+    selectNeuralSource(live.current.wings ? 'wing' : controllerRef.current==='spiking'?'spiking':'motor');
+  }
+  async function selectController(next:'trained'|'spiking') {
+    if(active.current || !ready || (next==='spiking' && !report?.spiking?.available))return;
+    controllerRef.current=next;setController(next);
+    await resetSimulation();
   }
   function resetView() { live.current.resetView++; }
   function cycleCamera() {
@@ -128,5 +135,5 @@ export function useDrawing() {
     try{localStorage.setItem(CAMERA_STORAGE_KEY,String(next));}catch{/* Storage can be unavailable in private sessions. */}
   }
   function cycleSpeed() { speedRef.current = speedRef.current === 1 ? 3 : speedRef.current === 3 ? 6 : 1; setSpeed(speedRef.current); }
-  return { model: neuralSource === 'motor' && motorModel ? motorModel : model, report, error, shape, phase, progress, completed, host, live, ready, draw, wings, toggleWings, contact, resetView, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera };
+  return { controller, selectController, model: neuralSource !== 'wing' && motorModel ? motorModel : model, report, error, shape, phase, progress, completed, host, live, ready, draw, wings, toggleWings, contact, resetView, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera };
 }

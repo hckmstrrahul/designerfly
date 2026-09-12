@@ -1,0 +1,36 @@
+{
+  "doi": "10.5061/dryad.gqnk98t16",
+  "version": 393607,
+  "files": [
+    {
+      "file": "9A_treadmill_platform.parquet",
+      "sha256": "c7e159f3c430ae648cc0bf3708c07c87a696a0441572aa1a2ed4e377cf87c750",
+      "bytes": 189216481,
+      "download": "https://datadryad.org/api/v2/files/4330028/download"
+    },
+    {
+      "file": "hook_flexion_01_magnet_Mamiya2018.parquet",
+      "sha256": "ea61eee2d26a5e6fddb7aebaee06e13e11c9b87427d0f70b350760ab0ae545be",
+      "bytes": 766556,
+      "download": "https://datadryad.org/api/v2/files/4330033/download"
+    },
+    {
+      "file": "hook_flexion_01_magnet.parquet",
+      "sha256": "d4a8c10f2700fe06f142da438e52797c99636fbbad2e1c04c1cc29c9fe080abd",
+      "bytes": 14993835,
+      "download": "https://datadryad.org/api/v2/files/4330030/download"
+    },
+    {
+      "file": "hook_flexion_01_treadmill_platform.parquet",
+      "sha256": "24679042c8c5de43b26f94406c019d6c49064f70767732b5983eac417fc9a9b3",
+      "bytes": 154532504,
+      "download": "https://datadryad.org/api/v2/files/4330023/download"
+    },
+    {
+      "file": "hook_flexion_02_treadmill.parquet",
+      "sha256": "304b5e2554da4eb539fc9d6962b5f640c30a1b31173aa38cc0eac3b7cecc30b5",
+      "bytes": 101739362,
+      "download": "https://datadryad.org/api/v2/files/4330024/download"
+    }
+  ]
+}

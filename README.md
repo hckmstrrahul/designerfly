@@ -130,7 +130,7 @@ readouts retain Departure Mono.
    when the physical tip contacts the paper during a drawing phase. The live
    control step uses no inverse kinematics.
 
-Both networks are four-step rate networks based on a selected **MaleCNS v1.0**
+The original planner and rate motor are four-step rate networks based on a selected **MaleCNS v1.0**
 ventral nerve cord subgraph. Training changes measured-edge gains, neuron biases
 and leaks. Sensory projection and motor decoder weights are frozen. Network state
 resets each inference. Training is supervised learning from shape examples and
@@ -154,7 +154,7 @@ small values, with 8× gain on the change component. Unchanged values remain sti
 trace is mean absolute rate across every neuron, including cells without positions.
 
 Enabling wings on either device selects the 1,024-neuron wing controller on both
-live monitors, even during drawing. The NL–01 Drawing 01 button stops flapping and
+live monitors, even during drawing. The NL–01 Motor button stops flapping and
 returns to the motor controller. Counts follow the selected network.
 
 **Neural Spectrum (NS–01)** shows the same 96 measured 3D skeletons in a separate
@@ -298,3 +298,116 @@ licenses; see [full notices](THIRD_PARTY_NOTICES.md). References to Fly / Wirehe
 Flyhard and Supabase are discussed in [the reference review](docs/reference-review.md).
 Their demos and results should not be confused with this experiment.
 
+
+## Experimental spiking circuit (feature branch)
+
+NL–01 has **Motor**, **Wings**, and **Spikes** selectors. Motor selects the original
+trained rate controller; Spikes selects the persistent spiking foreleg controller
+for the next drawing. Switching drawing controllers resets the sheet and is disabled
+while drawing. Wings selects wing telemetry without changing the foreleg controller.
+Both neural displays receive the actual selected session's activity.
+
+Each spiking drawing session owns its membrane voltages, synaptic currents,
+refractory periods and firing-rate history. Foreleg sensory feedback is encoded through a fixed random projection onto 256
+sensory cells (40 mV offset, clipped to 0–150 mV); other cells receive a documented
+12 mV tonic drive. An offline-trained interface decoder maps actual motor-neuron firing traces to the
+three rotary actuator commands from 128 motor-cell firing rates and their temporal
+differences; it has no direct observation-to-action shortcut.
+The original readout used offline rate-motor demonstrations. Its UI refinement uses
+offline inverse-kinematics feedback labels and a conservative readout blend; neither
+teacher runs during drawing.
+Internal anatomical weights remain frozen. The spiking mode requests a 0.004-unit
+lower contact reference to improve paper contact; this is a task-pressure calibration,
+not a direct actuator correction. Supplied paths use 1.2× drawing duration and
+learned shapes use 1.6× to allow for filtered spiking feedback. Both retain the
+same physical and neural timestep. This is trained motor interfacing, not
+learning-free drawing or a biological reproduction of pencil use.
+
+The API and UI enable spiking drawing only when the physical validation report
+passes and its graph/checkpoint and runtime-code SHA-256 hashes match the installed artifacts.
+`/session` and `/composition` accept `controller: "spiking"`; omitted means the
+original trained controller. State persists over the 20 ms physics control interval
+and throughout pen travel, lowering, drawing and lifting. The 1×/3×/6× speed control
+advances matching neural and physical time, rather than skipping neural simulation.
+
+The experimental circuit retains the 2,048-neuron graph and joins official MaleCNS neuron-level
+transmitter predictions by body ID. With confidence >= 0.5, it assumes ACh is
+excitatory and GABA/glutamate inhibitory: 1,128 excitatory, 793 inhibitory, and 127
+unresolved cells. Receptor exceptions and modulatory effects are not modeled.
+Of the unresolved cells, 73 are below the confidence threshold and 54 have
+unmodeled transmitter labels. All 2,048 selected neurons lack synaptic receptor
+annotations in this source. Unresolved cells retain their anatomy but contribute
+zero fast synaptic current.
+Predicted signs are assumptions, not established biological effects at every edge.
+
+Weights are measured synapse counts times presynaptic sign times a global 0.15 mV
+scale; there are no learned per-edge gains or row normalization. Persistent LIF
+state uses 1 ms steps, 20 ms membrane and 5 ms synaptic time constants, a threshold
+15 mV above rest, reset to rest, and a 2 ms refractory period. A spike affects
+postsynaptic current at the next step. These are exploratory engineering parameters,
+not calibrated fly physiology. The display shows firing rates smoothed over 100 ms,
+normalized to 100 Hz and saturated above that value. The trace is the mean of these
+normalized display values, not a biological spike recording. A constant-stimulus
+diagnostic remains available through `/spiking` endpoints for circuit tests; the
+NL–01 Spikes button uses physical feedback and controls the pencil.
+
+To reproduce the compact annotated graph, download the official file recorded in
+`research/results/spiking-manifest.json` to `research/data/neurotransmitters.feather`,
+then run `.venv/bin/python research/prepare_spiking.py` (the original pinned
+`annotations.feather` is also needed for the receptor audit). Source and original graph
+SHA-256 hashes, assumptions, and coverage are recorded in that manifest. The compact
+`circuit-spiking.npz` is included; the full annotation download is not required to run.
+`research/train_spiking_motor.py` reproduces the original base readout and rewrites
+the installed checkpoint; doing so invalidates the acceptance gate until revalidated.
+For the current UI refinement, use the preserved `spiking-motor-base.npz` and the
+candidate-only training workflow in [UI motor training](docs/ui-motor-training.md). Run
+`.venv/bin/python -m unittest discover -s research -p 'test_spiking*.py'` for
+annotation provenance, persistent state, fixed weights, physical actuation,
+contact-only ink and session isolation.
+
+The default Draw UI example now uses an evenly spaced **THE TIMES OF FLIES**
+masthead, search, feature image, article cards, and footer. Desktop canvas previews
+fit their available width and height; the stacked tablet layout retains scrolling.
+The physical drawing scale is expanded from 0.44 to 0.52 while keeping paper margins.
+A complete 46-stroke run finished with 99.95% drawing-contact samples and 0.0091
+model-length-unit tracking RMSE. This is one layout check, not a new general
+biological accuracy claim or a replacement for the historical checkpoint reports.
+
+The current spiking motor acceptance run covers nine cases: the newspaper UI,
+lettering, two emojis, two freehand paths, and the three learned shape families.
+All complete with 97.608–100% drawing contact, zero travel contact, and tracking
+RMSE 0.01958–0.03026 model-length units. The newspaper's 46 strokes reach 99.815%
+contact and 0.02736 RMSE, with at least 98.96% contact on every individual stroke.
+A disturbance trial passes; removing feedback raises error to 0.57952, and removing
+the recurrent circuit raises it to 1.53741. These tests demonstrate task dependence
+on feedback and the fixed circuit, not biological fidelity or superiority to
+alternative architectures. See `research/results/spiking-motor-validation.json`.
+
+The UI readout refinement reduced measured roughness by **12.64%** and cross-track
+error by **12.78%** on a separately locked seven-fixture quality test. Contact rose
+from 99.609% to 99.835%. These are fixture averages: vertical and diagonal path
+accuracy regressed, and not every contact metric improved. Original circuit weights
+and the sensory projection remain unchanged. The original rate-based **Motor**
+mode is unchanged; choose **Spikes** in NL01 to use this readout. Training details,
+reproduction, retained baseline, and limitations are in
+[UI motor training](docs/ui-motor-training.md).
+
+Receptor evidence and measured 2k/4k circuit sizing, including Railway cost
+scenarios and expansion limits, are documented in
+[connectome expansion](docs/connectome-expansion.md). No receptor-specific effect
+was assigned without a validated cell match.
+
+An isolated [presynaptic receptor probe](docs/receptor-mechanism-evidence.md)
+implements release inhibition. The earlier missing-edge result came from a
+cross-version neuron-label mismatch; the [original-ID audit](docs/receptor-connectivity-followup.md) corrects it.
+[Biological recording calibration](docs/receptor-calibration.md) now uses separate
+training, validation and test animals. Its suppression candidate improves average
+held-out error but worsens one test animal and transfers poorly to passive
+recordings. It remains experimental and is not applied to the drawing controller.
+
+Further [biological refinement experiments](docs/receptor-refinement-status.md)
+separated passive response, 9A observation dynamics and suppression, then tested
+an additional tonic component. Both candidates failed to outperform the strongest
+animal-cross-validated control. Fresh confirmation cohorts remain unused; motor
+integration and retraining are deferred, and the validated app controller remains
+unchanged.

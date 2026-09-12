@@ -1,0 +1,2024 @@
+{
+  "audit_date": "2026-09-13",
+  "production_changed": false,
+  "study_doi": "10.1038/s41586-025-09554-2",
+  "data_doi": "10.5061/dryad.gqnk98t16",
+  "data_version": "20250903",
+  "original_manc_properties_url": "https://storage.googleapis.com/flyem-manc-exports/v1.0/manc-v1.0-neuron-properties.feather",
+  "notebook_url": "https://github.com/chrisjdallmann/feco-inhibition/blob/e1233f4a987c532c9f1ab42273af21a0a6a50393/code/manc_9A_web_connectivity.ipynb",
+  "sha256": {
+    "designerfly-manc-v1-neuron-properties.feather": "0c4476528906bb0a20e05e1f01e83fc2e5a582761536171ede5463669ca0b891",
+    "manc_v1_connectivity.parquet": "dddb20a6f3145ca801ad75a9b3aa9fe2db61ad87c78acd4b8cab0025d3556c0f",
+    "manc_v1_classifications.csv": "f81572490e571e69eeaa625383f348bd48fbb5f0f75b2c29195aca4aa911357c",
+    "male_cns_annotations.feather": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "male_cns_weights.feather": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1"
+  },
+  "classifications_columns": [
+    "bodyId",
+    "class"
+  ],
+  "classifications_rows": 23188,
+  "notebook_output_limit": "Saved outputs are the web-neuron example, not a saved list of hook IDs; source explicitly queries SNpp38 in manc:v1.0 and filters displayed edges at >=5 synapses. This audit retains every nonzero table row.",
+  "connectivity_semantics": "Presynaptic_ID -> Postsynaptic_ID; Excitatory x Connectivity is already signed and multiplied by global w_syn in the study model. It is not raw unsigned anatomy.",
+  "original_snpp38_neurons": 108,
+  "original_snpp38_subclasses": {
+    "missing": 15,
+    "mesothoracic leg": 7,
+    "mesothoracic leg FeCO hook": 26,
+    "prothoracic leg FeCO hook": 12,
+    "metathoracic leg FeCO club": 5,
+    "metathoracic leg FeCO hook": 18,
+    "prothoracic leg": 6,
+    "metathoracic leg": 9,
+    "mesothoracic leg FeCO club": 4,
+    "metathoracic leg FeCO claw": 1,
+    "prothoracic leg FeCO club": 5
+  },
+  "strict_original_hook_neurons": 56,
+  "accepted_hook_homologs": 35,
+  "mapping_rule": "Original MANC v1.0 type SNpp38 AND explicit FeCO hook subclass; then body crosswalk, matching root side, thoracic entry nerve and proprioceptive class, unique match required. Homology evidence is not direct receptor measurement in MaleCNS.",
+  "hook_mapping": [
+    {
+      "manc_body_id": 23310,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        809398
+      ],
+      "accepted": true,
+      "male_cns_body_id": 809398,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 24468,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 27124,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        810041
+      ],
+      "accepted": true,
+      "male_cns_body_id": 810041,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 28001,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 28655,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 28696,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        814905
+      ],
+      "accepted": true,
+      "male_cns_body_id": 814905,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 29586,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        809250
+      ],
+      "accepted": true,
+      "male_cns_body_id": 809250,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 30144,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        809932
+      ],
+      "accepted": true,
+      "male_cns_body_id": 809932,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 30240,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        819524
+      ],
+      "accepted": true,
+      "male_cns_body_id": 819524,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 30692,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [
+        903843
+      ],
+      "accepted": true,
+      "male_cns_body_id": 903843,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 34459,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        808757
+      ],
+      "accepted": true,
+      "male_cns_body_id": 808757,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 35223,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        909549
+      ],
+      "accepted": true,
+      "male_cns_body_id": 909549,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 37056,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        907744
+      ],
+      "accepted": true,
+      "male_cns_body_id": 907744,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 37335,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 43224,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        807274
+      ],
+      "accepted": true,
+      "male_cns_body_id": 807274,
+      "male_cns_type": "SNppxx",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 43612,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 45922,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        808576
+      ],
+      "accepted": true,
+      "male_cns_body_id": 808576,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 46061,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        813911,
+        903209
+      ],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 46406,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [
+        905340
+      ],
+      "accepted": true,
+      "male_cns_body_id": 905340,
+      "male_cns_type": "SNpp59",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 50769,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        909478
+      ],
+      "accepted": true,
+      "male_cns_body_id": 909478,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 54515,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        905218
+      ],
+      "accepted": true,
+      "male_cns_body_id": 905218,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 55943,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [
+        813177
+      ],
+      "accepted": true,
+      "male_cns_body_id": 813177,
+      "male_cns_type": null,
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 58631,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        813147
+      ],
+      "accepted": true,
+      "male_cns_body_id": 813147,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 59155,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 62989,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        907742
+      ],
+      "accepted": true,
+      "male_cns_body_id": 907742,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 67802,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        806847
+      ],
+      "accepted": true,
+      "male_cns_body_id": 806847,
+      "male_cns_type": "SNppxx",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 76568,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        807900
+      ],
+      "accepted": true,
+      "male_cns_body_id": 807900,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 82116,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        1066481166
+      ],
+      "accepted": true,
+      "male_cns_body_id": 1066481166,
+      "male_cns_type": "SNpp44",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 97015,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        911942
+      ],
+      "accepted": true,
+      "male_cns_body_id": 911942,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 100046,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [
+        833563
+      ],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 100058,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        809353
+      ],
+      "accepted": true,
+      "male_cns_body_id": 809353,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 100118,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        809027
+      ],
+      "accepted": true,
+      "male_cns_body_id": 809027,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 100324,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 100412,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 100941,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        910836
+      ],
+      "accepted": true,
+      "male_cns_body_id": 910836,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 101869,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        807473
+      ],
+      "accepted": true,
+      "male_cns_body_id": 807473,
+      "male_cns_type": "SNppxx",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 103272,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 114234,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 126328,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 155073,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [
+        817298
+      ],
+      "accepted": true,
+      "male_cns_body_id": 817298,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 158073,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        810445
+      ],
+      "accepted": true,
+      "male_cns_body_id": 810445,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 158881,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        813644
+      ],
+      "accepted": true,
+      "male_cns_body_id": 813644,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 164521,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 169735,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 171016,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [
+        818813
+      ],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 172044,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 176316,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        810526
+      ],
+      "accepted": true,
+      "male_cns_body_id": 810526,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 177450,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        822285
+      ],
+      "accepted": true,
+      "male_cns_body_id": 822285,
+      "male_cns_type": "SNpp41",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 178305,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        806629
+      ],
+      "accepted": true,
+      "male_cns_body_id": 806629,
+      "male_cns_type": "SNppxx",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 178795,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 189259,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [
+        812422
+      ],
+      "accepted": true,
+      "male_cns_body_id": 812422,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 196644,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 204344,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "metathoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MetaLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    },
+    {
+      "manc_body_id": 206048,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "prothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "ProLN",
+      "candidate_body_ids": [
+        905668
+      ],
+      "accepted": true,
+      "male_cns_body_id": 905668,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 21149588940,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "R",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [
+        913882
+      ],
+      "accepted": true,
+      "male_cns_body_id": 913882,
+      "male_cns_type": "SNpp39",
+      "in_baseline": false
+    },
+    {
+      "manc_body_id": 21558919163,
+      "manc_v1_type": "SNpp38",
+      "manc_v1_subclass": "mesothoracic leg FeCO hook",
+      "manc_side": "L",
+      "expected_nerve": "MesoLN",
+      "candidate_body_ids": [],
+      "accepted": false,
+      "reason": "missing_or_ambiguous_side_nerve_class_validated_match"
+    }
+  ],
+  "incorrect_previous_type_mapping": [
+    {
+      "male_cns_body_id": 809437,
+      "manc_body_id": 11868,
+      "original_manc_v1_type": "SNpp05",
+      "original_subclass": "wing"
+    },
+    {
+      "male_cns_body_id": 809543,
+      "manc_body_id": 23043,
+      "original_manc_v1_type": "SNpp05",
+      "original_subclass": "wing"
+    },
+    {
+      "male_cns_body_id": 809853,
+      "manc_body_id": 12487,
+      "original_manc_v1_type": "SNpp05",
+      "original_subclass": "wing"
+    },
+    {
+      "male_cns_body_id": 809898,
+      "manc_body_id": 14178,
+      "original_manc_v1_type": "SNpp05",
+      "original_subclass": "wing"
+    },
+    {
+      "male_cns_body_id": 810043,
+      "manc_body_id": 11712,
+      "original_manc_v1_type": "SNpp05",
+      "original_subclass": "wing"
+    },
+    {
+      "male_cns_body_id": 908037,
+      "manc_body_id": 12668,
+      "original_manc_v1_type": "SNpp05",
+      "original_subclass": "wing"
+    }
+  ],
+  "manc_chief_outgoing_edges": 166,
+  "manc_chief_to_original_snpp38": {
+    "edges": 71,
+    "signed_weight_sum": -4021.0,
+    "absolute_weight_sum": 4021.0,
+    "negative_edges": 71,
+    "rows": [
+      {
+        "pre": 12443,
+        "post": 18478,
+        "signed_weight": -41.0
+      },
+      {
+        "pre": 12443,
+        "post": 27124,
+        "signed_weight": -84.0
+      },
+      {
+        "pre": 12443,
+        "post": 28001,
+        "signed_weight": -22.0
+      },
+      {
+        "pre": 12443,
+        "post": 35223,
+        "signed_weight": -14.0
+      },
+      {
+        "pre": 12443,
+        "post": 43698,
+        "signed_weight": -23.0
+      },
+      {
+        "pre": 12443,
+        "post": 45922,
+        "signed_weight": -180.0
+      },
+      {
+        "pre": 12443,
+        "post": 76568,
+        "signed_weight": -86.0
+      },
+      {
+        "pre": 12443,
+        "post": 79321,
+        "signed_weight": -52.0
+      },
+      {
+        "pre": 12443,
+        "post": 100058,
+        "signed_weight": -92.0
+      },
+      {
+        "pre": 12443,
+        "post": 100118,
+        "signed_weight": -153.0
+      },
+      {
+        "pre": 12443,
+        "post": 101869,
+        "signed_weight": -75.0
+      },
+      {
+        "pre": 12443,
+        "post": 158073,
+        "signed_weight": -73.0
+      },
+      {
+        "pre": 12443,
+        "post": 159167,
+        "signed_weight": -28.0
+      },
+      {
+        "pre": 12443,
+        "post": 159168,
+        "signed_weight": -36.0
+      },
+      {
+        "pre": 12443,
+        "post": 175427,
+        "signed_weight": -20.0
+      },
+      {
+        "pre": 12443,
+        "post": 177450,
+        "signed_weight": -53.0
+      },
+      {
+        "pre": 12443,
+        "post": 21149588940,
+        "signed_weight": -43.0
+      },
+      {
+        "pre": 12804,
+        "post": 30240,
+        "signed_weight": -103.0
+      },
+      {
+        "pre": 12804,
+        "post": 37056,
+        "signed_weight": -38.0
+      },
+      {
+        "pre": 12804,
+        "post": 37335,
+        "signed_weight": -49.0
+      },
+      {
+        "pre": 12804,
+        "post": 40104,
+        "signed_weight": -20.0
+      },
+      {
+        "pre": 12804,
+        "post": 43612,
+        "signed_weight": -7.0
+      },
+      {
+        "pre": 12804,
+        "post": 58631,
+        "signed_weight": -147.0
+      },
+      {
+        "pre": 12804,
+        "post": 62989,
+        "signed_weight": -52.0
+      },
+      {
+        "pre": 12804,
+        "post": 63336,
+        "signed_weight": -5.0
+      },
+      {
+        "pre": 12804,
+        "post": 67802,
+        "signed_weight": -47.0
+      },
+      {
+        "pre": 12804,
+        "post": 92963,
+        "signed_weight": -57.0
+      },
+      {
+        "pre": 12804,
+        "post": 98084,
+        "signed_weight": -71.0
+      },
+      {
+        "pre": 12804,
+        "post": 114234,
+        "signed_weight": -31.0
+      },
+      {
+        "pre": 12804,
+        "post": 169735,
+        "signed_weight": -61.0
+      },
+      {
+        "pre": 12804,
+        "post": 171449,
+        "signed_weight": -20.0
+      },
+      {
+        "pre": 12804,
+        "post": 6309444152,
+        "signed_weight": -34.0
+      },
+      {
+        "pre": 13157,
+        "post": 23310,
+        "signed_weight": -76.0
+      },
+      {
+        "pre": 13157,
+        "post": 28696,
+        "signed_weight": -60.0
+      },
+      {
+        "pre": 13157,
+        "post": 29586,
+        "signed_weight": -90.0
+      },
+      {
+        "pre": 13157,
+        "post": 34459,
+        "signed_weight": -61.0
+      },
+      {
+        "pre": 13157,
+        "post": 43224,
+        "signed_weight": -64.0
+      },
+      {
+        "pre": 13157,
+        "post": 54515,
+        "signed_weight": -44.0
+      },
+      {
+        "pre": 13157,
+        "post": 92271,
+        "signed_weight": -30.0
+      },
+      {
+        "pre": 13157,
+        "post": 97015,
+        "signed_weight": -130.0
+      },
+      {
+        "pre": 13157,
+        "post": 100941,
+        "signed_weight": -57.0
+      },
+      {
+        "pre": 13157,
+        "post": 178305,
+        "signed_weight": -56.0
+      },
+      {
+        "pre": 14517,
+        "post": 30144,
+        "signed_weight": -60.0
+      },
+      {
+        "pre": 14517,
+        "post": 34890,
+        "signed_weight": -21.0
+      },
+      {
+        "pre": 14517,
+        "post": 46061,
+        "signed_weight": -27.0
+      },
+      {
+        "pre": 14517,
+        "post": 48333,
+        "signed_weight": -5.0
+      },
+      {
+        "pre": 14517,
+        "post": 52985,
+        "signed_weight": -7.0
+      },
+      {
+        "pre": 14517,
+        "post": 82116,
+        "signed_weight": -102.0
+      },
+      {
+        "pre": 14517,
+        "post": 84871,
+        "signed_weight": -18.0
+      },
+      {
+        "pre": 14517,
+        "post": 100452,
+        "signed_weight": -23.0
+      },
+      {
+        "pre": 14517,
+        "post": 100677,
+        "signed_weight": -58.0
+      },
+      {
+        "pre": 14517,
+        "post": 103272,
+        "signed_weight": -87.0
+      },
+      {
+        "pre": 14517,
+        "post": 152893,
+        "signed_weight": -43.0
+      },
+      {
+        "pre": 14517,
+        "post": 158881,
+        "signed_weight": -138.0
+      },
+      {
+        "pre": 14517,
+        "post": 176316,
+        "signed_weight": -38.0
+      },
+      {
+        "pre": 14517,
+        "post": 189259,
+        "signed_weight": -53.0
+      },
+      {
+        "pre": 100513,
+        "post": 30692,
+        "signed_weight": -69.0
+      },
+      {
+        "pre": 100513,
+        "post": 46406,
+        "signed_weight": -135.0
+      },
+      {
+        "pre": 100513,
+        "post": 55943,
+        "signed_weight": -53.0
+      },
+      {
+        "pre": 100513,
+        "post": 100046,
+        "signed_weight": -121.0
+      },
+      {
+        "pre": 100513,
+        "post": 100324,
+        "signed_weight": -15.0
+      },
+      {
+        "pre": 165560,
+        "post": 24468,
+        "signed_weight": -128.0
+      },
+      {
+        "pre": 165560,
+        "post": 44091,
+        "signed_weight": -26.0
+      },
+      {
+        "pre": 165560,
+        "post": 45349,
+        "signed_weight": -23.0
+      },
+      {
+        "pre": 165560,
+        "post": 100412,
+        "signed_weight": -45.0
+      },
+      {
+        "pre": 165560,
+        "post": 100808,
+        "signed_weight": -20.0
+      },
+      {
+        "pre": 165560,
+        "post": 101970,
+        "signed_weight": -10.0
+      },
+      {
+        "pre": 165560,
+        "post": 143459,
+        "signed_weight": -5.0
+      },
+      {
+        "pre": 165560,
+        "post": 171016,
+        "signed_weight": -100.0
+      },
+      {
+        "pre": 165560,
+        "post": 171795,
+        "signed_weight": -21.0
+      },
+      {
+        "pre": 165560,
+        "post": 206048,
+        "signed_weight": -85.0
+      }
+    ]
+  },
+  "manc_chief_to_strict_hooks": {
+    "edges": 45,
+    "signed_weight_sum": -3304.0,
+    "absolute_weight_sum": 3304.0,
+    "negative_edges": 45,
+    "rows": [
+      {
+        "pre": 12443,
+        "post": 27124,
+        "signed_weight": -84.0
+      },
+      {
+        "pre": 12443,
+        "post": 28001,
+        "signed_weight": -22.0
+      },
+      {
+        "pre": 12443,
+        "post": 35223,
+        "signed_weight": -14.0
+      },
+      {
+        "pre": 12443,
+        "post": 45922,
+        "signed_weight": -180.0
+      },
+      {
+        "pre": 12443,
+        "post": 76568,
+        "signed_weight": -86.0
+      },
+      {
+        "pre": 12443,
+        "post": 100058,
+        "signed_weight": -92.0
+      },
+      {
+        "pre": 12443,
+        "post": 100118,
+        "signed_weight": -153.0
+      },
+      {
+        "pre": 12443,
+        "post": 101869,
+        "signed_weight": -75.0
+      },
+      {
+        "pre": 12443,
+        "post": 158073,
+        "signed_weight": -73.0
+      },
+      {
+        "pre": 12443,
+        "post": 177450,
+        "signed_weight": -53.0
+      },
+      {
+        "pre": 12443,
+        "post": 21149588940,
+        "signed_weight": -43.0
+      },
+      {
+        "pre": 12804,
+        "post": 30240,
+        "signed_weight": -103.0
+      },
+      {
+        "pre": 12804,
+        "post": 37056,
+        "signed_weight": -38.0
+      },
+      {
+        "pre": 12804,
+        "post": 37335,
+        "signed_weight": -49.0
+      },
+      {
+        "pre": 12804,
+        "post": 43612,
+        "signed_weight": -7.0
+      },
+      {
+        "pre": 12804,
+        "post": 58631,
+        "signed_weight": -147.0
+      },
+      {
+        "pre": 12804,
+        "post": 62989,
+        "signed_weight": -52.0
+      },
+      {
+        "pre": 12804,
+        "post": 67802,
+        "signed_weight": -47.0
+      },
+      {
+        "pre": 12804,
+        "post": 114234,
+        "signed_weight": -31.0
+      },
+      {
+        "pre": 12804,
+        "post": 169735,
+        "signed_weight": -61.0
+      },
+      {
+        "pre": 13157,
+        "post": 23310,
+        "signed_weight": -76.0
+      },
+      {
+        "pre": 13157,
+        "post": 28696,
+        "signed_weight": -60.0
+      },
+      {
+        "pre": 13157,
+        "post": 29586,
+        "signed_weight": -90.0
+      },
+      {
+        "pre": 13157,
+        "post": 34459,
+        "signed_weight": -61.0
+      },
+      {
+        "pre": 13157,
+        "post": 43224,
+        "signed_weight": -64.0
+      },
+      {
+        "pre": 13157,
+        "post": 54515,
+        "signed_weight": -44.0
+      },
+      {
+        "pre": 13157,
+        "post": 97015,
+        "signed_weight": -130.0
+      },
+      {
+        "pre": 13157,
+        "post": 100941,
+        "signed_weight": -57.0
+      },
+      {
+        "pre": 13157,
+        "post": 178305,
+        "signed_weight": -56.0
+      },
+      {
+        "pre": 14517,
+        "post": 30144,
+        "signed_weight": -60.0
+      },
+      {
+        "pre": 14517,
+        "post": 46061,
+        "signed_weight": -27.0
+      },
+      {
+        "pre": 14517,
+        "post": 82116,
+        "signed_weight": -102.0
+      },
+      {
+        "pre": 14517,
+        "post": 103272,
+        "signed_weight": -87.0
+      },
+      {
+        "pre": 14517,
+        "post": 158881,
+        "signed_weight": -138.0
+      },
+      {
+        "pre": 14517,
+        "post": 176316,
+        "signed_weight": -38.0
+      },
+      {
+        "pre": 14517,
+        "post": 189259,
+        "signed_weight": -53.0
+      },
+      {
+        "pre": 100513,
+        "post": 30692,
+        "signed_weight": -69.0
+      },
+      {
+        "pre": 100513,
+        "post": 46406,
+        "signed_weight": -135.0
+      },
+      {
+        "pre": 100513,
+        "post": 55943,
+        "signed_weight": -53.0
+      },
+      {
+        "pre": 100513,
+        "post": 100046,
+        "signed_weight": -121.0
+      },
+      {
+        "pre": 100513,
+        "post": 100324,
+        "signed_weight": -15.0
+      },
+      {
+        "pre": 165560,
+        "post": 24468,
+        "signed_weight": -128.0
+      },
+      {
+        "pre": 165560,
+        "post": 100412,
+        "signed_weight": -45.0
+      },
+      {
+        "pre": 165560,
+        "post": 171016,
+        "signed_weight": -100.0
+      },
+      {
+        "pre": 165560,
+        "post": 206048,
+        "signed_weight": -85.0
+      }
+    ]
+  },
+  "cells": [
+    {
+      "role": "chief_9A",
+      "bodyId": 805450,
+      "mancBodyid": 100513.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "entryNerve": null,
+      "somaSide": "L",
+      "somaNeuromere": "T1",
+      "in_baseline": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 804940,
+      "mancBodyid": 13157.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "entryNerve": null,
+      "somaSide": "L",
+      "somaNeuromere": "T2",
+      "in_baseline": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 802115,
+      "mancBodyid": 14517.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "entryNerve": null,
+      "somaSide": "L",
+      "somaNeuromere": "T3",
+      "in_baseline": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 805777,
+      "mancBodyid": 165560.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "entryNerve": null,
+      "somaSide": "R",
+      "somaNeuromere": "T1",
+      "in_baseline": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 803114,
+      "mancBodyid": 12443.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "entryNerve": null,
+      "somaSide": "R",
+      "somaNeuromere": "T2",
+      "in_baseline": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 805004,
+      "mancBodyid": 12804.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "entryNerve": null,
+      "somaSide": "R",
+      "somaNeuromere": "T3",
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 809398,
+      "mancBodyid": 23310.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 810041,
+      "mancBodyid": 27124.0,
+      "type": "SNpp39",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 814905,
+      "mancBodyid": 28696.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 809250,
+      "mancBodyid": 29586.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 809932,
+      "mancBodyid": 30144.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 819524,
+      "mancBodyid": 30240.0,
+      "type": "SNpp41",
+      "rootSide": "R",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 903843,
+      "mancBodyid": 30692.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "ProLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 808757,
+      "mancBodyid": 34459.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 909549,
+      "mancBodyid": 35223.0,
+      "type": "SNpp39",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 907744,
+      "mancBodyid": 37056.0,
+      "type": "SNpp39",
+      "rootSide": "R",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 807274,
+      "mancBodyid": 43224.0,
+      "type": "SNppxx",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 808576,
+      "mancBodyid": 45922.0,
+      "type": "SNpp41",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 905340,
+      "mancBodyid": 46406.0,
+      "type": "SNpp59",
+      "rootSide": "L",
+      "entryNerve": "ProLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 909478,
+      "mancBodyid": 50769.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 905218,
+      "mancBodyid": 54515.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 813177,
+      "mancBodyid": 55943.0,
+      "type": null,
+      "rootSide": "L",
+      "entryNerve": "ProLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 813147,
+      "mancBodyid": 58631.0,
+      "type": "SNpp41",
+      "rootSide": "R",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 907742,
+      "mancBodyid": 62989.0,
+      "type": "SNpp39",
+      "rootSide": "R",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 806847,
+      "mancBodyid": 67802.0,
+      "type": "SNppxx",
+      "rootSide": "R",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 807900,
+      "mancBodyid": 76568.0,
+      "type": "SNpp39",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 1066481166,
+      "mancBodyid": 82116.0,
+      "type": "SNpp44",
+      "rootSide": "L",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 911942,
+      "mancBodyid": 97015.0,
+      "type": "SNpp41",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 809353,
+      "mancBodyid": 100058.0,
+      "type": "SNpp41",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 809027,
+      "mancBodyid": 100118.0,
+      "type": "SNpp41",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 910836,
+      "mancBodyid": 100941.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 807473,
+      "mancBodyid": 101869.0,
+      "type": "SNppxx",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 817298,
+      "mancBodyid": 155073.0,
+      "type": "SNpp41",
+      "rootSide": "L",
+      "entryNerve": "ProLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 810445,
+      "mancBodyid": 158073.0,
+      "type": "SNpp39",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 813644,
+      "mancBodyid": 158881.0,
+      "type": "SNpp41",
+      "rootSide": "L",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 810526,
+      "mancBodyid": 176316.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 822285,
+      "mancBodyid": 177450.0,
+      "type": "SNpp41",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 806629,
+      "mancBodyid": 178305.0,
+      "type": "SNppxx",
+      "rootSide": "L",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 812422,
+      "mancBodyid": 189259.0,
+      "type": "SNpp39",
+      "rootSide": "L",
+      "entryNerve": "MetaLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 905668,
+      "mancBodyid": 206048.0,
+      "type": "SNpp39",
+      "rootSide": "R",
+      "entryNerve": "ProLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 913882,
+      "mancBodyid": 21149588940.0,
+      "type": "SNpp39",
+      "rootSide": "R",
+      "entryNerve": "MesoLN",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "in_baseline": false
+    }
+  ],
+  "male_cns_edges": [
+    {
+      "pre": 804940,
+      "post": 809398,
+      "count": 54
+    },
+    {
+      "pre": 803114,
+      "post": 810041,
+      "count": 80
+    },
+    {
+      "pre": 804940,
+      "post": 814905,
+      "count": 78
+    },
+    {
+      "pre": 804940,
+      "post": 809250,
+      "count": 70
+    },
+    {
+      "pre": 802115,
+      "post": 809932,
+      "count": 76
+    },
+    {
+      "pre": 805004,
+      "post": 819524,
+      "count": 155
+    },
+    {
+      "pre": 805450,
+      "post": 903843,
+      "count": 18
+    },
+    {
+      "pre": 804940,
+      "post": 808757,
+      "count": 47
+    },
+    {
+      "pre": 803114,
+      "post": 909549,
+      "count": 22
+    },
+    {
+      "pre": 805004,
+      "post": 907744,
+      "count": 50
+    },
+    {
+      "pre": 804940,
+      "post": 807274,
+      "count": 97
+    },
+    {
+      "pre": 803114,
+      "post": 808576,
+      "count": 184
+    },
+    {
+      "pre": 805450,
+      "post": 905340,
+      "count": 5
+    },
+    {
+      "pre": 804940,
+      "post": 909478,
+      "count": 15
+    },
+    {
+      "pre": 804940,
+      "post": 905218,
+      "count": 88
+    },
+    {
+      "pre": 805450,
+      "post": 813177,
+      "count": 27
+    },
+    {
+      "pre": 805004,
+      "post": 813147,
+      "count": 180
+    },
+    {
+      "pre": 805004,
+      "post": 907742,
+      "count": 93
+    },
+    {
+      "pre": 805004,
+      "post": 806847,
+      "count": 75
+    },
+    {
+      "pre": 803114,
+      "post": 807900,
+      "count": 84
+    },
+    {
+      "pre": 802115,
+      "post": 1066481166,
+      "count": 13
+    },
+    {
+      "pre": 804940,
+      "post": 911942,
+      "count": 170
+    },
+    {
+      "pre": 803114,
+      "post": 809353,
+      "count": 142
+    },
+    {
+      "pre": 803114,
+      "post": 809027,
+      "count": 179
+    },
+    {
+      "pre": 804940,
+      "post": 910836,
+      "count": 55
+    },
+    {
+      "pre": 803114,
+      "post": 807473,
+      "count": 85
+    },
+    {
+      "pre": 805450,
+      "post": 817298,
+      "count": 100
+    },
+    {
+      "pre": 803114,
+      "post": 810445,
+      "count": 45
+    },
+    {
+      "pre": 802115,
+      "post": 813644,
+      "count": 164
+    },
+    {
+      "pre": 802115,
+      "post": 810526,
+      "count": 55
+    },
+    {
+      "pre": 803114,
+      "post": 822285,
+      "count": 60
+    },
+    {
+      "pre": 804940,
+      "post": 806629,
+      "count": 71
+    },
+    {
+      "pre": 802115,
+      "post": 812422,
+      "count": 17
+    },
+    {
+      "pre": 805777,
+      "post": 905668,
+      "count": 5
+    },
+    {
+      "pre": 803114,
+      "post": 913882,
+      "count": 65
+    }
+  ],
+  "male_cns_nonzero_edges": 35,
+  "male_cns_synapse_sum": 2724,
+  "additional_cells": 41,
+  "foreleg": {
+    "chiefs": 2,
+    "hooks": 5,
+    "edges": 5,
+    "synapses": 155
+  },
+  "conclusion": "Previous zero-edge result used cross-version type names and tested wing cells. Corrected original-ID mappings support an isolated measured connectivity probe; no motor promotion, receptor conductance claim or production graph expansion follows from this audit."
+}

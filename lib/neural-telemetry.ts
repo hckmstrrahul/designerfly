@@ -1,4 +1,4 @@
-export type NeuralSource = 'motor' | 'wing';
+export type NeuralSource = 'motor' | 'wing' | 'spiking';
 export interface NeuralSample { source: NeuralSource; time: number; sequence: number; run: number; state: Float32Array }
 export interface ActivityTrace { source: NeuralSource | null; run: number; sequence: number; samples: { time: number; mean: number }[] }
 export function activityTrace(): ActivityTrace { return { source: null, run: -1, sequence: -1, samples: [] }; }

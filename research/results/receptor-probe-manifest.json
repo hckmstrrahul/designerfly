@@ -1,0 +1,201 @@
+{
+  "status": "isolated hypothesis probe; not connected to motor",
+  "study_code": "https://github.com/chrisjdallmann/feco-inhibition/blob/e1233f4a987c532c9f1ab42273af21a0a6a50393/code/manc_9A_web_connectivity.ipynb",
+  "mapping": "MANC homolog annotations plus matching type; chief side and segment checked. Hook segment unresolved; no foreleg-only claim.",
+  "receptor_evidence": "Rdl expression at hook/claw population level; not receptor measurement in these MaleCNS cells",
+  "source_sha256": {
+    "annotations.feather": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+    "weights.feather": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+    "neurotransmitters.feather": "95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621"
+  },
+  "cells": [
+    {
+      "role": "chief_9A",
+      "bodyId": 805450,
+      "mancBodyid": 100513.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "somaSide": "L",
+      "somaNeuromere": "T1",
+      "entryNerve": null,
+      "in_active_graph": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 804940,
+      "mancBodyid": 13157.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "somaSide": "L",
+      "somaNeuromere": "T2",
+      "entryNerve": null,
+      "in_active_graph": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 802115,
+      "mancBodyid": 14517.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "somaSide": "L",
+      "somaNeuromere": "T3",
+      "entryNerve": null,
+      "in_active_graph": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 805777,
+      "mancBodyid": 165560.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "somaSide": "R",
+      "somaNeuromere": "T1",
+      "entryNerve": null,
+      "in_active_graph": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 803114,
+      "mancBodyid": 12443.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "somaSide": "R",
+      "somaNeuromere": "T2",
+      "entryNerve": null,
+      "in_active_graph": false
+    },
+    {
+      "role": "chief_9A",
+      "bodyId": 805004,
+      "mancBodyid": 12804.0,
+      "type": "IN09A012",
+      "rootSide": null,
+      "somaSide": "R",
+      "somaNeuromere": "T3",
+      "entryNerve": null,
+      "in_active_graph": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 809437,
+      "mancBodyid": 11868.0,
+      "type": "SNpp38",
+      "rootSide": "L",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "entryNerve": "ADMN",
+      "in_active_graph": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 809543,
+      "mancBodyid": 23043.0,
+      "type": "SNpp38",
+      "rootSide": "L",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "entryNerve": "ADMN",
+      "in_active_graph": true
+    },
+    {
+      "role": "hook",
+      "bodyId": 809853,
+      "mancBodyid": 12487.0,
+      "type": "SNpp38",
+      "rootSide": "R",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "entryNerve": "ADMN",
+      "in_active_graph": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 809898,
+      "mancBodyid": 14178.0,
+      "type": "SNpp38",
+      "rootSide": "R",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "entryNerve": "ADMN",
+      "in_active_graph": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 810043,
+      "mancBodyid": 11712.0,
+      "type": "SNpp38",
+      "rootSide": "L",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "entryNerve": "ADMN",
+      "in_active_graph": false
+    },
+    {
+      "role": "hook",
+      "bodyId": 908037,
+      "mancBodyid": 12668.0,
+      "type": "SNpp38",
+      "rootSide": "R",
+      "somaSide": null,
+      "somaNeuromere": null,
+      "entryNerve": "ADMN",
+      "in_active_graph": false
+    }
+  ],
+  "counts_target_by_source": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "nonzero_edges": 0,
+  "additional_cells": 11,
+  "production_expansion": false,
+  "calibration": "pending biological replay and held-out validation",
+  "superseded": true,
+  "correction": "Wrong cross-version SNpp38 label selected wing proprioceptors, not original MANC hook cells. Do not interpret zero/one edges as missing biological connectivity. See receptor-manc-audit.json."
+}

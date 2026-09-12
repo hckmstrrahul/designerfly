@@ -30,18 +30,37 @@ export function roundedRect(x:number,y:number,w:number,h:number,r=.035): PenPoin
 const examplePaths:PenPoint[][]=[];
 const round=(x:number,y:number,w:number,h:number,r=.035)=>examplePaths.push(roundedRect(x,y,w,h,r));
 const line=(...p:PenPoint[])=>examplePaths.push(p);
-round(0,-.72,1.62,.22);
-line([-.67,-.73],[-.6,-.73]);line([.53,-.77],[.57,-.73],[.53,-.69]);
-round(0,-.22,1.62,.50,.05);
-line([-.73,-.12],[-.40,-.39],[-.13,-.16],[.19,-.35],[.73,.01]);
-round(.48,-.37,.13,.13,.06);
-for(const x of [-.44,.44]){
- round(x,.42,.74,.68,.045);
- round(x,.30,.60,.28,.025);
- line([x-.27,.39],[x-.10,.22],[x+.03,.33],[x+.14,.25],[x+.27,.39]);
- line([x-.27,.54],[x+.22,.54]);line([x-.27,.64],[x+.04,.64]);
+// Even vertical gutters between masthead, search, feature, cards and footer.
+round(0,-.64,1.72,.20);
+line([-.72,-.64],[-.63,-.64]);line([.68,-.68],[.72,-.64],[.68,-.60]);
+round(0,-.16,1.72,.52,.04);
+line([-.77,.01],[-.43,-.33],[-.09,-.04],[.27,-.28],[.77,.01]);
+round(.57,-.29,.13,.13,.06);
+for(const x of [-.46,.46]){
+ round(x,.45,.80,.50,.035);
+ round(x,.37,.66,.20,.025);
+ line([x-.28,.43],[x-.11,.30],[x+.03,.40],[x+.14,.32],[x+.28,.43]);
+ line([x-.28,.54],[x+.25,.54]);line([x-.28,.62],[x+.07,.62]);
 }
-line([-.80,.86],[.30,.86]);round(.63,.86,.34,.16,.07);
-// The masthead uses the exact same supplied lettering paths as the text tool.
-for(const p of letteringPaths('FLY'))examplePaths.push(p.map(([x,y])=>[x*.42,y*.42-.90]));
+line([-.85,.84],[.31,.84]);round(.65,.84,.42,.14,.065);
+// One-line masthead, using the same vector alphabet as the text tool.
+const masthead=letteringPaths('THE TIMES OF FLIES',40);
+const titlePoints=masthead.flat(), titleXs=titlePoints.map(p=>p[0]), titleYs=titlePoints.map(p=>p[1]);
+const titleLeft=Math.min(...titleXs), titleRight=Math.max(...titleXs), titleTop=Math.min(...titleYs), titleBottom=Math.max(...titleYs);
+for(const p of masthead)examplePaths.push(p.map(([x,y])=>[(x-(titleLeft+titleRight)/2)*1.64/(titleRight-titleLeft),(y-(titleTop+titleBottom)/2)*.10/(titleBottom-titleTop)-.89]));
 export const UI_EXAMPLE:PlacedShape[]=examplePaths.map((p,i)=>pathShape(p,101+i));
+
+/** Match editor primitives to the supplied-path motor route used by emojis. */
+export function drawingStroke(s: PlacedShape): PlacedShape {
+ if (s.points) return s;
+ let points: PenPoint[];
+ if (s.shape === 0) points = [[-.5,-.5],[.5,-.5],[.5,.5],[-.5,.5],[-.5,-.5]];
+ else if (s.shape === 1) {
+  points = Array.from({length:128},(_,i)=>{
+   const angle=i*Math.PI*2/128;
+   return [Math.cos(angle)*.5,Math.sin(angle)*.5] as PenPoint;
+  });
+  points.push([...points[0]]);
+ } else points = [[0,-.5],[.5,.5],[-.5,.5],[0,-.5]];
+ return {...s,points};
+}

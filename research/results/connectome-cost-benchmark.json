@@ -1,0 +1,69 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "processor": "arm64",
+  "scope": "Local CPU sparse LIF only; constant stimulus, same calibration, 200ms warmup and five 1s trials. Excludes physics, rate policies, HTTP, rendering, imports and controller training. Larger graph not enabled or motor-validated.",
+  "results": [
+    {
+      "neurons": 2048,
+      "anatomical_edges": 192267,
+      "nonzero_effective_edges": 187657,
+      "sparse_weights_bytes_per_session": 2315400,
+      "five_state_arrays_bytes_per_session": 81920,
+      "median_wall_seconds_per_neural_second": 0.1269514590021572,
+      "median_cpu_seconds_per_neural_second": 0.122668,
+      "trials": [
+        {
+          "wall_seconds": 0.12318675000278745,
+          "cpu_seconds": 0.12037300000000006
+        },
+        {
+          "wall_seconds": 0.1269514590021572,
+          "cpu_seconds": 0.122668
+        },
+        {
+          "wall_seconds": 0.12520383299852256,
+          "cpu_seconds": 0.12185900000000016
+        },
+        {
+          "wall_seconds": 0.144210500002373,
+          "cpu_seconds": 0.13739400000000002
+        },
+        {
+          "wall_seconds": 0.1415874169979361,
+          "cpu_seconds": 0.13715699999999997
+        }
+      ]
+    },
+    {
+      "neurons": 4096,
+      "anatomical_edges": 534990,
+      "nonzero_effective_edges": 516239,
+      "sparse_weights_bytes_per_session": 6436268,
+      "five_state_arrays_bytes_per_session": 163840,
+      "median_wall_seconds_per_neural_second": 0.3688627500014263,
+      "median_cpu_seconds_per_neural_second": 0.3655310000000003,
+      "trials": [
+        {
+          "wall_seconds": 0.40128941599687096,
+          "cpu_seconds": 0.3870589999999998
+        },
+        {
+          "wall_seconds": 0.38479287500376813,
+          "cpu_seconds": 0.3806569999999998
+        },
+        {
+          "wall_seconds": 0.3688627500014263,
+          "cpu_seconds": 0.3655310000000003
+        },
+        {
+          "wall_seconds": 0.36177620899979956,
+          "cpu_seconds": 0.3602789999999998
+        },
+        {
+          "wall_seconds": 0.36567658399872016,
+          "cpu_seconds": 0.36393699999999995
+        }
+      ]
+    }
+  ]
+}

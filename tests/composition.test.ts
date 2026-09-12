@@ -54,3 +54,17 @@ void test('40 high-stroke letters fit the drawing budget and workspace', async()
   assert.ok(Math.abs(s.y+y*s.height)<=1);
  }
 });
+
+void test('UI primitives send closed preview geometry while authored ink is unchanged', async()=>{
+ const {drawingStroke}=await import('../lib/composition.ts');
+ for(const shape of [0,1,2]){
+  const original={id:1,shape,x:.2,y:-.1,width:.8,height:.4};
+  const stroke=drawingStroke(original);
+  assert.deepEqual(stroke.points![0],stroke.points!.at(-1));
+  assert.equal(stroke.width,original.width);assert.equal(stroke.height,original.height);
+  for(const p of stroke.points!)assert.ok(p.every(v=>Math.abs(v)<=.5));
+  if(shape===0)assert.deepEqual(stroke.points, [[-.5,-.5],[.5,-.5],[.5,.5],[-.5,.5],[-.5,-.5]]);
+  if(shape===1)for(const [x,y] of stroke.points!)assert.ok(Math.abs(x*x+y*y-.25)<1e-12);
+ }
+ for(const stroke of UI_EXAMPLE)assert.equal(drawingStroke(stroke),stroke);
+});

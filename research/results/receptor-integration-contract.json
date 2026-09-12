@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "contract_id": "receptor-integration-v1",
+  "date": "2026-09-13",
+  "status": "preregistered; confirmatory outcomes not inspected; integration not authorized by a passing result yet",
+  "scope": "Engineering acceptance for a receptor-supported experimental drawing candidate. Numeric margins are project decisions fixed before new holdout outcomes, not published biological standards.",
+  "production_change": false,
+  "motor_training_permitted_now": false,
+  "decision_rule": "ALL biological, assumption-bridge, anatomical and isolation requirements must pass before candidate motor training; ALL subsequent motor checks must pass before candidate can be enabled. Missing evidence is pending/inconclusive, never implicitly passed.",
+  "known_exposure": {
+    "development": [
+      "hook_flexion_01_treadmill_platform.parquet: all animals, including previously evaluated test animals",
+      "hook_flexion_01_magnet.parquet: all animals, including previously evaluated passive transfer animals"
+    ],
+    "excluded_from_confirmatory_passive": [
+      "hook_flexion_01_magnet_Mamiya2018.parquet: animal1; first rows previously inspected"
+    ],
+    "rule": "Previously inspected results may inform development but cannot be advertised as fresh confirmatory evidence. Record any additional outcome exposure before executing final evaluation."
+  },
+  "confirmatory_data": {
+    "primary": {
+      "file": "hook_flexion_02_treadmill.parquet",
+      "sha256": "304b5e2554da4eb539fc9d6962b5f640c30a1b31173aa38cc0eac3b7cecc30b5",
+      "animals": "all8 animals established by metadata-only inspection",
+      "conditions": "all eligible observations; active and not-actively-moving strata additionally reported without selective exclusion",
+      "role": "fresh primary transfer cohort"
+    },
+    "passive": {
+      "file": "hook_flexion_01_magnet_Mamiya2018.parquet",
+      "sha256": "ea61eee2d26a5e6fddb7aebaee06e13e11c9b87427d0f70b350760ab0ae545be",
+      "animals": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14"
+      ],
+      "role": "fresh passive transfer; no per-animal refitting",
+      "historical_limit": "These outcomes were not inspected during our model selection, but the published calcium-kernel prior was historically tuned on Mamiya data. This is not completely independent of all prior model knowledge."
+    },
+    "identity_rule": "Audit cohort provenance for biological animal overlap. Numeric animal IDs reused across files do not establish either biological identity or independence.",
+    "minimum_independent_animals_per_cohort": 5,
+    "eligibility": "At least30 finite analyze=1 scored observations per animal under the locked preprocessing; report all exclusions. Fewer eligible animals yields inconclusive.",
+    "outcome_access": "Metadata/schema/IDs/checksums may be checked before model lock. Calcium outcomes, derived predictions and scoring remain sealed until the lock manifest exists."
+  },
+  "development_protocol": {
+    "validation": "Animal-grouped cross-validation on development data only; preprocessing, calcium kernel/calibration, candidate selection and parameters all fitted within each training fold.",
+    "comparison": "Choose the strongest primary comparator by development animal-grouped cross-validation among passive-derived nongated, constant, and v1-style models; do not choose a weak comparator after viewing holdout scores. Freeze its full model and selection trail. Candidate/calcium head uses the same eligible data and published units.",
+    "lock_before_confirmatory": [
+      "contract SHA256",
+      "all source input SHA256 values",
+      "eligible cohort/animal IDs and preprocessing policy",
+      "candidate and comparator parameters and model SHA256 values",
+      "fitting/evaluation source code SHA256 values",
+      "all random seeds and bootstrap protocol"
+    ],
+    "evaluation": "Run once after freezing both models. No outcome-based exclusions, threshold edits, model reselection, per-animal test amplitude fitting or test-set normalization fitting.",
+    "failure_policy": "A failed/inconclusive new holdout cannot become a tuning set and then be reused for confirmation. A new protocol version requires new untouched confirmatory observations.",
+    "passive_comparison": "Freeze passive observation head and development-fitted constant and matched nongated comparators before test. At gate-off the matched nongated model may be identical: noninferiority alone is then not evidence of predictive value."
+  },
+  "metrics": {
+    "animal_mse": "Mean squared calcium prediction error over scored frames for each animal; combine trials/ROIs within animal without treating frames as independent animals.",
+    "cohort_mse": "Arithmetic mean of animal MSE values, equal animal weight.",
+    "denominator_epsilon": 1e-12,
+    "near_zero_baseline": "If cohort baseline MSE<=epsilon, relative improvement is not identified: mark inconclusive instead of exploiting a tiny denominator.",
+    "relative_improvement": "1 - gated_cohort_MSE / baseline_cohort_MSE",
+    "relative_regression": "gated_cohort_MSE / baseline_cohort_MSE - 1",
+    "individual_regression": "(gated_animal_MSE - baseline_animal_MSE) / max(baseline_animal_MSE,epsilon)",
+    "uncertainty": {
+      "method": "paired bootstrap of biological animals, resampling identical indices for gated/baseline MSE; recompute cohort ratio for every replicate",
+      "replicates": 20000,
+      "seed": 20260913,
+      "interval": "two-sided percentile95%; not a frame-level bootstrap",
+      "zero_denominator_replicate": "Mark interval inconclusive if a bootstrap denominator<=epsilon; do not silently drop replicates."
+    },
+    "report_also": [
+      "per-animal MSE/MAE and eligible frame count",
+      "active and not-actively-moving stratum errors",
+      "calcium amplitude error and correlation with declared handling of flat traces",
+      "all confidence intervals and prediction artifacts",
+      "kinematic support/coverage and any domain-normalization limitations"
+    ]
+  },
+  "biological_acceptance": {
+    "primary": {
+      "minimum_relative_mse_improvement": 0.05,
+      "relative_improvement_ci95_lower_strictly_greater_than": 0.0,
+      "minimum_fraction_animals_with_strict_mse_improvement": 0.75,
+      "maximum_individual_relative_mse_regression": 0.25,
+      "comparator": "strongest development-CV-selected control"
+    },
+    "passive": {
+      "maximum_relative_mse_regression_ci95_upper": 0.1,
+      "maximum_individual_relative_mse_regression": 0.25,
+      "minimum_relative_mse_improvement_vs_constant_strictly_greater_than": 0.0,
+      "constant_comparison_interval": "Report paired animal95% CI; its lower bound is descriptive, not an additional pass condition for this passive prerequisite.",
+      "comparator_for_noninferiority": "locked matched nongated comparator; report identity explicitly if gate-off gives identical predictions"
+    },
+    "interpretation": "All limits are conjunctive. Passing supports out-of-cohort predictive generalization of the stated phenomenological model, not receptor parameter identification or a causal discovery."
+  },
+  "mechanistic_assumption_bridge": {
+    "status": "pending; normalized movement-proxy/calcium fit is not a spike-event calibration",
+    "not_required": "Unique identification of biological9A spike rates from calcium alone is not required and is not claimed.",
+    "required": [
+      "Declare units and a reproducible mapping from measured/engineered input to9A spike event rates, including spontaneous rate, gain, stochastic process and uncertainty/assumption ranges.",
+      "Fit/calibrate scale and observation model only on development observations; test the complete spike-event-to-release-to-calcium pipeline on sealed confirmation, not just the normalized proxy surrogate.",
+      "Account for the distinction between normalized lowpass movement in[0,1] and an unnormalized sum of event impulses. Do not copy proxy beta directly into the spike gate.",
+      "Report nonidentifiability/sensitivity across plausible input-rate and calcium-kernel assumptions; do not label an engineering calibration measured receptor conductance.",
+      "Use the exact event-driven release equation in integration. Verify raw hook spikes remain distinct from release-weighted transmission and no actuator-command attenuation shortcut is used.",
+      "Confirm dt convergence with the same event times and rate-normalized input generation; virtual receptor blockade and targeted gate-input removal must remain separate controls."
+    ],
+    "bridge_equivalence_check": "The promoted candidate must be the same locked spike-to-observation model that passed confirmation. If the final heldout evaluates only a proxy model, biological pass is conditional and this bridge remains pending.",
+    "dynamic_convergence_acceptance": "Across1ms,.5ms,.25ms timesteps with identical event times, transmitted event mass and release trajectories at shared timestamps differ by<=1% of their declared reference scale; document interpolation/event alignment."
+  },
+  "anatomical_acceptance": {
+    "status": "corrected cross-version mapping supports an isolated probe; motor-compatible inclusion pending",
+    "audit": "research/results/receptor-manc-audit.json",
+    "audit_sha256": "20a04aa77bef61c6c2f59d06f9ced78c6c51b82a62ecc93a9578c9fdc3c56d4e",
+    "observed_probe": {
+      "accepted_hook_homologs": 35,
+      "male_cns_edges": 35,
+      "synapses": 2724,
+      "additional_cells": 41,
+      "foreleg_edges": 5,
+      "foreleg_synapses": 155
+    },
+    "requirements": [
+      "Lock original MANC IDs, crosswalk, side/nerve/class correspondence, measured nonzero edges and source hash; homology is not direct receptor measurement.",
+      "Use relevant foreleg homologs with explicit inclusion boundaries; do not present all-leg hook circuitry as a calibrated foreleg sensor.",
+      "Preserve measured connection counts and frozen internal weights; route only approved9A-to-hook edges away from somatic current to avoid double counting.",
+      "Document how newly included cells obtain inputs and reach downstream motor populations. Missing pathways cannot be silently supplied with invented anatomical synapses."
+    ]
+  },
+  "candidate_isolation": {
+    "baseline_snapshot": {
+      "research/results/spiking-motor.npz": "b540cf61ab97b80975640f0ae3de8e33156d5ff0930b38c0241112851093db15",
+      "research/data/circuit-spiking.npz": "56e311413375155044b15128040238831eb1392bc7b13bf9e519d39d009b03f8",
+      "research/results/spiking-motor-validation.json": "9847c7906fee24f08fe220fd15cf48616a9dcc9eb41fad1ba6b0dc0bcf11bc13",
+      "research/spiking.py": "d594ddcf5fb245aa4ba22a2a7f110403cbdf3894d2a77908d6f2001c9f11e972",
+      "research/spiking_motor.py": "50f8db2ef5578f7a7061bdf184e5a4c4a8237b1818ac76551e9fbf2d823c66f6",
+      "research/embodied.py": "cf57ba3745a39da3f18706bcb6fa2945945e73a07c9f7b83726be2331d81e039",
+      "research/composition.py": "a2d93641a18eee950c8b023f223c7706dba52d9d7f92781a838ca1f83ae7d915",
+      "research/runtime.py": "558b2870caa0abc6a2a2a26f3dcdf668457d1e25948315c4a3c9081fd2fff426"
+    },
+    "candidate_paths": {
+      "graph": "research/data/circuit-receptor-candidate.npz",
+      "checkpoint": "research/results/receptor-motor-candidate.npz",
+      "validation": "research/results/receptor-motor-validation.json"
+    },
+    "do_not_overwrite": [
+      "research/results/spiking-motor.npz",
+      "research/data/circuit-spiking.npz",
+      "research/results/active-motor.json"
+    ],
+    "training_gate": "Biological+bridge+anatomical+isolation evidence all passed and hashes current; otherwise no candidate motor training.",
+    "training_scope": "Train sensory/input and motor/output interfaces on offline demonstrations as needed; anatomical internal weights/counts and release mechanism parameters remain frozen.",
+    "enable_gate": "Separate candidate loader must verify biological/bridge/anatomical reports, candidate graph/checkpoint/runtime hashes and full motor validation; default controller and validated baseline remain available.",
+    "rollback": "Gate-off must exactly restore declared baseline routing and state-reset policy. An expanded candidate graph is not bitwise identical to the original graph, so comparison/rollback must explicitly load the original baseline rather than claim numerical equivalence."
+  },
+  "motor_acceptance_after_authorized_training": {
+    "base_protocol": "At minimum retain all current research/validate_spiking_motor.py acceptance thresholds and heldout fixtures; add targeted gate controls and separate new unseen trajectories.",
+    "required": [
+      "Complete drawing, text, emoji, freehand and all three canonical shapes with contact, tracking, pen-lift, force and stability acceptance.",
+      "Demonstrate causal dependence on transmitted neural activity; no runtime teacher, IK, observation-action bypass or per-stroke body reset.",
+      "Report full paired baseline/candidate physical results, including perturbations, gate blockade, targeted input removal and all-inhibition removal as distinct interventions.",
+      "Preserve old validated checkpoint/runtime hashes; no automatic replacement based solely on lower training error."
+    ],
+    "status": "not started; upstream scientific gates pending"
+  },
+  "pending_gates": [
+    "frozen candidate/comparator development fit",
+    "fresh primary biological generalization",
+    "fresh passive noninferiority",
+    "consistent calibrated spike-to-observation bridge",
+    "motor-compatible anatomical inclusion",
+    "candidate-only motor training and independent validation"
+  ],
+  "related_protocols": {
+    "research/results/receptor-v2-data-plan.json": "dac8cdac6eaa7725bfa2e5621d2e4dfef6ecda09d6ea7fb1c31e9600c4746b25",
+    "research/results/receptor-v2-sources.json": "b18736257473b84558d0a6ce7e17ff0b03022575ac7b5c9b4925d6bae801bc21"
+  }
+}

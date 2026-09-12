@@ -1,0 +1,66 @@
+{
+  "scope": "Development comparison only; NOT a confirmatory biological or motor validation",
+  "development_report_sha256": "093400f4fdce5fd1c4510f068014809113ad7b7db8c2c7f19cb2bed373fb30df",
+  "contract_sha256": "81e371eae8237e12ee6581bca9e6bdd507330297f8719de586fb32d802584dd1",
+  "candidate": "tonic-release calcium surrogate",
+  "comparator": "v1",
+  "development_assessment": {
+    "status": "evaluated",
+    "animals": [
+      "1",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "n_animals": 13,
+    "candidate_mse": 61.9148011278475,
+    "baseline_mse": 50.12815788905371,
+    "relative_improvement": -0.23513018900236893,
+    "relative_improvement_ci95": [
+      -0.44106064409645057,
+      -0.08443577911940721
+    ],
+    "relative_regression_ci95": [
+      0.08443577911940721,
+      0.44106064409645057
+    ],
+    "fraction_improved": 0.07692307692307693,
+    "maximum_individual_regression": 1.2751860473461538,
+    "checks": {
+      "enough_animals": true,
+      "individual_regression": false,
+      "mean_improvement": false,
+      "uncertainty": false,
+      "fraction_improved": false
+    },
+    "passed": false,
+    "scope": "Prediction criterion only; does not establish the spike bridge or motor readiness."
+  },
+  "decision": "reject development candidate; preserve sealed cohorts",
+  "fresh_confirmation_performed": false,
+  "reserved_cohorts_read": false,
+  "spike_to_observation_bridge_validated": false,
+  "motor_training_started": false,
+  "motor_contact_validation_started": false,
+  "production_promotion": false,
+  "baseline_unchanged": {
+    "research/results/spiking-motor.npz": true,
+    "research/data/circuit-spiking.npz": true,
+    "research/results/spiking-motor-validation.json": true,
+    "research/spiking.py": true,
+    "research/spiking_motor.py": true,
+    "research/embodied.py": true,
+    "research/composition.py": true,
+    "research/runtime.py": true
+  },
+  "remaining": "A better development model and a consistent spike-to-observation bridge must precede fresh biological confirmation, then candidate motor-interface training and physical validation."
+}

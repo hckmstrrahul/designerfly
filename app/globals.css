@@ -987,8 +987,8 @@ html, body, #root { height: 100%; overflow: hidden; }
 .scene-view {container-type:inline-size;}
 .paint-editor:focus {outline:none;}
 .paint-tools button svg {width:17px;height:17px;}
-.paint-editor .composition-workspace {container-type:inline-size;overflow:auto;align-items:flex-start;justify-content:center;overscroll-behavior:contain;}
-.paint-editor .composition-paper {width:100cqw;height:100cqw;max-width:none;flex:none;}
+.paint-editor .composition-workspace {container-type:size;overflow:hidden;align-items:center;justify-content:center;overscroll-behavior:contain;}
+.paint-editor .composition-paper {width:min(100cqw,100cqh);height:min(100cqw,100cqh);max-width:none;flex:none;}
 @container (max-width:600px) {
  .paint-editor.mode-arrange {grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto;gap:8px;}
  .paint-editor.mode-arrange .paint-tools {grid-column:1;grid-row:2;grid-template-columns:repeat(9,minmax(28px,1fr));gap:5px;padding:6px;overflow-x:auto;}
@@ -1006,8 +1006,43 @@ html, body, #root { height: 100%; overflow: hidden; }
  .studio-header-actions .clear-all {min-width:0;padding:0 8px;font-size:10px;}
 }
 @media(min-width:601px) and (max-width:1000px) {
+ .paint-editor .composition-workspace {container-type:inline-size;overflow:auto;align-items:flex-start;}
+ .paint-editor .composition-paper {width:100cqw;height:100cqw;}
  .device-stage .drawing-device {height:740px;--hardware-key-size:min(64px,calc((100vw - 140px)/6));}
  .drawing-device .control-panel {flex-direction:row;align-items:flex-start;justify-content:space-between;gap:16px;}
  .drawing-device .utility-controls,.drawing-device .shape-controls {width:auto;flex:0 0 auto;gap:8px;}
  .drawing-device .shape-controls {justify-content:start;}
+}
+/* NL01 hosts both trained activity and the experimental circuit probe. */
+.neural-hardware.controller-controls {display:flex;flex-direction:column;align-items:stretch;gap:8px;}
+.controller-selector {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;}
+.controller-selector .mode-key {min-width:0;width:100%;padding:8px 6px;gap:6px;}
+.spiking-controls {font:9px/1.5 'Departure Mono',monospace;color:#565c50;}
+.spiking-controls p {margin:0 0 6px;}
+.spiking-controls>div {display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.spiking-controls button {padding:5px 8px;border:1px solid #a9ada1;border-radius:5px;background:#e9e9e2;color:#464b40;}
+.spiking-controls button[aria-pressed=true] {background:#63695b;color:#fffdf3;}
+.spiking-controls small {display:block;margin-top:6px;font-size:8px;}
+.neural-screen .spiking-controls {color:#b8c1b1;padding:8px 12px;position:relative;z-index:1;}
+@media(min-width:1001px){
+ .activity-device .spiking-controls {grid-column:2;grid-row:5 / 7;min-height:0;overflow:auto;align-self:stretch;}
+ .controller-selector .mode-key {font-size:9px;}
+}
+.spiking-motor-note {position:relative;z-index:1;color:#a8b29f;font:8px/1.5 'Departure Mono',monospace;padding:4px 12px;}
+@media(min-width:1001px){.activity-device .spiking-motor-note {grid-column:2;grid-row:6;align-self:start;}}
+
+/* Keep unfinished frames behind opaque glass; cached loads skip the indicator. */
+.neural-screen {position:relative;}
+.device-loader {position:absolute;inset:0;z-index:20;display:grid;place-items:center;background:#111513;color:#b8beb6;padding:24px;border-radius:inherit;}
+.device-loader-content {width:min(240px,100%);text-align:center;font:11px/1.7 var(--mono);opacity:0;animation:device-loader-reveal 0s .18s forwards;}
+.device-loader.has-error .device-loader-content {opacity:1;animation:none;}
+.device-loader .device-loading-progress {display:block;width:100%;height:4px;margin:18px 0 0;border:0;border-radius:2px;overflow:hidden;background:#303630;}
+.device-loading-progress>span {display:block;width:38%;height:100%;background:#ec793e;animation:device-loading-sweep 1.5s ease-in-out infinite alternate;}
+@keyframes device-loader-reveal {to {opacity:1;}}
+@keyframes device-loading-sweep {from {transform:translateX(0);}to {transform:translateX(164%);}}
+@media(min-width:1001px) {
+ .activity-device .device-loader {position:relative;inset:auto;grid-column:1 / -1;grid-row:1 / 8;align-self:stretch;min-height:0;margin:3px;border-radius:3px;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .device-loading-progress>span {animation:none;}
 }

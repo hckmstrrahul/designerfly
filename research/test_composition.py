@@ -26,7 +26,8 @@ class CompositionTests(unittest.TestCase):
     def test_request_validation_rejects_unreachable_and_oversized_layouts(self):
         import server
         with self.assertRaises(ValidationError):server.CompositionStart(strokes=[])
-        with self.assertRaises(ValidationError):server.CompositionStart(strokes=STROKES*3)
+        self.assertEqual(len(server.CompositionStart(strokes=(STROKES*43)[:128]).strokes),128)
+        with self.assertRaises(ValidationError):server.CompositionStart(strokes=STROKES*43)
         with self.assertRaises(HTTPException) as caught:server.create_composition(server.CompositionStart(strokes=[dict(shape=0,x=.9,y=0,width=1.,height=.5)]))
         self.assertEqual(caught.exception.status_code,422)
 

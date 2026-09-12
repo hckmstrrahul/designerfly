@@ -1,0 +1,260 @@
+{
+  "analysis": "fixed study-style BDN2 offset contrast; no fitted parameters",
+  "source": "https://github.com/chrisjdallmann/feco-inhibition/blob/e1233f4a987c532c9f1ab42273af21a0a6a50393/code/imaging_BDN2_activation.ipynb",
+  "input_sha256": "fe8c05508abb5ee71f29920db4f65999c098dc08d4ac6f8c7b412773cba7d2ed",
+  "animals": [
+    {
+      "animal": 1,
+      "stimulated_delta_calcium": 1.5293212292308689,
+      "control_delta_calcium": -0.4326854093171516,
+      "paired_difference": 1.9620066385480204,
+      "pairs": [
+        {
+          "stimulus_trial": 2,
+          "control_trial": 3,
+          "stimulated_delta_calcium": 0.4260208141428733,
+          "control_delta_calcium": 0.16012033138052706,
+          "stimulated_delta_angle": -13.982593895893558,
+          "control_delta_angle": -12.93009073171828
+        },
+        {
+          "stimulus_trial": 4,
+          "control_trial": 5,
+          "stimulated_delta_calcium": 3.1309920617027824,
+          "control_delta_calcium": -1.3418253963200253,
+          "stimulated_delta_angle": -12.290895185109605,
+          "control_delta_angle": -12.573194249426479
+        },
+        {
+          "stimulus_trial": 6,
+          "control_trial": 7,
+          "stimulated_delta_calcium": 1.3167482920879565,
+          "control_delta_calcium": -0.27424346139585287,
+          "stimulated_delta_angle": -12.941367310054858,
+          "control_delta_angle": -12.748089139589439
+        },
+        {
+          "stimulus_trial": 8,
+          "control_trial": 9,
+          "stimulated_delta_calcium": 1.3472229013402084,
+          "control_delta_calcium": -0.4812167940330056,
+          "stimulated_delta_angle": -11.931683855491741,
+          "control_delta_angle": -11.314656509342257
+        },
+        {
+          "stimulus_trial": 10,
+          "control_trial": 11,
+          "stimulated_delta_calcium": 1.4256220768805234,
+          "control_delta_calcium": -0.22626172621740093,
+          "stimulated_delta_angle": -12.420568132327816,
+          "control_delta_angle": -12.868521335034671
+        }
+      ]
+    },
+    {
+      "animal": 2,
+      "stimulated_delta_calcium": 2.5919749082643615,
+      "control_delta_calcium": -0.1786332844577565,
+      "paired_difference": 2.770608192722118,
+      "pairs": [
+        {
+          "stimulus_trial": 2,
+          "control_trial": 3,
+          "stimulated_delta_calcium": 2.5416164076406194,
+          "control_delta_calcium": 0.014997263273125228,
+          "stimulated_delta_angle": -13.09331970044964,
+          "control_delta_angle": -12.917998336898492
+        },
+        {
+          "stimulus_trial": 4,
+          "control_trial": 5,
+          "stimulated_delta_calcium": 3.3157586309541474,
+          "control_delta_calcium": -0.10995417830350807,
+          "stimulated_delta_angle": -9.770662572765062,
+          "control_delta_angle": -12.696667226991835
+        },
+        {
+          "stimulus_trial": 6,
+          "control_trial": 7,
+          "stimulated_delta_calcium": 2.945873652741721,
+          "control_delta_calcium": -0.8383394745548092,
+          "stimulated_delta_angle": -10.99079228800501,
+          "control_delta_angle": -13.154141796255558
+        },
+        {
+          "stimulus_trial": 8,
+          "control_trial": 9,
+          "stimulated_delta_calcium": 1.9183157603144092,
+          "control_delta_calcium": -0.014902548925125103,
+          "stimulated_delta_angle": -8.882222468351557,
+          "control_delta_angle": -11.261410202619345
+        },
+        {
+          "stimulus_trial": 10,
+          "control_trial": 11,
+          "stimulated_delta_calcium": 2.2383100896709114,
+          "control_delta_calcium": 0.0550325162215346,
+          "stimulated_delta_angle": -9.453470418077458,
+          "control_delta_angle": -11.512760733711204
+        }
+      ]
+    },
+    {
+      "animal": 3,
+      "stimulated_delta_calcium": 0.44426069094281606,
+      "control_delta_calcium": 0.029638520494156762,
+      "paired_difference": 0.4146221704486593,
+      "pairs": [
+        {
+          "stimulus_trial": 2,
+          "control_trial": 3,
+          "stimulated_delta_calcium": 0.7328749395937448,
+          "control_delta_calcium": -0.1580411005397604,
+          "stimulated_delta_angle": -12.596415569775246,
+          "control_delta_angle": -12.694662955237874
+        },
+        {
+          "stimulus_trial": 4,
+          "control_trial": 5,
+          "stimulated_delta_calcium": 0.7004204473716111,
+          "control_delta_calcium": 0.2106348275482901,
+          "stimulated_delta_angle": -12.48601925637334,
+          "control_delta_angle": -12.388440479030294
+        },
+        {
+          "stimulus_trial": 6,
+          "control_trial": 7,
+          "stimulated_delta_calcium": -0.5923222583708396,
+          "control_delta_calcium": 0.39019301875911694,
+          "stimulated_delta_angle": -13.693289338982709,
+          "control_delta_angle": -12.743251600784774
+        },
+        {
+          "stimulus_trial": 8,
+          "control_trial": 9,
+          "stimulated_delta_calcium": -0.1594437926989163,
+          "control_delta_calcium": -0.24338660643239152,
+          "stimulated_delta_angle": -12.665256740806,
+          "control_delta_angle": -12.971067064687304
+        },
+        {
+          "stimulus_trial": 10,
+          "control_trial": 11,
+          "stimulated_delta_calcium": 1.5397741188184806,
+          "control_delta_calcium": -0.051207536864471326,
+          "stimulated_delta_angle": -12.447444742200048,
+          "control_delta_angle": -11.694822932368936
+        }
+      ]
+    },
+    {
+      "animal": 4,
+      "stimulated_delta_calcium": 2.23562927036691,
+      "control_delta_calcium": -0.16115293525226154,
+      "paired_difference": 2.3967822056191714,
+      "pairs": [
+        {
+          "stimulus_trial": 2,
+          "control_trial": 3,
+          "stimulated_delta_calcium": 1.9043431941921538,
+          "control_delta_calcium": -0.2525079785105442,
+          "stimulated_delta_angle": -12.374851008385832,
+          "control_delta_angle": -12.427937948793243
+        },
+        {
+          "stimulus_trial": 4,
+          "control_trial": 5,
+          "stimulated_delta_calcium": 2.230774121609103,
+          "control_delta_calcium": -0.10506732071730784,
+          "stimulated_delta_angle": -12.489801066790164,
+          "control_delta_angle": -12.478496141590426
+        },
+        {
+          "stimulus_trial": 6,
+          "control_trial": 7,
+          "stimulated_delta_calcium": 2.6557197862085355,
+          "control_delta_calcium": -0.05989158630110225,
+          "stimulated_delta_angle": -12.654914479462178,
+          "control_delta_angle": -12.776523201879883
+        },
+        {
+          "stimulus_trial": 8,
+          "control_trial": 9,
+          "stimulated_delta_calcium": 1.6521810192957203,
+          "control_delta_calcium": -0.216559475234662,
+          "stimulated_delta_angle": -10.965943177960213,
+          "control_delta_angle": -10.990380437211911
+        },
+        {
+          "stimulus_trial": 10,
+          "control_trial": 11,
+          "stimulated_delta_calcium": 2.7351282305290376,
+          "control_delta_calcium": -0.17173831549769147,
+          "stimulated_delta_angle": -10.881765749344567,
+          "control_delta_angle": -11.533813203840793
+        }
+      ]
+    },
+    {
+      "animal": 5,
+      "stimulated_delta_calcium": 1.3121254324025995,
+      "control_delta_calcium": -0.3216253892927014,
+      "paired_difference": 1.633750821695301,
+      "pairs": [
+        {
+          "stimulus_trial": 2,
+          "control_trial": 3,
+          "stimulated_delta_calcium": 0.7906131646943608,
+          "control_delta_calcium": -1.2698740998069855,
+          "stimulated_delta_angle": -14.01152468720781,
+          "control_delta_angle": -13.239571292897708
+        },
+        {
+          "stimulus_trial": 4,
+          "control_trial": 5,
+          "stimulated_delta_calcium": 0.6974211596465647,
+          "control_delta_calcium": -0.29411366656832216,
+          "stimulated_delta_angle": -12.844731356176709,
+          "control_delta_angle": -12.766881772683206
+        },
+        {
+          "stimulus_trial": 6,
+          "control_trial": 7,
+          "stimulated_delta_calcium": 1.3825196638430293,
+          "control_delta_calcium": 0.15026453714413224,
+          "stimulated_delta_angle": -12.91693610896722,
+          "control_delta_angle": -13.214675729849404
+        },
+        {
+          "stimulus_trial": 8,
+          "control_trial": 9,
+          "stimulated_delta_calcium": 1.1935803437597148,
+          "control_delta_calcium": 1.0124681853195656,
+          "stimulated_delta_angle": -12.030145278864268,
+          "control_delta_angle": -13.179815665011844
+        },
+        {
+          "stimulus_trial": 10,
+          "control_trial": 11,
+          "stimulated_delta_calcium": 2.496492830069327,
+          "control_delta_calcium": -1.2068719025518972,
+          "stimulated_delta_angle": -12.274414671018647,
+          "control_delta_angle": -13.020639387633054
+        }
+      ]
+    }
+  ],
+  "mean_paired_difference": 1.8355540058066542,
+  "animal_bootstrap_95_percent_interval": [
+    1.05487990773209,
+    2.4684715210961654
+  ],
+  "unit": "published calcium units; no cross-animal rescaling",
+  "limitations": [
+    "Five animals; bootstrap uncertainty is exploratory.",
+    "BDN2 stimulation is not an Rdl-specific intervention.",
+    "This validates neither MaleCNS cell matching nor a learned motor policy.",
+    "Study-style offset rebound contrast, not receptor inhibition strength or kinetic estimate."
+  ],
+  "production_change": false
+}

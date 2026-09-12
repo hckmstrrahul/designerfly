@@ -50,9 +50,10 @@ class CompositionSession:
         if s.get('points'):
             length=np.linalg.norm(np.diff(np.asarray(s['points'])*[s['width'],s['height']],axis=0),axis=1).sum()
             duration=max(1.2,float(length)*3.)
+        duration*=getattr(self.motor,'draw_duration_scale' if s.get('points') else 'learned_duration_scale',1.)
         phase=float(np.clip(self.elapsed/duration,0,1)) if self.stage=='draw' else (1. if self.stage in ['lift','done'] else 0.)
         point=self.planned(phase);xy=paper_xy(point)
-        raised=1.14;down=PAPER_Z+.004
+        raised=1.14;down=PAPER_Z+.004+getattr(self.motor,'contact_height_offset',0.)
         if self.stage=='travel':
             t=min(1.,self.elapsed/self.travel_duration);t=t*t*(3-2*t)
             xy=self.origin[:2]*(1-t)+xy*t;z=raised

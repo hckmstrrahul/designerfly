@@ -12,13 +12,30 @@ def load_policies():
 
 class DrawingSession:
     def __init__(self,shape,planner,motor,offset=None):
+        self.composition=None
+        if getattr(motor,'controller',None)=='spiking':
+            # The persistent motor needs the same explicit travel/settle sequence
+            # as multi-stroke work; do not declare lowering to be drawing.
+            from composition import CompositionSession
+            self.composition=CompositionSession([dict(shape=shape,x=0.,y=0.,width=1.72,height=1.24 if shape==0 else 1.72)],planner,motor)
+            self.shape=shape;self.planner=planner;self.motor=motor;self.env=self.composition.env
+            if offset is not None:
+                self.env.reset(offset);self.composition.origin=self.env.tip.copy()
+                self.composition.travel_duration=self.composition._travel_duration()
+            self.last_state=np.zeros(motor.circuit.n);self.last_wing=np.zeros(1024)
+            return
         self.shape=shape;self.planner=planner;self.motor=motor;self.env=Foreleg();self.env.reset(offset)
         self.frozen=None;self.last_state=np.zeros(1024);self.last_wing=np.zeros(1024)
     def step(self,ablated=False,feedback=True,push=None):
+        if self.composition is not None:
+            frame=self.composition.step(ablated=ablated,feedback=feedback,push=push)
+            self.last_state=self.composition.last_state
+            return frame
         t=self.env.data.time;phase=np.clip((t-1.2)/12,0,1)
         planned,planner_state=self.planner(features([self.shape],[phase])[0])
-        height=1.12 if t<.7 else (1.12+(PAPER_Z+.004-1.12)*min(1,(t-.7)/.5))
-        if t>13.5:height=PAPER_Z+.004+min(.20,(t-13.5)*.6)
+        down=PAPER_Z+.004+getattr(self.motor,'contact_height_offset',0.)
+        height=1.12 if t<.7 else (1.12+(down-1.12)*min(1,(t-.7)/.5))
+        if t>13.5:height=down+min(.20,(t-13.5)*.6)
         reference=np.r_[paper_xy(planned),height]
         obs=self.env.sense(reference)
         if self.frozen is None:self.frozen=obs.copy()
