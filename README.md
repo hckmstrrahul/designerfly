@@ -250,11 +250,15 @@ no additional font dataset or text training was used.
 
 ## Deployment
 
-Nothing is deployed by the local commands. `npm run build` produces the frontend
-in `dist`. **Vercel hosting of the static frontend alone will not run the physics
-service.** A deployed version needs a separately hosted Python backend and an API
-proxy, or a future browser physics port. The current app uses Vite's `/physics`
-proxy and defaults to localhost for development.
+The production frontend is [designerfly.vercel.app](https://designerfly.vercel.app/).
+Its persistent MuJoCo physics service runs on
+[Railway](https://physics-production-198a.up.railway.app/health), deploying from
+`main` with `Dockerfile.physics`. Docker installs the Python dependencies and starts
+`research/server.py`; visitors do not need to run a local physics service.
+
+`npm run build` produces the frontend in `dist`. For local development,
+`npm run dev` starts the frontend and physics service together; `npm run physics`
+starts only the Python backend. Vite proxies local API requests through `/physics`.
 
 To connect the deployed frontend:
 
@@ -267,7 +271,10 @@ To connect the deployed frontend:
 4. Set `VITE_PHYSICS_URL` in Vercel to that HTTPS backend URL (no `/physics` suffix),
    then rebuild/redeploy. Without this setting, local development uses `/physics`.
 
-The backend host has not yet been configured. Vercel currently hosts the frontend only.
+Production `VITE_PHYSICS_URL` is `https://physics-production-198a.up.railway.app`.
+Both the trained and Spikes controllers passed deployed session creation and
+12-frame stepping smoke checks, with production-origin CORS verified. These checks
+verify hosting connectivity; physical accuracy is covered by the validation reports.
 
 ## Sources and licenses
 
