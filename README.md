@@ -40,11 +40,18 @@ server; the default toolbar uses local copy/paste.
 ## Controls
 
 - **Rectangle / circle / triangle:** draw on a fresh sheet. Press the selected shape again to stop, clear the paper, stop flapping, and restore the initial physical pose and camera. Keyboard: `1`, `2`, `3`. Arrange mode keeps adding shapes instead.
-- **Arrange:** place up to eight shapes on one sheet. Drag to move, use the corner
-  handle to resize, then press Draw. The shape buttons add shapes while editing.
-  **Search / feed** loads an editable six-shape wireframe: a search field, two
-  avatar-and-card rows, and a footer. It is a hand-authored preset, not a layout
-  invented by the neural network.
+- **Arrange:** compose up to 96 pen strokes. Add rectangles, squares, circles,
+  ellipses and triangles; move or resize them directly on the sheet.
+  **UI Example** loads a detailed editorial wireframe with rounded cards,
+  landscape thumbnails, content lines and a small FLY masthead.
+- **Text:** inside Arrange, enter up to 20 characters, including spaces and line
+  breaks. Supports A–Z, 0–9 and `. ! ? -`; lowercase becomes uppercase. Long
+  lines wrap at seven characters. Text sits beside UI Example; opening it replaces
+  the canvas and shape toolbar with a large input. Choose **Preview lettering**,
+  then **Draw study**.
+  The original single-line alphabet is supplied vector geometry, not learned
+  language or a newly trained text model. The existing 2,048-neuron motor follows
+  these paths through the same contact-based physics as other drawings.
 - **Speed:** cycle through 1×, 2× and 4× simulation time. Each update runs 2, 4 or
   8 full control steps. The fixed physics timestep, feedback inference and every
   contact/ink sample are preserved. This is faster execution of the same
@@ -86,7 +93,7 @@ readouts retain Departure Mono.
 1. **A learned path.** A 1,024-neuron network receives the selected shape and a
    generic phase encoding. Its output is a canonical pen path. During live
    inference it does not call the analytic shape teacher used in training.
-2. **A specified layout.** Arrange applies an explicit position/size transform.
+2. **A specified layout.** Arrange applies an explicit position/size transform. Rounded UI details and lettering use supplied polylines with arc-length interpolation, bypassing the three-shape planner but retaining the trained motor and physics.
    A sequencer supplies travel, lowering, drawing and lifting phases. These
    decisions are ordinary application code.
 3. **Neural feedback control.** The active **2,048-neuron, 192,267-connection** motor
@@ -172,6 +179,7 @@ npm run build
 .venv/bin/python research/test_speed.py
 .venv/bin/python research/test_physics.py
 .venv/bin/python research/test_composition.py
+.venv/bin/python research/validate_detailed_strokes.py
 .venv/bin/python research/evaluate_expansion.py
 node scripts/check-fly-clearance.mjs research/results/expansion-poses-2048.json
 ```
@@ -195,6 +203,22 @@ from the included original composition checkpoint. For the earlier training
 stages and their limitations, read [the neural experiment](docs/neural-experiment.md),
 [embodied prototype](docs/embodied-prototype.md) and
 [composition training](docs/composition-training.md).
+
+## Detailed strokes and scene
+
+S–01 now uses a dark grid surface, selective glossy cuticle and eye materials,
+stronger thorax stripes and warmer leg/abdomen colors. These are artistic material
+choices, not new anatomical measurements. The paper is 1.07 × 1.07 model units,
+with matching collision bounds; the reachable drawing region remains 0.8 × 0.8.
+This makes the drawing fill more of the paper without claiming extra motor reach.
+
+The physical check covers the UI example, `HELLO` / `WORLD`, the alphabet,
+numbers and supported punctuation. All four sessions completed with 100% contact
+on sampled drawing frames. XY tracking RMSE ranged from 0.00635 to 0.00736 model
+units. See [the recorded results](research/results/detailed-strokes-validation.json).
+These are smoke checks, not a comprehensive handwriting benchmark or a guarantee
+for every arrangement. Letter geometry is original code in `lib/lettering.ts`;
+no additional font dataset or text training was used.
 
 ## Deployment
 

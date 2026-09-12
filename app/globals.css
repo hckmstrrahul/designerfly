@@ -760,3 +760,61 @@ html, body, #root { height: 100%; overflow: hidden; }
 @media(min-width:1001px) {
   .activity-device { grid-template-rows: 30px 60px 84px 44px 48px 1fr 38px 64px; }
 }
+
+/* Arrange: compact instrument controls around an uncluttered drafting sheet. */
+.composition-editor { background: #e3e3de; padding: 22px; gap: 14px; color: #454540; }
+.composition-heading,.composition-actions,.composition-toolbar { width: 100%; max-width: 660px; }
+.composition-heading { height: auto; align-items: center; }
+.composition-kicker { font: 9px 'Departure Mono',monospace; letter-spacing: 1.5px; color: #8c8c83; }
+.composition-heading h2 { margin: 4px 0 0; font: 500 22px/1.2 Inter,sans-serif; letter-spacing: -.7px; color: #3c3c38; }
+.composition-heading h2>span { color: #e47744; }
+.composition-editor button { background: linear-gradient(145deg,#f2f2ed,#e5e5de); border: 1px solid #bebeb5; color: #606058; border-radius: 6px; padding: 9px 12px; font: 11px Inter,sans-serif; box-shadow: 0 1px 0 #fff8 inset,0 2px 2px #00000008; }
+.composition-editor button:hover:not(:disabled) { background: #f7f7f1; }
+.composition-editor button:active:not(:disabled) { box-shadow: 0 1px 3px #0002 inset; }
+.composition-toolbar { display: flex; align-items: stretch; gap: 6px; padding: 6px; border: 1px solid #c8c8bf; border-radius: 9px; background: #d6d6cf; }
+.composition-toolbar button { flex: 1; min-width: 0; padding: 8px 3px; flex-direction: column; gap: 5px; font-size: 10px; }
+.composition-count { display: flex; align-items: center; gap: 3px; padding: 0 8px; font: 10px 'Departure Mono',monospace; }
+.composition-count>span { color: #98988d; }
+.composition-workspace { flex: 1; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; }
+.composition-paper { height: 100%; width: auto; max-width: 100%; aspect-ratio: 1; background: #fffdf5; border: 1px solid #ddddD4; box-shadow: 0 2px 3px #00000005,0 8px 22px #00000008; }
+.composition-paper g { stroke: #62625a; }
+.composition-paper g>rect,.composition-paper g>ellipse,.composition-paper g>polygon { vector-effect: non-scaling-stroke; stroke-width: 1.5px; }
+.composition-paper g>rect:first-child { stroke-width: 1px; }
+.composition-paper .resize-handle { fill: #e77d47; stroke: #fffdf5; stroke-width: 2px; }
+.composition-actions { height: auto; }
+.composition-secondary { display: flex; gap: 8px; }
+.composition-actions .draw-study { background: #e77d47; border-color: #bd663c; color: #fff9eb; padding: 11px 16px; }
+.composition-actions .draw-study:hover:not(:disabled) { background: #ed8853; }
+.composition-help { margin: -4px 0 0; font: 9px 'Departure Mono',monospace; color: #919188; }
+@media(max-width:700px) { .composition-editor { padding: 12px; gap: 10px; }.composition-heading h2 { font-size: 18px; }.composition-toolbar { gap: 4px; padding: 4px; }.composition-toolbar button { font-size: 8px; }.composition-count { padding: 0 3px; font-size: 8px; }.composition-help { font-size: 7px; }.composition-editor button { padding: 8px; } }
+
+/* S–01 shares the dark instrument surface; the paper remains a physical sheet. */
+.paper-surround .scene-status, .paper-surround .scene-hint { color: #bac4bf; }
+.composition-paper polyline {fill:none;stroke:#555c50;stroke-width:1.5px;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round;}
+.lettering-open .composition-workspace,.lettering-open .composition-toolbar { display:none; }
+.lettering-panel { width:100%;max-width:660px;flex:1;min-height:180px;display:flex;flex-direction:column;gap:16px;padding:clamp(16px,2vw,28px);background:#d9dad4;border:1px solid #c9cbc2;border-radius:12px;font-family:Inter,sans-serif; }
+.lettering-panel label {display:flex;flex-direction:column;gap:6px;font-size:18px;font-weight:600;letter-spacing:-.3px;}
+.lettering-panel label span {font-size:12px;font-weight:400;letter-spacing:0;color:#797c73;}
+.lettering-panel textarea {flex:1;min-height:80px;width:100%;resize:none;border:1px solid #bfc2b6;border-radius:8px;padding:20px;background:#f5f5ee;color:#41463c;font:400 clamp(28px,3vw,44px)/1.3 'Departure Mono',monospace;letter-spacing:-1px;text-transform:uppercase;outline:none;box-shadow:inset 0 2px 4px #00000004;}
+.lettering-panel textarea:focus {border-color:#9a9f90;box-shadow:0 0 0 3px #b5baa426;}
+.lettering-meta {display:flex;justify-content:space-between;gap:12px;color:#7a7e72;font-size:11px;}
+.lettering-meta>span:last-child {white-space:nowrap;font-variant-numeric:tabular-nums;}
+.lettering-panel p {margin:0;font-size:11px;color:#a14b30;}
+.composition-secondary button[aria-pressed=true] {background:#62665c;color:#f6f7ef;border-color:#585d51;}
+@media(max-width:600px){
+ .composition-actions {display:flex;flex-wrap:wrap;gap:8px;}
+ .composition-secondary {display:flex;gap:6px;}
+ .composition-actions button {min-width:0;padding:7px;font-size:10px;justify-content:center;}
+ .composition-actions .draw-study {flex:1;}
+ .composition-editor {overflow-y:auto;}
+ .composition-help {font-size:8px;}
+ .lettering-panel {padding:14px;gap:10px;min-height:180px;}
+ .lettering-panel textarea {padding:12px;font-size:28px;}
+ .lettering-panel label {font-size:16px;}
+ .lettering-meta {font-size:9px;}
+ .lettering-open .composition-actions .draw-study {flex-basis:100%;}
+}
+@media(max-width:600px){
+ .lettering-panel label span {display:none;}
+ .lettering-panel textarea {min-height:104px;}
+}

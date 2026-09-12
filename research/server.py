@@ -15,8 +15,9 @@ class Start(BaseModel):shape:int=Field(ge=0,le=2)
 class Stroke(BaseModel):
     shape:int=Field(ge=0,le=2)
     x:float=Field(ge=-1,le=1);y:float=Field(ge=-1,le=1)
-    width:float=Field(ge=.24,le=1.72);height:float=Field(ge=.24,le=1.72)
-class CompositionStart(BaseModel):strokes:list[Stroke]=Field(min_length=1,max_length=8)
+    width:float=Field(ge=.02,le=1.72);height:float=Field(ge=.02,le=1.72)
+    points:list[tuple[float,float]] | None=Field(default=None,min_length=2,max_length=256)
+class CompositionStart(BaseModel):strokes:list[Stroke]=Field(min_length=1,max_length=96)
 class Step(BaseModel):session:str;steps:int=Field(default=2,ge=1,le=8);wings:bool=False;push:bool=False;wing_phase:float=Field(default=0,ge=0,le=1)
 @app.get('/health')
 def health():
@@ -37,6 +38,8 @@ def create(request:Start):
 def create_composition(request:CompositionStart):
     global placement_planner,composition_motor
     strokes=[s.model_dump() for s in request.strokes]
+    if any(not np.isfinite(v) or abs(v)>.500001 for s in strokes for p in (s.get('points') or []) for v in p):
+        raise HTTPException(422,'Path points must be finite local coordinates within the shape')
     if any(abs(s['x'])+s['width']/2>1.000001 or abs(s['y'])+s['height']/2>1.000001 for s in strokes):
         raise HTTPException(422,'Keep shapes inside the trained drawing area')
     if placement_planner is None:placement_planner=load_placement()

@@ -19,7 +19,7 @@ function box(w: number, h: number, d: number, color: string, x: number, y: numbe
 
 /** Anatomical rendering of measured MuJoCo poses. Only actual paper contacts leave ink. */
 export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () => void, fail: (e: string) => void) {
-  const scene = new T.Scene(); scene.background = new T.Color('#e5e5e2');
+  const scene = new T.Scene(); scene.background = new T.Color('#151a19');
   const renderer = new T.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = T.VSMShadowMap; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = .95;
@@ -36,21 +36,22 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
   const pmrem = new T.PMREMGenerator(renderer); const room = new RoomEnvironment(); const environment = pmrem.fromScene(room, .04); scene.environment = environment.texture; scene.environmentIntensity = .5; room.dispose(); pmrem.dispose();
   scene.add(new T.HemisphereLight('#fff8e9', '#b7bba8', .65));
   const sun = new T.DirectionalLight('#fff5de', 2.1); sun.position.set(-3, 7, 4); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -5; sun.shadow.camera.right = 5; sun.shadow.camera.top = 5; sun.shadow.camera.bottom = -5; sun.shadow.normalBias = .015; sun.shadow.bias = -.0001; sun.shadow.radius = 4; sun.shadow.blurSamples = 8; scene.add(sun);
-  const ground = new T.Mesh(new T.PlaneGeometry(200, 200), new T.MeshBasicMaterial({ color: '#e5e5e2', toneMapped: false })); ground.rotation.x = -Math.PI / 2; ground.position.y = -.04; scene.add(ground);
+  const ground = new T.Mesh(new T.PlaneGeometry(200, 200), new T.MeshBasicMaterial({ color: '#151a19', toneMapped: false })); ground.rotation.x = -Math.PI / 2; ground.position.y = -.04; scene.add(ground);
   const groundShadow = new T.Mesh(new T.PlaneGeometry(200, 200), new T.ShadowMaterial({ color: '#555550', opacity: .22 }));
   groundShadow.rotation.x = -Math.PI / 2; groundShadow.position.y = -.039; groundShadow.receiveShadow = true; scene.add(groundShadow);
+  const grid = new T.GridHelper(200, 800, '#303936', '#252d2b'); grid.position.y = -.038; scene.add(grid);
   // A small artist's pedestal: weighted base, stem, timber drawing board, loose paper.
   const stand = new T.Mesh(new T.CylinderGeometry(.43, .5, .1, 64), new T.MeshStandardMaterial({ color: '#bfbfba', metalness: .3, roughness: .5 })); stand.position.set(1.55, .035, 0); stand.castShadow = true; stand.receiveShadow = true; scene.add(stand);
   box(.12, .78, .12, '#acaca6', 1.55, .46, 0, scene);
-  box(1.68, .075, 1.72, '#b9a07c', 1.55, .885, 0, scene);
-  box(1.62, .015, 1.66, '#fffdf5', 1.55, .934, 0, scene);
+  box(1.16, .075, 1.16, '#b9a07c', 1.55, .885, 0, scene);
+  box(1.10, .015, 1.10, '#fffdf5', 1.55, .934, 0, scene);
   const paperCanvas = document.createElement('canvas'); paperCanvas.width = paperCanvas.height = 1024;
   const context = paperCanvas.getContext('2d')!;
   const clearPaper = () => { context.fillStyle = '#fffdf7'; context.fillRect(0, 0, 1024, 1024); };
   clearPaper(); const paperTexture = new T.CanvasTexture(paperCanvas); paperTexture.colorSpace = T.SRGBColorSpace; paperTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-  const paper = new T.Mesh(new T.PlaneGeometry(1.59, 1.63), new T.MeshStandardMaterial({ map: paperTexture, roughness: 1 })); paper.rotation.x = -Math.PI / 2; paper.position.set(1.55, .946, 0); paper.receiveShadow = true; scene.add(paper);
+  const paper = new T.Mesh(new T.PlaneGeometry(1.07, 1.07), new T.MeshStandardMaterial({ map: paperTexture, roughness: 1 })); paper.rotation.x = -Math.PI / 2; paper.position.set(1.55, .946, 0); paper.receiveShadow = true; scene.add(paper);
   // Two small brass clips keep the sheet in place, without any text on the canvas.
-  for (const z of [-.6, .6]) box(.12, .022, .12, '#ada58e', 2.31, .962, z, scene);
+  for (const z of [-.44, .44]) box(.12, .022, .12, '#ada58e', 2.03, .962, z, scene);
   const stylus = new T.Group(); scene.add(stylus);
   const shaft = new T.Mesh(new T.CylinderGeometry(.023, .023, .44, 12), new T.MeshStandardMaterial({ color: '#e56835', roughness: .48 })); shaft.position.y = .34; stylus.add(shaft);
   const wood = new T.Mesh(new T.ConeGeometry(.023, .12, 12), new T.MeshStandardMaterial({ color: '#ccb38b' })); wood.rotation.z = Math.PI; wood.position.y = .08; stylus.add(wood);
@@ -71,8 +72,8 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
     if (disposed) { loadedGeometry.forEach(([, g]) => g.dispose()); return; }
     const geometries = Object.fromEntries(loadedGeometry);
     const amber = new T.MeshStandardMaterial({ color: '#8bb9a3', roughness: .58, metalness: .03 });
-    const legMaterial = new T.MeshStandardMaterial({ color: '#d5ad70', roughness: .66, metalness: .02, bumpMap: maps.cuticle, bumpScale: .0014 });
-    const eyeMaterial = new T.MeshPhysicalMaterial({ color: '#b14948', roughness: .43, clearcoat: .3, bumpMap: maps.facets, bumpScale: .004 });
+    const legMaterial = new T.MeshStandardMaterial({ color: '#e0a13c', roughness: .32, metalness: .18, bumpMap: maps.cuticle, bumpScale: .0014 });
+    const eyeMaterial = new T.MeshPhysicalMaterial({ color: '#c53e29', roughness: .22, clearcoat: .8, bumpMap: maps.facets, bumpScale: .004 });
     const wingMaterial = new T.MeshPhysicalMaterial({ color: '#d5ded0', map: maps.veins, transparent: true, opacity: .36, metalness: .02, roughness: .36, side: T.DoubleSide, depthWrite: false, iridescence: .16, iridescenceIOR: 1.25 });
     Object.assign(joints, createJointRig(data, fly));
     for (const name of Object.keys(data.rig)) {
@@ -97,13 +98,13 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
           const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
           const u = (x - bounds.min.x) / (bounds.max.x - bounds.min.x);
           const band = name.includes('abdomen') && u < .23;
-          const stripe = name === 'c_thorax' ? Math.exp(-Math.pow((Math.abs(y) - .12) / .085, 2)) * .12 : 0;
-          const color = new T.Color(band ? '#496d85' : name.includes('abdomen') ? '#dab57e' : name === 'c_head' ? '#b3c99a' : '#65a698');
+          const stripe = name === 'c_thorax' ? Math.exp(-Math.pow((Math.abs(y) - .12) / .085, 2)) * .30 : 0;
+          const color = new T.Color(band ? '#496d85' : name.includes('abdomen') ? '#e0a449' : name === 'c_head' ? '#b3c99a' : '#299c88');
           if (name === 'c_thorax') color.lerp(new T.Color('#839bc5'), Math.max(0, (z - bounds.min.z) / (bounds.max.z - bounds.min.z)) * .46);
           color.multiplyScalar(.98 - stripe + .02 * Math.sin(x * 321 + y * 733 + z * 519)); colors.push(...color.toArray());
         }
         geometry.setAttribute('color', new T.Float32BufferAttribute(colors, 3));
-        material = new T.MeshStandardMaterial({ vertexColors: true, roughness: .67, metalness: .02, bumpMap: maps.cuticle, bumpScale: .002 });
+        material = new T.MeshPhysicalMaterial({ vertexColors: true, roughness: .30, clearcoat: .7, clearcoatRoughness: .24, metalness: .15, bumpMap: maps.cuticle, bumpScale: .002 });
       }
       const mesh = new T.Mesh(geometry, material); mesh.castShadow = !name.includes('wing'); mesh.receiveShadow = true; group.add(mesh);
       if (name.includes('wing')) wingRest[name] = group.quaternion.clone();
@@ -137,8 +138,8 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
     stylus.position.copy(pen);
     for (const sample of live.ink.splice(0)) {
       if (!sample.contact || !sample.drawing) { previous = null; continue; }
-      const p = new T.Vector2((sample.tip[0] - 1.55) / 1.59 * 1024 + 512, -sample.tip[1] / 1.63 * 1024 + 512);
-      if (previous) { context.beginPath(); context.moveTo(previous.x, previous.y); context.lineTo(p.x, p.y); context.lineWidth = 5; context.strokeStyle = '#252b21'; context.lineCap = 'round'; context.lineJoin = 'round'; context.stroke(); paperTexture.needsUpdate = true; }
+      const p = new T.Vector2((sample.tip[0] - 1.55) / 1.07 * 1024 + 512, -sample.tip[1] / 1.07 * 1024 + 512);
+      if (previous) { context.beginPath(); context.moveTo(previous.x, previous.y); context.lineTo(p.x, p.y); context.lineWidth = 2.6; context.strokeStyle = '#252b21'; context.lineCap = 'round'; context.lineJoin = 'round'; context.stroke(); paperTexture.needsUpdate = true; }
       previous = p;
     }
     if (loaded && physical) applyPhysicalPose(joints, stylus, physical);

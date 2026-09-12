@@ -43,7 +43,8 @@ export default function DesignerFly() {
   function chooseShape(kind: number) {
     if (!arranging) { void draw(kind); return; }
     if (study.length >= MAX_SHAPES) return;
-    const id = nextId.current++;
+    const id = Math.max(nextId.current, ...study.map(s => s.id + 1));
+    nextId.current = id + 1;
     setStudy(s => [...s, constrainShape({ id, shape: kind, x: ((id % 3) - 1) * .18, y: ((id % 2) - .5) * .25, width: .55, height: .55 })]);
   }
   useEffect(() => {
@@ -56,7 +57,7 @@ export default function DesignerFly() {
   const motorScores = expanded ? { trained_rmse: expanded.after_rmse, ablated_rmse: expanded.ablated_rmse } : isComposition ? compositionScores && { ...compositionScores, untrained_rmse: compositionScores.before_refinement_rmse } : report?.reports['motor-validation']?.scores;
   const busy = ['drawing', 'draw', 'approach', 'travel', 'lower', 'lift'].includes(phase);
   const monitoring = ready && (neuralSource === 'wing' ? wings : busy);
-  const status = error ? 'Connection interrupted' : !ready ? 'Preparing the studio' : arranging ? study.length >= MAX_SHAPES ? 'Eight shapes on this sheet' : 'Shape buttons add to the study' : phase === 'travel' ? `Moving to shape ${strokeIndex + 1}` : phase === 'lower' ? 'Pencil to paper' : phase === 'lift' ? 'Lifting the pencil' : phase === 'approach' ? 'Taking the pencil' : phase === 'drawing' || phase === 'draw' ? `Drawing ${SHAPES[shape!]}${strokeCount > 1 ? ` ${strokeIndex + 1}/${strokeCount}` : ''}` : phase === 'done' ? 'A little work of art' : 'Ready when you are';
+  const status = error ? 'Connection interrupted' : !ready ? 'Preparing the studio' : arranging ? study.length >= MAX_SHAPES ? 'This sheet is full' : 'Shape buttons add to the study' : phase === 'travel' ? `Moving to shape ${strokeIndex + 1}` : phase === 'lower' ? 'Pencil to paper' : phase === 'lift' ? 'Lifting the pencil' : phase === 'approach' ? 'Taking the pencil' : phase === 'drawing' || phase === 'draw' ? `Drawing ${isComposition ? 'stroke' : SHAPES[shape!]}${strokeCount > 1 ? ` ${strokeIndex + 1}/${strokeCount}` : ''}` : phase === 'done' ? 'A little work of art' : 'Ready when you are';
   return (
     <main className="workbench">
       <header className="project-heading">
@@ -142,7 +143,7 @@ export default function DesignerFly() {
             <div><h4>Neural Link</h4><p>A selected MaleCNS circuit: red and green show signed model activity; brightness shows strength. The graph averages activity magnitude across all controller neurons.</p></div>
             <div><h4>Neural Spectrum</h4><p>96 measured neuron skeletons. Color identifies each neuron; brightness follows its computed activity. Missing locations are omitted.</p></div>
           </div></section>
-          <section><h3>What this prototype can do</h3><p>Draw and arrange simple shapes with one controlled foreleg. The body stays fixed; wing flapping is neural animation without flight physics. It cannot understand prompts or design interfaces on its own.</p><p className="experiment-caveat">These are model values, not recorded spikes or signals travelling along branches. This is a partial circuit, not a full brain. Biological accuracy and an advantage over random wiring remain unproven.</p></section>
+          <section><h3>What this prototype can do</h3><p>Draw shapes, rounded wireframes and short lettering with one controlled foreleg. Letter paths are supplied; the existing trained motor draws them. The body stays fixed; wing flapping is neural animation without flight physics. It cannot understand prompts or design interfaces on its own.</p><p className="experiment-caveat">These are model values, not recorded spikes or signals travelling along branches. This is a partial circuit, not a full brain. Biological accuracy and an advantage over random wiring remain unproven.</p></section>
           <section><h3>Faster simulation</h3><p>1×, 2× and 4× run more complete physics and neural steps per update, preserving the timestep and ink samples. Actual speed depends on your computer.</p></section>
           {motorScores && <section className="experiment-results"><h3>Held-out command error <span>Lower is better</span></h3><div><p><strong>{motorScores.trained_rmse.toFixed(3)}</strong><span>Trained controller</span></p><p><strong>{motorScores.ablated_rmse.toFixed(3)}</strong><span>Connections removed</span></p></div></section>}
           <section className="experiment-sources"><h3>Sources &amp; credits</h3><p><a href="https://male-cns.janelia.org/" target="_blank" rel="noreferrer">MaleCNS / FlyEM ↗</a><span>Neural data · CC BY 4.0</span></p><p><a href="https://github.com/NeLy-EPFL/flygym" target="_blank" rel="noreferrer">NeuroMechFly / FlyGym ↗</a><span>Fly anatomy · Apache 2.0</span></p><p className="experiment-author">Built by <a href="https://github.com/hckmstrrahul" target="_blank" rel="noreferrer">@hckmstrrahul</a><a href="https://github.com/hckmstrrahul/designerfly" target="_blank" rel="noreferrer">Code &amp; methods ↗</a></p></section>

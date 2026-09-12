@@ -51,7 +51,7 @@ export function useDrawing() {
     setIsComposition(!!composition);
     try {
       if (old) await physics(`/session/${old}`, undefined, 'DELETE');
-      const next = await physics<{ session: string; frame: PhysicsFrame }>(composition ? '/composition' : '/session', composition ? { strokes: composition.map(({ shape, x, y, width, height }) => ({ shape, x, y, width, height })) } : { shape: i });
+      const next = await physics<{ session: string; frame: PhysicsFrame }>(composition ? '/composition' : '/session', composition ? { strokes: composition.map(({ shape, x, y, width, height, points }) => ({ shape, x, y, width, height, points })) } : { shape: i });
       if (!alive.current || run !== live.current.run) { void physics(`/session/${next.session}`, undefined, 'DELETE').catch(() => {}); return; }
       session.current = next.session; live.current.physical = next.frame; active.current = true;
     } catch { if (alive.current && run === live.current.run) setError('Physics disconnected. Run npm run physics and reload.'); }

@@ -20,7 +20,7 @@ XML=f'''<mujoco model="DF-02 tethered foreleg">
 <geom contype="0" conaffinity="0" density="100"/>
 <position kp="60" kv="3" forcelimited="true" forcerange="-12 12"/></default>
 <worldbody>
-<geom name="paper" type="box" pos="1.55 0 {PAPER_Z-.025}" size=".795 .815 .025" contype="1" conaffinity="1" friction=".08 .001 .0001" solref=".04 1" solimp=".8 .8 .001 .5 2"/>
+<geom name="paper" type="box" pos="1.55 0 {PAPER_Z-.025}" size=".535 .535 .025" contype="1" conaffinity="1" friction=".08 .001 .0001" solref=".04 1" solimp=".8 .8 .001 .5 2"/>
 <body name="femur" pos="{' '.join(map(str,BASE))}" quat="{np.cos(BASE_ROLL/2)} {np.sin(BASE_ROLL/2)} 0 0">
 <joint name="yaw" axis="0 0 1" range="-1.2 1.2"/>
 <joint name="pitch" axis="0 1 0" range="-2 1.5"/>

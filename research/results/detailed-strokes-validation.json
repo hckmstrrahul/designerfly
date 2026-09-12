@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "training": "No new training; supplied geometry executed by the existing active motor",
+  "results": {
+    "ui": {
+      "completed": true,
+      "steps": 8408,
+      "rmse": 0.007362527426182304,
+      "contact_fraction": 1.0,
+      "seconds": 4.2703540325164795
+    },
+    "text": {
+      "completed": true,
+      "steps": 3455,
+      "rmse": 0.006652487658740485,
+      "contact_fraction": 1.0,
+      "seconds": 1.733475923538208
+    },
+    "alphabet": {
+      "completed": true,
+      "steps": 7906,
+      "rmse": 0.0063951012828124985,
+      "contact_fraction": 1.0,
+      "seconds": 4.097145080566406
+    },
+    "remaining": {
+      "completed": true,
+      "steps": 6710,
+      "rmse": 0.0063480191567465045,
+      "contact_fraction": 1.0,
+      "seconds": 3.375580072402954
+    }
+  }
+}

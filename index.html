@@ -7,6 +7,14 @@
     <meta name="description" content="A little 3D artist, three shapes, and a trained neural circuit. Designer Fly draws with a pencil at its miniature pedestal." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Designer Fly — S–01</title>
+    <script>
+      if (location.hash.includes('figmacapture=')) {
+        const capture = document.createElement('script');
+        capture.src = 'https://mcp.figma.com/mcp/html-to-design/capture.js';
+        capture.async = true;
+        document.head.appendChild(capture);
+      }
+    </script>
   </head>
   <body><div id="root"></div><script type="module" src="/app/main.tsx"></script></body>
 </html>

@@ -34,6 +34,12 @@ class CompositionSession:
         self.travel_duration=self._travel_duration()
     def planned(self,phase):
         s=self.strokes[self.index]
+        if s.get('points'):
+            points=np.asarray(s['points'])*[s['width'],s['height']]+[s['x'],s['y']]
+            distances=np.r_[0,np.cumsum(np.linalg.norm(np.diff(points,axis=0),axis=1))]
+            # Supplied vector geometry; the trained neural motor still executes every motion.
+            distance=phase*distances[-1]
+            return np.array([np.interp(distance,distances,points[:,axis]) for axis in range(2)])
         point,_=self.planner(features([s['shape']],[phase])[0])
         return place_point(point,s)
     def _travel_duration(self):
@@ -41,6 +47,9 @@ class CompositionSession:
         return max(1.,float(np.linalg.norm(start-self.origin[:2]))/.26)
     def step(self,ablated=False,feedback=True,push=None):
         s=self.strokes[self.index];duration=max(3.,6.*max(s['width'],s['height']))
+        if s.get('points'):
+            length=np.linalg.norm(np.diff(np.asarray(s['points'])*[s['width'],s['height']],axis=0),axis=1).sum()
+            duration=max(1.2,float(length)*3.)
         phase=float(np.clip(self.elapsed/duration,0,1)) if self.stage=='draw' else (1. if self.stage in ['lift','done'] else 0.)
         point=self.planned(phase);xy=CENTER[:2]+point*.4
         raised=1.14;down=PAPER_Z+.004
@@ -59,7 +68,7 @@ class CompositionSession:
         self.elapsed+=CONTROL_DT;self.last_reference=reference
         if self.stage=='travel' and self.elapsed>=self.travel_duration+.3:self.stage='lower';self.elapsed=0.
         elif self.stage=='lower' and self.elapsed>=1.:self.stage='draw';self.elapsed=0.
-        elif self.stage=='draw' and self.elapsed>duration+CONTROL_DT:self.stage='lift';self.elapsed=0.
+        elif self.stage=='draw' and self.elapsed>duration+.20:self.stage='lift';self.elapsed=0.
         elif self.stage=='lift' and self.elapsed>=.9 and not frame['contact']:
             if self.index+1==len(self.strokes):self.done=True;self.stage='done';frame['done']=True;frame['phase']=1.
             else:
