@@ -258,7 +258,8 @@ Its persistent MuJoCo physics service runs on
 
 `npm run build` produces the frontend in `dist`. For local development,
 `npm run dev` starts the frontend and physics service together; `npm run physics`
-starts only the Python backend. Vite proxies local API requests through `/physics`.
+starts only the Python backend. `npm run dev` automatically reloads Python source
+changes. Vite proxies local API requests through `/physics`.
 
 To connect the deployed frontend:
 
@@ -319,7 +320,9 @@ Their demos and results should not be confused with this experiment.
 
 NL–01 has **Motor** and **Spikes** selectors. Motor selects the trained rate
 controller; Spikes selects the persistent spiking foreleg controller. Both remain
-available during drawing. Changes apply at the next requested playback batch,
+available during drawing. New drawings default to Spikes when its validated model
+is available. During a switch, the existing animation continues until matching
+new samples arrive; the display loop stays mounted. Changes apply at the next requested playback batch,
 preserving the body, paper, stroke index and path phase. Already buffered motion
 finishes first. Neural samples retain their actual source during the handoff.
 Switching can briefly disturb pen contact; it is not equivalent to a controller

@@ -29,9 +29,12 @@ export function useDrawing() {
   const ready = !!model && !!report && sceneReady && !error && phase!=='resetting';
   const publishNeuralFrame = () => {
     const frame = selectedSource.current === 'wing' ? wingFrame.current : motorFrame.current;
-    live.current.frame = frame?.source === selectedSource.current ? frame : null;
+    // Continue the current controller's real buffered activity until the first
+    // sample from the requested controller arrives; never blank the handoff.
+    if (frame && (active.current || frame.source === selectedSource.current)) { live.current.frame = frame; setNeuralSource(frame.source!); }
+    else if (!active.current) { live.current.frame = null; setNeuralSource(selectedSource.current); }
   };
-  const selectNeuralSource = (source: 'motor' | 'wing' | 'spiking') => { selectedSource.current = source; setNeuralSource(source); publishNeuralFrame(); };
+  const selectNeuralSource = (source: 'motor' | 'wing' | 'spiking') => { selectedSource.current = source; publishNeuralFrame(); };
   async function resetSimulation() {
     const run = ++live.current.run;
     active.current = false; live.current.drawing = false; live.current.ink.length = 0;
@@ -52,8 +55,9 @@ export function useDrawing() {
     if (!composition && shape === i && !isComposition) { await resetSimulation(); return; }
     const run = ++live.current.run; active.current = false; live.current.ink.length = 0; live.current.drawing = false;
     motorFrame.current = null;
-    if (!live.current.wings) selectNeuralSource(controllerRef.current==='spiking'?'spiking':'motor');
-    else publishNeuralFrame();
+    controllerRef.current = report?.spiking?.available ? 'spiking' : 'trained';
+    setController(controllerRef.current);
+    selectNeuralSource(controllerRef.current==='spiking'?'spiking':'motor');
     const old = session.current; session.current = '';
     setShape(i); setPhase('approach'); setProgress(0); setContact(false);
     setStrokeCount(composition?.length || 1); setStrokeIndex(0);
@@ -149,7 +153,7 @@ export function useDrawing() {
   async function selectController(next:'trained'|'spiking') {
     if(!ready || (next==='spiking' && !report?.spiking?.available))return;
     controllerRef.current=next;setController(next);
-    selectNeuralSource(next==='spiking' ? 'spiking' : live.current.wings ? 'wing' : 'motor');
+    selectNeuralSource(next==='spiking' ? 'spiking' : live.current.wings && !active.current ? 'wing' : 'motor');
   }
   function resetView() { live.current.resetView++; }
   function cycleCamera() {

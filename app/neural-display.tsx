@@ -8,6 +8,7 @@ type Camera = { yaw: number; pitch: number; zoom: number; x: number; y: number }
 const home = (mode: 'activity' | 'anatomy' | 'spectrum'): Camera => ({ yaw: mode === 'spectrum' ? 0 : .38, pitch: mode === 'spectrum' ? 0 : .12, zoom: mode === 'activity' ? 1.16 * .8 * 1.1 : mode === 'spectrum' ? .96 : 1, x: 0, y: 0 });
 
 export function NeuralDisplay({ model, live, source, mode, onReady, onError }: { model: CircuitView; live: RefObject<LiveDrawing>; source: NeuralSource; mode: 'activity' | 'anatomy' | 'spectrum'; onReady?: (ready:boolean)=>void; onError?: (error:string)=>void }) {
+  const sourceRef = useRef(source); sourceRef.current = source;
   const traceRef = useRef<HTMLCanvasElement>(null);
   const ref = useRef<HTMLCanvasElement>(null), camera = useRef(home(mode));
   const [anatomyData, setAnatomy] = useState<Anatomy | null>(null), [anatomyError, setAnatomyError] = useState(false);
@@ -91,6 +92,7 @@ export function NeuralDisplay({ model, live, source, mode, onReady, onError }: {
     let projected: (number[] | null)[] = [], paths: { neuron: number; path: Path2D }[] = [];
     const trace = historyRef.current;
     const draw = () => {
+      const source = sourceRef.current;
       animation = requestAnimationFrame(draw);
       const w = canvas.clientWidth, h = canvas.clientHeight, dpr = Math.min(devicePixelRatio, 2), plotHeight = h;
       if (!w || !h) return;
@@ -207,7 +209,7 @@ export function NeuralDisplay({ model, live, source, mode, onReady, onError }: {
 
     };
     animation = requestAnimationFrame(draw); return () => cancelAnimationFrame(animation);
-  }, [model, live, source, mode, anatomy, anatomyPoints, anatomyError, onReady]);
+  }, [model, live, mode, anatomy, anatomyPoints, anatomyError, onReady]);
   return <>
     {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role */}
     <canvas ref={ref} className="neural-canvas" tabIndex={0} role="img" aria-label={`${source} ${mode} interactive 3D view. ${source === 'spiking' ? `Experimental LIF firing rates, smoothed over 100 milliseconds. ${mode === 'spectrum' ? 'Hue identifies the neuron; brightness represents firing rate.' : 'Green brightness represents firing rate.'} Display saturates at 100 Hz. Not biological recordings.` : mode === 'activity' ? 'Computed signed rates: red negative, dark green zero, green positive. Soft glow shows activity strength and changes between received samples.' : mode === 'spectrum' ? 'Measured 3D skeletons: rainbow hue identifies each neuron, brightness shows its computed rate magnitude. No branch signal propagation is modeled.' : 'Measured neuron skeletons: sensory cyan, local circuit purple, motor gold.'} Drag or arrow keys rotate; scroll or plus/minus zoom; Shift-drag or Shift-arrows pan; double-click or Home resets.`} />

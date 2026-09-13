@@ -12,7 +12,7 @@ function Screw({ position }: { position: string }) { return <span aria-hidden="t
 function Screws() { return <>{['top-left', 'top-right', 'bottom-left', 'bottom-right'].map(p => <Screw key={p} position={p} />)}</>; }
 
 export default function DesignerFly() {
-  const { resetSimulation, model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact, controller, selectController } = useDrawing();
+  const { resetSimulation, model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact, selectController } = useDrawing();
   const [activityReady,setActivityReady]=useState(false);
   const [spectrumReady,setSpectrumReady]=useState(false);
   const [spectrumError,setSpectrumError]=useState('');
@@ -131,7 +131,7 @@ export default function DesignerFly() {
           </div>
             <div className="screen-metrics" title="Selected controller totals. The scene displays neurons with measured locations; the trace includes all neurons."><span><strong>{displayModel?.neurons.toLocaleString('en-US') || '…'}</strong> neurons</span><span><strong>{displayModel?.edges.toLocaleString('en-US') || '…'}</strong> connections</span></div>
             {displayModel && <NeuralDisplay model={displayModel} live={displayLive} source={displaySource} mode="activity" onReady={setActivityReady} />}
-            <div className="controller-status" aria-label="Controller and stylus status"><span><small>Controller</small><b>{neuralSource === 'wing' ? 'Wing rhythm' : controller==='spiking' ? 'Spiking foreleg' : 'Trained foreleg'}</b></span><span><small>Stylus</small><b>{contact ? 'On paper' : 'Lifted'}</b></span></div>
+            <div className="controller-status" aria-label="Controller and stylus status"><span><small>Controller</small><b>{neuralSource === 'wing' ? 'Wing rhythm' : spiking ? 'Spiking foreleg' : 'Trained foreleg'}</b></span><span><small>Stylus</small><b>{contact ? 'On paper' : 'Lifted'}</b></span></div>
             {spiking && <div className="spiking-motor-note">Frozen anatomy · trained interfaces</div>}
             <div className="signal-row"><span>{isComposition ? 'Study' : 'Drawing'}</span><progress className="signal-track" aria-label={isComposition ? 'Study progress' : 'Drawing progress'} value={progress} max={1} /><span>{Math.round(progress * 100)}%</span></div>
             {!activityReady && <DeviceLoader label="Loading neural activity" error={error}/> }
