@@ -59,8 +59,20 @@ export function createFlyScene(host: HTMLElement, live: LiveDrawing, ready: () =
   const clearPaper = () => { context.fillStyle = '#fffdf7'; context.fillRect(0, 0, 1024, 1024); };
   clearPaper(); const paperTexture = new T.CanvasTexture(paperCanvas); paperTexture.colorSpace = T.SRGBColorSpace; paperTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const paper = new T.Mesh(new T.PlaneGeometry(1.15, 1.15), new T.MeshStandardMaterial({ map: paperTexture, roughness: 1 })); paper.rotation.x = -Math.PI / 2; paper.position.set(1.55, .946, 0); paper.receiveShadow = true; scene.add(paper);
-  // Two small brass clips keep the sheet in place, without any text on the canvas.
-  for (const z of [-.48, .48]) box(.12, .022, .12, '#ada58e', 2.07, .962, z, scene);
+  // Bent steel wire clips straddle the paper edge; the open loops leave paper visible.
+  for (const z of [-.48, .48]) {
+    const points = [
+      [.035, -.025], [-.047, -.025], [-.067, -.014], [-.067, .014],
+      [-.047, .028], [.055, .028], [.072, .014], [.072, -.013],
+      [.055, -.036], [-.025, -.036], [-.043, -.022], [-.043, -.005],
+      [-.026, .008], [.035, .008],
+    ].map(([x, dz]) => new T.Vector3(2.085 + x, .954, z + dz));
+    const wire = new T.Mesh(
+      new T.TubeGeometry(new T.CatmullRomCurve3(points), 96, .0035, 8, false),
+      new T.MeshStandardMaterial({ color: '#b6b9b4', metalness: .88, roughness: .25 }),
+    );
+    wire.castShadow = true; wire.receiveShadow = true; scene.add(wire);
+  }
   const stylus = new T.Group(); scene.add(stylus);
   const shaft = new T.Mesh(new T.CylinderGeometry(.023, .023, .44, 12), new T.MeshStandardMaterial({ color: '#e56835', roughness: .48 })); shaft.position.y = .34; stylus.add(shaft);
   const wood = new T.Mesh(new T.ConeGeometry(.023, .12, 12), new T.MeshStandardMaterial({ color: '#ccb38b' })); wood.rotation.z = Math.PI; wood.position.y = .08; stylus.add(wood);

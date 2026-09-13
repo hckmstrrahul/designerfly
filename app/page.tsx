@@ -12,7 +12,7 @@ function Screw({ position }: { position: string }) { return <span aria-hidden="t
 function Screws() { return <>{['top-left', 'top-right', 'bottom-left', 'bottom-right'].map(p => <Screw key={p} position={p} />)}</>; }
 
 export default function DesignerFly() {
-  const { model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact, controller, selectController } = useDrawing();
+  const { resetSimulation, model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact, controller, selectController } = useDrawing();
   const [activityReady,setActivityReady]=useState(false);
   const [spectrumReady,setSpectrumReady]=useState(false);
   const [spectrumError,setSpectrumError]=useState('');
@@ -25,6 +25,12 @@ export default function DesignerFly() {
   const setStudy=(next:PlacedShape[] | ((current:PlacedShape[])=>PlacedShape[]))=>setCanvases(current=>({...current,[editorMode]:typeof next==='function'?next(current[editorMode]):next}));
   const [editorTool,setEditorTool] = useState<EditorTool>('arrange');
   function openEditor(mode:EditorMode){setEditorMode(mode);setEditorTool(mode);setArranging(true);}
+  function toggleDrawingMode(mode:EditorMode) {
+    if (mode===editorMode && (busy || phase==='done')) {
+      setArranging(false); void resetSimulation();
+    } else if (arranging && mode===editorMode) setArranging(false);
+    else openEditor(mode);
+  }
   const nextId = useRef(5);
   const experimentDialog = useRef<HTMLDialogElement>(null);
   const stage = useRef<HTMLDivElement>(null), devices = useRef<HTMLDivElement>(null);
@@ -112,7 +118,7 @@ export default function DesignerFly() {
               <div className="utility-module"><button className="shape-key round-key speed-key selected" aria-pressed={true} aria-label={`Simulation speed ${speed} times. Click to change.`} onClick={cycleSpeed} disabled={!ready} title="Advance more full physics steps per update"><span className="key-top"><span className="speed-value">{speed}×</span><span className="speed-leds" aria-hidden="true">{[1, 3, 6].map(level => <i key={level} className={speed >= level ? 'lit' : ''} />)}</span></span></button><span className="key-caption" aria-hidden="true">Speed</span></div>
               <div className="utility-module"><button className="shape-key round-key speed-key selected" aria-pressed={true} aria-label={`Camera view ${cameraPreset+1}: ${['Angled','Paper','Overhead'][cameraPreset]}. Click to change.`} title="Cycle angled, paper and overhead views" onClick={cycleCamera} disabled={!ready}><span className="key-top"><Camera size={25} strokeWidth={1.7}/><span className="speed-leds" aria-hidden="true">{[0,1,2].map(level=><i key={level} className={cameraPreset>=level?'lit':''}/>)}</span></span></button><span className="key-caption">Camera</span></div>
             </div>
-            <div className="shape-controls" aria-label="Drawing modes"><div className="key-module"><button className={`shape-key ${arranging && editorMode==='arrange' ? 'selected' : ''}`} aria-label="Draw UI" aria-pressed={arranging&&editorMode==='arrange'} disabled={!ready || busy} onClick={() => {if(arranging&&editorMode==='arrange')setArranging(false);else openEditor('arrange');}}><span className="key-top"><LayoutTemplate size={25} strokeWidth={1.7} /><span className="key-indicator" /></span></button><span className="key-caption" aria-hidden="true">Draw UI</span></div>{([{tool:'text',label:'Text',Icon:Type},{tool:'emoji',label:'Emoji',Icon:Smile}] as const).map(({tool,label,Icon})=><div className="key-module" key={tool}><button className={`shape-key ${arranging&&editorMode===tool?'selected':''}`} aria-label={`Open ${label.toLowerCase()} mode`} aria-pressed={arranging&&editorMode===tool} disabled={!ready||busy} onClick={()=>openEditor(tool)}><span className="key-top"><Icon size={25} strokeWidth={1.7}/><span className="key-indicator"/></span></button><span className="key-caption">{label}</span></div>)}</div>
+            <div className="shape-controls" aria-label="Drawing modes"><div className="key-module"><button className={`shape-key ${(arranging || busy || phase==='done') && editorMode==='arrange' ? 'selected' : ''}`} aria-label="Draw UI" aria-pressed={(arranging||busy||phase==='done')&&editorMode==='arrange'} disabled={!ready || (busy && editorMode!=='arrange')} onClick={() => toggleDrawingMode('arrange')}><span className="key-top"><LayoutTemplate size={25} strokeWidth={1.7} /><span className="key-indicator" /></span></button><span className="key-caption" aria-hidden="true">Draw UI</span></div>{([{tool:'text',label:'Text',Icon:Type},{tool:'emoji',label:'Emoji',Icon:Smile}] as const).map(({tool,label,Icon})=><div className="key-module" key={tool}><button className={`shape-key ${(arranging||busy||phase==='done')&&editorMode===tool?'selected':''}`} aria-label={`Open ${label.toLowerCase()} mode`} aria-pressed={(arranging||busy||phase==='done')&&editorMode===tool} disabled={!ready||(busy&&editorMode!==tool)} onClick={()=>toggleDrawingMode(tool)}><span className="key-top"><Icon size={25} strokeWidth={1.7}/><span className="key-indicator"/></span></button><span className="key-caption">{label}</span></div>)}</div>
           </div>
           <footer className="device-footer" aria-hidden="true"><span className="footer-dots"><i /><i /><i /></span><span className="vent" /></footer>
         </section>

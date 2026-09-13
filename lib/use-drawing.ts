@@ -158,5 +158,5 @@ export function useDrawing() {
     try{localStorage.setItem(CAMERA_STORAGE_KEY,String(next));}catch{/* Storage can be unavailable in private sessions. */}
   }
   function cycleSpeed() { speedRef.current = speedRef.current === 1 ? 3 : speedRef.current === 3 ? 6 : 1; setSpeed(speedRef.current); }
-  return { controller, selectController, model: neuralSource !== 'wing' && motorModel ? motorModel : model, report, error, shape, phase, progress, completed, host, live, ready, draw, wings, toggleWings, contact, resetView, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera };
+  return { resetSimulation, controller, selectController, model: neuralSource !== 'wing' && motorModel ? motorModel : model, report, error, shape, phase, progress, completed, host, live, ready, draw, wings, toggleWings, contact, resetView, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera };
 }
