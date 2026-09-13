@@ -66,7 +66,7 @@ def health():
     if config:
         import json
         summary['active-motor']=json.loads((ROOT/f"research/results/expansion-training-{config['neurons']}.json").read_text())
-    return {'ready':True,'engine':'MuJoCo','spiking':spiking_status(),'reports':summary,'motor_model':f"/models/motor-circuit-{config['neurons']}.json" if config else None}
+    return {'ready':True,'region':os.getenv('RAILWAY_REPLICA_REGION','local'),'engine':'MuJoCo','spiking':spiking_status(),'reports':summary,'motor_model':f"/models/motor-circuit-{config['neurons']}.json" if config else None}
 @app.post('/session')
 def create(request:Start):
     now=time.monotonic()
