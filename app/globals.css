@@ -1046,3 +1046,13 @@ html, body, #root { height: 100%; overflow: hidden; }
 @media(prefers-reduced-motion:reduce) {
  .device-loading-progress>span {animation:none;}
 }
+
+/* Fixed housing with the same one-pixel inset travel as S–01. */
+.neural-device .controller-selector .mode-key {padding:0;overflow:hidden;transform:none;}
+.mode-key-face {position:relative;display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:100%;border-radius:inherit;background:inherit;transition:transform .08s ease-out,box-shadow .08s ease-out;}
+.neural-device .controller-selector .mode-key:active {transform:none;box-shadow:0 1px 0 #ffffffbd inset,0 2px 1px #96968d,0 3px 4px #4545451f;}
+.controller-selector .mode-key:active:not(:disabled) .mode-key-face {transform:translateY(1px);box-shadow:inset 0 2px 4px #0003,inset 0 -1px 1px #fff2;}
+@media(prefers-reduced-motion:reduce) {
+ .mode-key-face {transition:none;}
+ .controller-selector .mode-key:active:not(:disabled) .mode-key-face {transform:none;}
+}

@@ -1,4 +1,4 @@
-import { Wind, LayoutTemplate, Activity, FlaskConical, Scale, ArrowUpRight, Type, Smile, Camera } from 'lucide-react';
+import { Wind, LayoutTemplate, Activity, Cog, FlaskConical, Scale, ArrowUpRight, Type, Smile, Camera } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDrawing } from '@/lib/use-drawing';
 import { DeviceLoader } from './device-loader';
@@ -138,8 +138,8 @@ export default function DesignerFly() {
           </div>
           <div className="neural-hardware controller-controls" aria-label="Neural signal source">
             <div className="controller-selector">
-              <button className="hardware-key mode-key" aria-pressed={!spiking} disabled={!ready} onClick={()=>void selectController('trained')}><Activity size={17}/><span>Motor</span><i/></button>
-              <button className="hardware-key mode-key" aria-pressed={spiking} disabled={!ready || !report?.spiking?.available} title={report?.spiking?.available ? 'Draw using the spiking foreleg controller' : 'Spiking controller validation pending'} onClick={()=>void selectController('spiking')}><Activity size={17}/><span>Spikes</span><i/></button>
+              <button className="hardware-key mode-key" aria-pressed={!spiking} disabled={!ready} onClick={()=>void selectController('trained')}><span className="mode-key-face"><Cog size={17}/><span>Motor</span><i/></span></button>
+              <button className="hardware-key mode-key" aria-pressed={spiking} disabled={!ready || !report?.spiking?.available} title={report?.spiking?.available ? 'Draw using the spiking foreleg controller' : 'Spiking controller validation pending'} onClick={()=>void selectController('spiking')}><span className="mode-key-face"><Activity size={17}/><span>Spikes</span><i/></span></button>
             </div>
 
           </div>
