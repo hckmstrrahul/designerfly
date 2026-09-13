@@ -255,7 +255,7 @@ no additional font dataset or text training was used.
 
 The production frontend is [designerfly.vercel.app](https://designerfly.vercel.app/).
 Its persistent MuJoCo physics service runs on
-[Railway](https://physics-production-198a.up.railway.app/health), deploying from
+Railway, deploying from
 `main` with `Dockerfile.physics`. Docker installs the Python dependencies and starts
 `research/server.py`; visitors do not need to run a local physics service.
 
@@ -275,7 +275,7 @@ To connect the deployed frontend:
 4. Set `VITE_PHYSICS_URL` in Vercel to that HTTPS backend URL (no `/physics` suffix),
    then rebuild/redeploy. Without this setting, local development uses `/physics`.
 
-Production `VITE_PHYSICS_URL` is `https://physics-production-198a.up.railway.app`.
+The production backend origin is configured through Vercel’s `VITE_PHYSICS_URL` environment variable.
 Both the trained and Spikes controllers passed deployed session creation and
 12-frame stepping smoke checks, with production-origin CORS verified. These checks
 verify hosting connectivity; physical accuracy is covered by the validation reports.
