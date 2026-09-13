@@ -1056,3 +1056,26 @@ html, body, #root { height: 100%; overflow: hidden; }
  .mode-key-face {transition:none;}
  .controller-selector .mode-key:active:not(:disabled) .mode-key-face {transform:none;}
 }
+.controller-selector {grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px;}
+.neural-device .controller-selector .neural-info-key {width:44px;height:44px;}
+.neural-info {position:absolute;inset:0;z-index:25;overflow:auto;overscroll-behavior:contain;background:#141916;color:#bdc4b9;padding:20px;outline:none;display:flex;flex-direction:column;gap:18px;border-radius:3px;scrollbar-width:thin;scrollbar-color:#50594e #141916;}
+.neural-screen:has(.neural-info)>:not(.neural-info) {visibility:hidden;}
+.neural-info header {display:flex;align-items:center;justify-content:space-between;font:9px var(--mono);letter-spacing:1px;color:#a2aa9d;}
+.neural-info header button {display:grid;place-items:center;width:28px;height:28px;padding:0;border:1px solid #465044;border-radius:4px;background:#232b24;color:#dce0d4;cursor:pointer;}
+.neural-info button:focus-visible {outline:2px solid #ee8a4f;outline-offset:2px;}
+.neural-info h3 {font-size:24px;font-weight:500;letter-spacing:-.7px;margin:0;color:#eeeedd;}
+.neural-info-modes {display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.neural-info-modes section {min-width:0;border-top:1px solid #485143;padding-top:12px;}
+.neural-info-label {display:flex;flex-wrap:wrap;gap:5px;align-items:center;font:9px var(--mono);letter-spacing:.4px;color:#c2c9b9;}
+.neural-info-label b {font-size:7px;font-weight:400;color:#e99358;padding:3px 4px;border:1px solid #e9935844;border-radius:2px;}
+.neural-info svg:not(button svg) {display:block;width:100%;height:44px;margin:12px 0;fill:none;stroke:#c0ceac;stroke-width:1.6;}
+.neural-info-modes section+section svg {stroke:#e99358;}
+.neural-info h4 {margin:0 0 6px;font-size:13px;font-weight:500;color:#e1e4d5;}
+.neural-info p {margin:0;font:11px/1.6 var(--sans, sans-serif);}
+.neural-info-flow {display:flex;align-items:center;justify-content:space-between;gap:6px;padding:12px 0;border-block:1px solid #343e32;font:8px var(--mono);}
+.neural-info-flow i {font-style:normal;font-size:14px;color:#e99358;}
+.neural-info-reading {display:grid;gap:12px;}
+.neural-info-reading strong {display:block;font-weight:500;color:#e1e4d5;margin-bottom:3px;}
+.neural-info footer {margin-top:auto;color:#909b89;font:9px/1.6 var(--mono);}
+@media(min-width:1001px) {.activity-device .neural-info {position:relative;inset:auto;grid-column:1 / -1;grid-row:1 / 8;min-height:0;margin:3px;}}
+@media(max-width:420px) {.neural-info {padding:14px;gap:14px;}.neural-info-modes {gap:10px;}}

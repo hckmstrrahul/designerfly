@@ -1,6 +1,7 @@
-import { Wind, LayoutTemplate, Activity, Cog, FlaskConical, Scale, ArrowUpRight, Type, Smile, Camera } from 'lucide-react';
+import { Wind, LayoutTemplate, Activity, Cog, Info, FlaskConical, Scale, ArrowUpRight, Type, Smile, Camera } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useDrawing } from '@/lib/use-drawing';
+import { NeuralInfo } from './neural-info';
 import { DeviceLoader } from './device-loader';
 import { DeviceCable } from './device-cable';
 import { NeuralDisplay } from './neural-display';
@@ -13,6 +14,7 @@ function Screws() { return <>{['top-left', 'top-right', 'bottom-left', 'bottom-r
 
 export default function DesignerFly() {
   const { resetSimulation, model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact, selectController } = useDrawing();
+  const [neuralInfoOpen, setNeuralInfoOpen] = useState(false);
   const [activityReady,setActivityReady]=useState(false);
   const [spectrumReady,setSpectrumReady]=useState(false);
   const [spectrumError,setSpectrumError]=useState('');
@@ -134,12 +136,14 @@ export default function DesignerFly() {
             <div className="controller-status" aria-label="Controller and stylus status"><span><small>Controller</small><b>{neuralSource === 'wing' ? 'Wing rhythm' : spiking ? 'Spiking foreleg' : 'Trained foreleg'}</b></span><span><small>Stylus</small><b>{contact ? 'On paper' : 'Lifted'}</b></span></div>
             {spiking && <div className="spiking-motor-note">Frozen anatomy · trained interfaces</div>}
             <div className="signal-row"><span>{isComposition ? 'Study' : 'Drawing'}</span><progress className="signal-track" aria-label={isComposition ? 'Study progress' : 'Drawing progress'} value={progress} max={1} /><span>{Math.round(progress * 100)}%</span></div>
+            {neuralInfoOpen && <NeuralInfo onClose={() => setNeuralInfoOpen(false)}/> }
             {!activityReady && <DeviceLoader label="Loading neural activity" error={error}/> }
           </div>
           <div className="neural-hardware controller-controls" aria-label="Neural signal source">
             <div className="controller-selector">
               <button className="hardware-key mode-key" aria-pressed={!spiking} disabled={!ready} onClick={()=>void selectController('trained')}><span className="mode-key-face"><Cog size={17}/><span>Motor</span><i/></span></button>
               <button className="hardware-key mode-key" aria-pressed={spiking} disabled={!ready || !report?.spiking?.available} title={report?.spiking?.available ? 'Draw using the spiking foreleg controller' : 'Spiking controller validation pending'} onClick={()=>void selectController('spiking')}><span className="mode-key-face"><Activity size={17}/><span>Spikes</span><i/></span></button>
+              <button className="hardware-key mode-key neural-info-key" aria-label="About Motor, Spikes and the neural displays" aria-expanded={neuralInfoOpen} onClick={() => setNeuralInfoOpen(open => !open)}><span className="mode-key-face"><Info size={17}/></span></button>
             </div>
 
           </div>

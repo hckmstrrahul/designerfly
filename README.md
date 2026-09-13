@@ -323,8 +323,9 @@ Their demos and results should not be confused with this experiment.
 
 NL–01 has **Motor** and **Spikes** selectors. Motor selects the trained rate
 controller; Spikes selects the persistent spiking foreleg controller. Both remain
-available during drawing. New drawings default to Spikes when its validated model
-is available. During a switch, the existing animation continues until matching
+available during drawing. New drawings default to Motor for cleaner tracing. Spikes remains an experimental
+option and can produce wavier lines. The square info button explains both controllers
+and the NL–01 / NS–01 displays without interrupting the drawing. During a switch, the existing animation continues until matching
 new samples arrive; the display loop stays mounted. Changes apply at the next requested playback batch,
 preserving the body, paper, stroke index and path phase. Already buffered motion
 finishes first. Neural samples retain their actual source during the handoff.

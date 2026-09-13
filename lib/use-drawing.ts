@@ -55,9 +55,9 @@ export function useDrawing() {
     if (!composition && shape === i && !isComposition) { await resetSimulation(); return; }
     const run = ++live.current.run; active.current = false; live.current.ink.length = 0; live.current.drawing = false;
     motorFrame.current = null;
-    controllerRef.current = report?.spiking?.available ? 'spiking' : 'trained';
-    setController(controllerRef.current);
-    selectNeuralSource(controllerRef.current==='spiking'?'spiking':'motor');
+    controllerRef.current = 'trained';
+    setController('trained');
+    selectNeuralSource('motor');
     const old = session.current; session.current = '';
     setShape(i); setPhase('approach'); setProgress(0); setContact(false);
     setStrokeCount(composition?.length || 1); setStrokeIndex(0);
