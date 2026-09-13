@@ -62,4 +62,23 @@ class ControllerAPITests(unittest.TestCase):
         with patch.object(server,'advance_session',return_value={'frames':[{'done':True}]}):
             self.assertEqual(len(server.playback(server.Playback(session=a['session'],count=20))['samples']),1)
 
+    def test_live_switch_preserves_session_body_and_stroke_phase(self):
+        with patch.object(server,'session_motor',return_value=StatefulMotor()):
+            a=server.create_composition(server.CompositionStart(strokes=[dict(shape=0,x=0,y=0,width=.4,height=.4)]))
+        session=server.sessions[a['session']][0]
+        session.stage='draw';session.elapsed=.5
+        before=session.env.data.qpos.copy();time=session.env.data.time
+        replacement=StatefulMotor();replacement.learned_duration_scale=1.6
+        with patch.object(server,'session_motor',return_value=replacement):
+            server.switch_session_controller(session,'spiking')
+        np.testing.assert_array_equal(session.env.data.qpos,before)
+        self.assertEqual(session.env.data.time,time)
+        self.assertEqual(session.index,0);self.assertAlmostEqual(session.elapsed,.8)
+        result=server.playback(server.Playback(session=a['session'],controller='spiking',count=2))
+        self.assertEqual(result['samples'][0]['neural_source'],'spiking')
+        self.assertEqual(replacement.calls,4)
+        with patch.object(server,'session_motor',return_value=StatefulMotor()):
+            server.switch_session_controller(session,'trained')
+        self.assertEqual(session.controller,'trained')
+
 if __name__=='__main__':unittest.main()

@@ -12,7 +12,7 @@ function Screw({ position }: { position: string }) { return <span aria-hidden="t
 function Screws() { return <>{['top-left', 'top-right', 'bottom-left', 'bottom-right'].map(p => <Screw key={p} position={p} />)}</>; }
 
 export default function DesignerFly() {
-  const { model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, selectNeuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact, controller, selectController } = useDrawing();
+  const { model, report, error, shape, phase, progress, host, live, ready, draw, wings, toggleWings, neuralSource, strokeCount, strokeIndex, isComposition, speed, cycleSpeed, cameraPreset, cycleCamera, contact, controller, selectController } = useDrawing();
   const [activityReady,setActivityReady]=useState(false);
   const [spectrumReady,setSpectrumReady]=useState(false);
   const [spectrumError,setSpectrumError]=useState('');
@@ -132,9 +132,8 @@ export default function DesignerFly() {
           </div>
           <div className="neural-hardware controller-controls" aria-label="Neural signal source">
             <div className="controller-selector">
-              <button className="hardware-key mode-key" aria-pressed={!spiking && neuralSource==='motor'} disabled={!ready || busy} onClick={()=>void selectController('trained')}><Activity size={17}/><span>Motor</span><i/></button>
-              <button className="hardware-key mode-key" aria-pressed={!spiking && neuralSource==='wing'} disabled={!ready} onClick={()=>{if(!wings)toggleWings();else selectNeuralSource('wing');}}><Wind size={17}/><span>Wings</span><i/></button>
-              <button className="hardware-key mode-key" aria-pressed={spiking} disabled={!ready || busy || !report?.spiking?.available} title={report?.spiking?.available ? 'Draw using the spiking foreleg controller' : 'Spiking controller validation pending'} onClick={()=>void selectController('spiking')}><Activity size={17}/><span>Spikes</span><i/></button>
+              <button className="hardware-key mode-key" aria-pressed={!spiking} disabled={!ready} onClick={()=>void selectController('trained')}><Activity size={17}/><span>Motor</span><i/></button>
+              <button className="hardware-key mode-key" aria-pressed={spiking} disabled={!ready || !report?.spiking?.available} title={report?.spiking?.available ? 'Draw using the spiking foreleg controller' : 'Spiking controller validation pending'} onClick={()=>void selectController('spiking')}><Activity size={17}/><span>Spikes</span><i/></button>
             </div>
 
           </div>
@@ -162,7 +161,7 @@ export default function DesignerFly() {
         <div className="experiment-content">
           <section><h3>From neurons to pencil</h3><p>A trained planner traces a shape. A feedback network uses joint motion, pencil error and contact to drive three foreleg joints in MuJoCo. Ink appears only when the pencil touches paper.</p></section>
           <section><h3>Reading the displays</h3><div className="display-explain">
-            <div><h4>Neural Link</h4><p>A selected MaleCNS circuit. Motor and Wings show signed rate activity in red and green. Spikes shows firing rates from the physical drawing session in green, smoothed over 100 ms. Colors do not identify excitatory or inhibitory cells.</p></div>
+            <div><h4>Neural Link</h4><p>A selected MaleCNS circuit. Motor shows foreleg or wing signed rate activity in red and green. Spikes shows firing rates from the physical drawing session in green, smoothed over 100 ms. Colors do not identify excitatory or inhibitory cells.</p></div>
             <div><h4>Neural Spectrum</h4><p>96 measured neuron skeletons. Color identifies each neuron; brightness follows its computed activity. Missing locations are omitted.</p></div>
           </div></section>
           <section><h3>What this prototype can do</h3><p>Draw shapes, rounded wireframes and short lettering with one controlled foreleg. Letter paths are supplied; the existing trained motor draws them. The body stays fixed; wing flapping is neural animation without flight physics. It cannot understand prompts or design interfaces on its own.</p><p className="experiment-caveat">These are model values, not recorded spikes or signals travelling along branches. This is a partial circuit, not a full brain. Biological accuracy and an advantage over random wiring remain unproven.</p></section>

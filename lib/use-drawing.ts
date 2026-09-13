@@ -27,7 +27,10 @@ export function useDrawing() {
   const [strokeCount, setStrokeCount] = useState(1), [strokeIndex, setStrokeIndex] = useState(0);
   const [isComposition, setIsComposition] = useState(false);
   const ready = !!model && !!report && sceneReady && !error && phase!=='resetting';
-  const publishNeuralFrame = () => { live.current.frame = selectedSource.current === 'wing' ? wingFrame.current : motorFrame.current; };
+  const publishNeuralFrame = () => {
+    const frame = selectedSource.current === 'wing' ? wingFrame.current : motorFrame.current;
+    live.current.frame = frame?.source === selectedSource.current ? frame : null;
+  };
   const selectNeuralSource = (source: 'motor' | 'wing' | 'spiking') => { selectedSource.current = source; setNeuralSource(source); publishNeuralFrame(); };
   async function resetSimulation() {
     const run = ++live.current.run;
@@ -98,7 +101,7 @@ export function useDrawing() {
           const steps = stepsAtSpeed(speedRef.current), count = started ? 20 : 4; started = true;
           const wingStart = requestedWingTime;
           requestedWingTime += count * steps * .02;
-          void physics<{ samples: Sample[] }>('/playback', { session: drawing ? session.current : null, steps, count, wings: live.current.wings, wing_time: wingStart }).then(result => {
+          void physics<{ samples: Sample[] }>('/playback', { session: drawing ? session.current : null, steps, count, controller: controllerRef.current, wings: live.current.wings, wing_time: wingStart }).then(result => {
             if (!disposed && run === live.current.run && key === bufferKey) {
               buffer.push(result.samples);
               exhausted = !!result.samples.at(-1)?.frames.at(-1)?.done;
@@ -144,9 +147,9 @@ export function useDrawing() {
     selectNeuralSource(live.current.wings ? 'wing' : controllerRef.current==='spiking'?'spiking':'motor');
   }
   async function selectController(next:'trained'|'spiking') {
-    if(active.current || !ready || (next==='spiking' && !report?.spiking?.available))return;
+    if(!ready || (next==='spiking' && !report?.spiking?.available))return;
     controllerRef.current=next;setController(next);
-    await resetSimulation();
+    selectNeuralSource(next==='spiking' ? 'spiking' : live.current.wings ? 'wing' : 'motor');
   }
   function resetView() { live.current.resetView++; }
   function cycleCamera() {

@@ -153,9 +153,9 @@ between samples strengthen the glow. A fixed square-root display curve reveals
 small values, with 8× gain on the change component. Unchanged values remain still. The bottom
 trace is mean absolute rate across every neuron, including cells without positions.
 
-Enabling wings on either device selects the 1,024-neuron wing controller on both
-live monitors, even during drawing. The NL–01 Motor button stops flapping and
-returns to the motor controller. Counts follow the selected network.
+Enabling S–01 Wings selects Motor on NL–01 and shows the actual 1,024-neuron
+wing rhythm on both monitors, even during drawing. NL–01 has no separate Wings
+button. Counts follow the selected network; wing rates are not relabeled as spikes.
 
 **Neural Spectrum (NS–01)** shows the same 96 measured 3D skeletons in a separate
 interactive view below Neural Link. A stable hue identifies each neuron; opacity and
@@ -317,11 +317,13 @@ Their demos and results should not be confused with this experiment.
 
 ## Experimental spiking circuit (feature branch)
 
-NL–01 has **Motor**, **Wings**, and **Spikes** selectors. Motor selects the original
-trained rate controller; Spikes selects the persistent spiking foreleg controller
-for the next drawing. Switching drawing controllers resets the sheet and is disabled
-while drawing. Wings selects wing telemetry without changing the foreleg controller.
-Both neural displays receive the actual selected session's activity.
+NL–01 has **Motor** and **Spikes** selectors. Motor selects the trained rate
+controller; Spikes selects the persistent spiking foreleg controller. Both remain
+available during drawing. Changes apply at the next requested playback batch,
+preserving the body, paper, stroke index and path phase. Already buffered motion
+finishes first. Neural samples retain their actual source during the handoff.
+Switching can briefly disturb pen contact; it is not equivalent to a controller
+trained specifically for seamless handoffs.
 
 Each spiking drawing session owns its membrane voltages, synaptic currents,
 refractory periods and firing-rate history. Foreleg sensory feedback is encoded through a fixed random projection onto 256

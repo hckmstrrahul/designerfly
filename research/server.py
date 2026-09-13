@@ -110,6 +110,19 @@ class Playback(BaseModel):
     count: int = Field(default=20,ge=1,le=30)
     wings: bool = False
     wing_time: float = Field(default=0,ge=0,le=1e9)
+    controller: Literal['trained','spiking'] | None = None
+
+def switch_session_controller(session,controller):
+    if controller is None or controller==session.controller:return
+    target=getattr(session,'composition',None) or session
+    fallback=policy_or(load_composition_motor()) if isinstance(target,CompositionSession) else motor
+    replacement=session_motor(controller,fallback)
+    # Preserve the path phase when the two motors use different drawing speeds.
+    if isinstance(target,CompositionSession) and target.stage=='draw':
+        stroke=target.strokes[target.index]
+        scale='draw_duration_scale' if stroke.get('points') else 'learned_duration_scale'
+        target.elapsed*=getattr(replacement,scale,1.)/getattr(target.motor,scale,1.)
+    target.motor=replacement;session.motor=replacement;session.controller=controller
 
 @app.post('/playback')
 def playback(request:Playback):
@@ -132,6 +145,7 @@ def playback(request:Playback):
         if request.session not in sessions:raise HTTPException(404,'Drawing session expired')
         session,_=sessions[request.session]
     with session.request_lock:
+        switch_session_controller(session,request.controller)
         samples=[]
         for i in range(request.count):
             value=sample(i,session);samples.append(value)
