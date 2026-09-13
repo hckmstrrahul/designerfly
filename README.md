@@ -1,8 +1,11 @@
 # Designer Fly
 
-A little fly at a drawing desk, inside a pair of hardware-inspired instruments.
-Choose a shape, or arrange a small wireframe and watch it draw. The second device
-lets you explore the controller's activity and some of the neurons it is based on.
+A fly-connectome-based neural controller trained to trace drawings with a simulated foreleg.
+
+Create a UI, text, emoji or freehand drawing and watch the fly trace its paths.
+The neural displays show controller activity and selected anatomical neuron structures.
+Drawing paths are supplied by the editor; the trained controller moves the physical foreleg
+along them rather than independently inventing drawings or understanding their content.
 
 Built by [@hckmstrrahul](https://github.com/hckmstrrahul).
 
