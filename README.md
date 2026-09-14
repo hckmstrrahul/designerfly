@@ -9,6 +9,10 @@ along them rather than independently inventing drawings or understanding their c
 
 Built by [@hckmstrrahul](https://github.com/hckmstrrahul).
 
+[![Watch the Designer Fly demo on YouTube](https://img.youtube.com/vi/ekJNq7rWOOA/hqdefault.jpg)](https://youtu.be/ekJNq7rWOOA)
+
+[Watch the Youtube Demo ↗](https://youtu.be/ekJNq7rWOOA)
+
 **This is a trained, embodied neural prototype. It is not a complete biological
 fly simulation.** The drawing controller uses measured fruit-fly connectivity,
 learned parameters, sensory feedback and a reduced physical foreleg. The layout
